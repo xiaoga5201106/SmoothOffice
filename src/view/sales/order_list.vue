@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <tableList :titles="titles" :tableData="tableData"></tableList>
+    <tableList :titles="titles" :tableData="tableData" operate="true"></tableList>
   </div>
 </template>
 
@@ -47,9 +47,6 @@
               },
               { prop:'progress',
                 label:"当前进度"
-              },
-              { prop:'tools',
-                label:"操作"
               }
             ],
             /*表格数据*/
@@ -62,57 +59,50 @@
               area:'贵港',
               add_time:'2018-08-13',
               edit_time:'2018-08-13',
-              order_status:'<span >已提交</span>',
-              pact_status:'正办理',
-              progress:'未签合同',
-              tools:'操作'
-            }, {
-              order_id: '02',
-              name: '王小虎',
-              service_type: '税筹-自有业务-一次性付款',
-              partner:'xx有限公司',
-              line:'/',
-              area:'贵港',
-              add_time:'2018-08-13',
-              edit_time:'2018-08-13',
               order_status:'已提交',
               pact_status:'正办理',
-              progress:'未签合同',
-              tools:'操作'
-            }, {
-              order_id: '03',
-              name: '王小虎',
-              service_type: '税筹-自有业务-一次性付款',
-              partner:'xx有限公司',
-              line:'/',
-              area:'贵港',
-              add_time:'2018-08-13',
-              edit_time:'2018-08-13',
-              order_status:'已提交',
-              pact_status:'正办理',
-              progress:'未签合同',
-              tools:'操作'
-            }, {
-              order_id: '04',
-              name: '王小虎',
-              service_type: '税筹-自有业务-一次性付款',
-              partner:'xx有限公司',
-              line:'/',
-              area:'贵港',
-              add_time:'2018-08-13',
-              edit_time:'2018-08-13',
-              order_status:'已提交',
-              pact_status:'正办理',
-              progress:'未签合同',
-              tools:'操作'
-            }]
+              progress:'未签合同'
+              }, {
+                order_id: '02',
+                name: '王小虎',
+                service_type: '税筹-自有业务-一次性付款',
+                partner:'xx有限公司',
+                line:'/',
+                area:'贵港',
+                add_time:'2018-08-13',
+                edit_time:'2018-08-13',
+                order_status:'待提交',
+                pact_status:'待签订',
+                progress:'未签合同'
+              }, {
+                order_id: '03',
+                name: '王小虎',
+                service_type: '税筹-自有业务-一次性付款',
+                partner:'xx有限公司',
+                line:'/',
+                area:'贵港',
+                add_time:'2018-08-13',
+                edit_time:'2018-08-13',
+                order_status:'已提交',
+                pact_status:'已撤单',
+                progress:'未签合同'
+              }, {
+                order_id: '04',
+                name: '王小虎',
+                service_type: '税筹-自有业务-一次性付款',
+                partner:'xx有限公司',
+                line:'/',
+                area:'贵港',
+                add_time:'2018-08-13',
+                edit_time:'2018-08-13',
+                order_status:'已提交',
+                pact_status:'已完成',
+                progress:'未签合同'
+              }]
           }
         }
     }
 </script>
 
 <style scoped>
-  .el-table_4_column_12{
-    color: red;
-  }
 </style>
