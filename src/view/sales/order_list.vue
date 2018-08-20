@@ -1,18 +1,22 @@
 <template>
   <div id="main">
-    <tableList :titles="titles" :tableData="tableData" operate="true"></tableList>
+    <tableList :titles="titles" :tableData="tableData" operate="true" @open="show=true"></tableList>
+    <dialogbox :dialogVisible="show" @close="show=false"></dialogbox>
   </div>
 </template>
 
 <script>
     import tableList from '../component/tableList'
+    import dialogbox from'../component/dialog'
     export default {
         name: "order_list",
         components: {
-          tableList
+          tableList,
+          dialogbox
         },
         data () {
           return{
+              show:false,
             titles:[
               /*表头*/
               { prop:'order_id',

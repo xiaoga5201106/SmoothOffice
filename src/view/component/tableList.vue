@@ -11,11 +11,11 @@
       v-bind:class-name="title.prop"
       align="center">
     </el-table-column>
-    <el-table-column label="操作" v-if="operate=='true'">
+    <el-table-column label="操作" v-if="operate=='true'" align="center">
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="opendialog()">编辑</el-button>
         <el-button
           size="mini"
           type="danger"
@@ -34,6 +34,10 @@
         }
       },
       methods: {
+            opendialog(tableData,index,row){
+              this.$emit('open');
+            
+            },
         headerColor(row, rowIndex) {
           return 'background:#e70012;color:#fff';
         },
