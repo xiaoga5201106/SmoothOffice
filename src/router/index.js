@@ -61,7 +61,9 @@ import already_upload from '@/view/business/already_upload'
 import cancel_list_no_upload from '@/view/business/cancel_list_no_upload'
 import commission_base2 from '@/view/business/commission_base2'
 import commission_stage2 from '@/view/business/commission_stage2'
-
+import add_count from '@/view/admin/add_count'
+import count_list from '@/view/admin/count_list'
+import template_design from '@/view/admin/template_design'
 
 Vue.use(Router)
 
@@ -379,6 +381,22 @@ export default new Router({
           path: '/commission_stage2',
           name: 'commission_stage2',
           component: commission_stage2
+        },
+        //管理员权限
+        {
+          path: '/count_list',
+          name: 'count_list',
+          component: count_list
+        },
+        {
+          path: '/add_count',
+          name: 'add_count',
+          component: add_count
+        },
+        {
+          path: '/template_design',
+          name: 'template_design',
+          component: template_design
         }
       ]
     }

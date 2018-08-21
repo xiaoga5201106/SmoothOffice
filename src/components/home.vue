@@ -34,7 +34,7 @@
 </template>
 <script>
   import breadcrumb from '../view/component/breadcrumb';
-  let userIndex=1;//1销售,2内务,3审核,4外勤,5财务,6高管,7业务会计
+  let userIndex=1;//1销售,2内务,3审核,4外勤,5财务,6高管,7业务会计,8管理员账号管理
   let bars;
   let role;
   let menu=[];
@@ -593,6 +593,41 @@
         parentId:2,
         level:2,
         path:'/commission_stage2'
+      }
+    ]
+  };
+  if(userIndex==8){
+    role="管理员";
+    bars=[
+      /*所有第一级菜单*/
+      { title:'账号管理',
+        id:"1",
+        icon:"el-icon-setting",
+        level:1
+      },
+      { title:'流程管理',
+        id:"2",
+        icon:"el-icon-setting",
+        level:1
+      },
+      /*所有二级菜单*/
+      { title:'账号列表',
+        id:'1-1',
+        parentId:1,
+        level:2,
+        path:'/count_list'
+      },
+      { title:'添加账号',
+        id:'1-2',
+        parentId:1,
+        level:2,
+        path:'/add_count'
+      },
+      { title:'模板流程在线设计',
+        id:'2-1',
+        parentId:2,
+        level:2,
+        path:'/template_design'
       }
     ]
   };

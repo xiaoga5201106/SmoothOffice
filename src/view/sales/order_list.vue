@@ -1,18 +1,27 @@
 <template>
   <div id="main">
+    <searchTools :searchDatas="searchDatas"></searchTools>
+
     <tableList :titles="titles" :tableData="tableData" operate="true" @open="open"></tableList>
+
     <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" ></dialogbox>
+
+    <pagination></pagination>
   </div>
 </template>
 
 <script>
     import tableList from '../component/tableList'
     import dialogbox from'../component/dialog'
+    import pagination from'../component/pagination'
+    import searchTools from'../component/searchTools'
     export default {
         name: "order_list",
         components: {
           tableList,
-          dialogbox
+          dialogbox,
+          pagination,
+          searchTools
         },
         data () {
           return{
@@ -104,7 +113,18 @@
                 order_status:'已提交',
                 pact_status:'已完成',
                 progress:'未签合同'
-              }]
+              }],
+            /*搜索表单数据*/
+            searchDatas:[{
+              item:'区域',
+              content:'select'
+            },{
+              item:'订单编号',
+              content:'input'
+            },{
+              item:'客户名称',
+              content:'input'
+            }]
           }
         },
 
@@ -136,9 +156,9 @@
                 if(i != dataIndex-1){
                   dataStr += ",";
                 }
-               }   
+               }
               dataStr += "]";
-              //一定要将这个数组转换为JSON对象，不然传到模态框内会出错      
+              //一定要将这个数组转换为JSON对象，不然传到模态框内会出错
               this.datas = JSON.parse(dataStr);
 
             },
@@ -154,6 +174,6 @@
         }
     }
 </script>
-  
+
 <style scoped>
 </style>
