@@ -627,7 +627,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .home{
     height: 100%;
   }

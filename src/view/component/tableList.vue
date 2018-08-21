@@ -15,7 +15,7 @@
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="opendialog()">编辑</el-button>
+          @click="opendialog(scope.$index, scope.row)">编辑</el-button>
         <el-button
           size="mini"
           type="danger"
@@ -34,9 +34,9 @@
         }
       },
       methods: {
-            opendialog(tableData,index,row){
-              this.$emit('open');
-            
+            opendialog(index,row){
+              index++;
+              this.$emit('open',index);            
             },
         headerColor(row, rowIndex) {
           return 'background:#e70012;color:#fff';
@@ -60,6 +60,11 @@
           if(row.column.className=='pact_status'&&row.row.pact_status=='已完成'){
             return 'color:#8bc34a';
           }
+        },
+        handleDelete(index,row){
+          console.log(index);
+
+
         }
       }
     }

@@ -55,7 +55,7 @@
     }
 </script>
 
-<style>
+<style scoped>
   #login{
     height: 100%;
     background: url("../../static/img/bg.jpg");
