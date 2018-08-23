@@ -11,12 +11,11 @@
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer" align="center">
-    <el-button v-if="state1=='确定'" type="danger" @click="closedialog">{{state1}}</el-button>
-   <el-button v-if="state2=='取消'" type="info" @click="closedialog">{{state2}}</el-button>
-   <el-button v-if="state3=='上传'" type="danger" @click="closedialog">{{state3}}</el-button>
-   <el-button v-if="state4=='提交'" type="danger" @click="closedialog">{{state4}}</el-button>
+    <formButton state1="确定"  state2="取消" @close="close"></formButton>
   </div>
 </el-dialog>
+
+
 
 <el-dialog v-else-if="flag == '申请修改'"
   :title="flag"
@@ -51,12 +50,10 @@
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
-    <el-button v-if="state1=='确定'" type="danger" @click="closedialog">{{state1}}</el-button>
-   <el-button v-if="state2=='取消'" type="info" @click="closedialog">{{state2}}</el-button>
-   <el-button v-if="state3=='上传'" type="danger" @click="closedialog">{{state3}}</el-button>
-   <el-button v-if="state4=='提交'" type="danger" @click="closedialog">{{state4}}</el-button>
+    <formButton state4="提交" @close="close"></formButton>
   </div>
 </el-dialog>
+
 
 <el-dialog v-else-if="flag == '申请撤单'"
   :title="flag"
@@ -91,10 +88,7 @@
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
-    <el-button v-if="state1=='确定'" type="danger" @click="closedialog">{{state1}}</el-button>
-   <el-button v-if="state2=='取消'" type="info" @click="closedialog">{{state2}}</el-button>
-   <el-button v-if="state3=='上传'" type="danger" @click="closedialog">{{state3}}</el-button>
-   <el-button v-if="state4=='提交'" type="danger" @click="closedialog">{{state4}}</el-button>
+    <formButton state4="提交" @close="close"></formButton>
   </div>
 </el-dialog>
 </template>
@@ -136,11 +130,13 @@
 
 <script>
  import upload from './upload'
+ import formButton from './formButton'
   export default{
       name:'dialogbox',
-      props:["datas","dialogVisible","state1","state2","state3","state4","flag"],
+      props:["datas","dialogVisible","flag"],
       components:{
          upload,
+         formButton,
       },
       data(){
         return{ 
@@ -153,6 +149,9 @@
                       	this.$emit("close")
                       },
                       handleClose(){
+                        this.$emit("close")
+                      },
+                      close(){
                         this.$emit("close")
                       },
                       handleInput(event){

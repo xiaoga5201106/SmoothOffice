@@ -4,8 +4,8 @@
 
     <tableList :titles="titles" :tableData="tableData" operate="true" @open="open"></tableList>
 
-    <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" state1="确定" state2="取消" 
-               :flag="flag"></dialogbox>
+    <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
+               
     
 
     <pagination></pagination>
