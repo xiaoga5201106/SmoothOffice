@@ -4,7 +4,9 @@
 
     <tableList :titles="titles" :tableData="tableData" operate="true" @open="open"></tableList>
 
-    <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" state1="确定" state2="取消" ></dialogbox>
+    <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" state1="确定" state2="取消" 
+               :flag="flag"></dialogbox>
+    
 
     <pagination></pagination>
   </div>
@@ -28,6 +30,7 @@
             show:false,
             index:0,
             datas:"",
+            flag:"",
             titles:[
               /*表头*/
               { prop:'order_id',
@@ -130,9 +133,10 @@
 
         methods:{
           //返回点击的index值
-            open(index){
+            open(index,flag){
               this.show = true;
               this.index = index;
+              this.flag = flag;
               //获取当前点击行里的内容
               let data = this.getJsonById(this.index,this.tableData);
               let label = [];

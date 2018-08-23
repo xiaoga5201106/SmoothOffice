@@ -1,4 +1,5 @@
 <template>
+
   <div id="main">
   	<formBox :labels="labels"></formBox>
   	<formButton state4="提交"></formButton>
@@ -119,7 +120,10 @@
           ],
       
       }
+
     }
+
+
   }
 </script>
 

@@ -12,11 +12,17 @@
       align="center">
     </el-table-column>
     <el-table-column label="操作" v-if="operate=='true'" align="center">
-      <template slot-scope="scope">
-        <el-button
+      <template slot-scope="scope" >
+          <el-button 
           size="mini"
-          @click="opendialog(scope.$index, scope.row)">编辑</el-button>
-        <el-button
+          @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
+          <el-button
+          size="mini"
+          @click="opendialogForApplyAlter(scope.$index, scope.row)">申请修改</el-button>
+          <el-button
+          size="mini"
+          @click="opendialogForApplyRevoke(scope.$index, scope.row)">申请撤单</el-button>
+          <el-button
           size="mini"
           type="danger"
           @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -34,9 +40,20 @@
         }
       },
       methods: {
-            opendialog(index,row){
+            opendialogForEditor(index,row){
               index++;
-              this.$emit('open',index);            
+              let flag = "编辑";
+              this.$emit('open',index,flag);            
+            },
+            opendialogForApplyAlter(index,row){
+              index++;
+              let flag = "申请修改";
+              this.$emit('open',index,flag);            
+            },
+            opendialogForApplyRevoke(index,row){
+              index++;
+              let flag = "申请撤单";
+              this.$emit('open',index,flag);            
             },
         headerColor(row, rowIndex) {
           return 'background:#e70012;color:#fff';
@@ -74,5 +91,6 @@
   .el-button{
     display: block;
     margin:5px 0 5px 0;
+
   }
 </style>
