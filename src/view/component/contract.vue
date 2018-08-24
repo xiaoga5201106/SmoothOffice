@@ -71,12 +71,14 @@
     <el-col :span="8"><div class="grid-content bg-purple" >合同应首付金额(元)</div></el-col>
   <el-col :span="16"><div class="grid-content bg-purple-light"><el-input v-if="flag=='edit'"  v-model="form.totalPrice"></el-input><span v-if="flag=='show'">{{form.totalPrice}}</span></div></el-col>
 </el-row> 
-<el-button @click="show(form)">aaaa</el-button>
+<formButton state4="提交"></formButton>
 </el-form>
 
 </template>
 <script>
+  import formButton from './formButton'
   export default {
+    components:{formButton}
     props:["form","selectItems","flag"],
     data() {
       return {  
