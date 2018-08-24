@@ -25,7 +25,9 @@
         </el-col>
       </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <div class="personal"><img src="../../static/img/personal.png"/><span>{{role}},你好</span><img src="../../static/img/exit.png"/><span>退出</span></div>
+        </el-header>
         <el-main><breadcrumb :menu1="menu[0].title1" :menu2="menu[0].title2"></breadcrumb><router-view></router-view></el-main>
         <el-footer height="50px">Footer</el-footer>
       </el-container>
@@ -729,5 +731,20 @@
   .role a{
     display: block;
     color: #fff;
+  }
+  .personal{
+    float: right;
+    color: #354b60;
+    font-weight: bold;
+  }
+  .personal span{
+    cursor: pointer;
+    margin-left:5px;
+  }
+  .personal img{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 15px;
   }
 </style>

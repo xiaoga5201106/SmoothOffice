@@ -1,12 +1,10 @@
 <template>
   <div id="main">
-    <searchTools :searchDatas="searchDatas"></searchTools>
-
+    <searchTools :searchDatas="searchDatas" level="0"></searchTools>
+    <toolBtn :btns="btns"></toolBtn>
     <tableList :titles="titles" :tableData="tableData" operate="true" @open="open"></tableList>
 
     <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
-               
-    
 
     <pagination></pagination>
   </div>
@@ -17,13 +15,15 @@
     import dialogbox from'../component/dialog'
     import pagination from'../component/pagination'
     import searchTools from'../component/searchTools'
+    import toolBtn from '../component/toolBtn'
     export default {
         name: "order_list",
         components: {
           tableList,
           dialogbox,
           pagination,
-          searchTools
+          searchTools,
+          toolBtn
         },
         data () {
           return{
@@ -119,14 +119,76 @@
               }],
             /*搜索表单数据*/
             searchDatas:[{
+              item:'业务类型',
+              content:'select',
+              placeholder:'请选择',
+              option:[{
+                value: '1',
+                label: '筹税'
+              },{
+                value: '2',
+                label: '基础业务'
+              }]
+            },{
+              content:'select',
+              placeholder:'请选择',
+              option:[{
+                value: '3',
+                label: '自由业务'
+              },{
+                value: '4',
+                label: '转包业务'
+              }]
+            },{
+              content:'select',
+              placeholder:'请选择',
+              option:[{
+                value: '5',
+                label: '一次付款'
+              },{
+                value: '6',
+                label: '多次付款'
+              },{
+                value: '7',
+                label: '自签业务'
+              },{
+                value: '8',
+                label: '返佣业务'
+              },{
+                value: '9',
+                label: '工商业务'
+              },{
+                value: '10',
+                label: '转包业务'
+              },{
+                value: '11',
+                label: '财务业务'
+              }]
+            },{
               item:'区域',
-              content:'select'
+              content:'select',
+              placeholder:'请选择',
+              option:[{
+                value: '12',
+                label: '柳州'
+              },{
+                value: '13',
+                label: '贺州'
+              }]
             },{
               item:'订单编号',
-              content:'input'
+              content:'input',
+              placeholder:'请输入订单编号'
             },{
               item:'客户名称',
-              content:'input'
+              content:'input',
+              placeholder:'请输入客户名称'
+            }],
+            /*功能按钮组*/
+            btns:[{
+                label:"新建订单",
+                color:"danger",
+                func:""
             }]
           }
         },
