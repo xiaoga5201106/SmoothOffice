@@ -13,19 +13,36 @@
     </el-table-column>
     <el-table-column label="操作" v-if="operate=='true'" align="center">
       <template slot-scope="scope" >
-          <el-button 
-          size="mini"
-          @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-          size="mini"
-          @click="opendialogForApplyAlter(scope.$index, scope.row)">申请修改</el-button>
-          <el-button
-          size="mini"
-          @click="opendialogForApplyRevoke(scope.$index, scope.row)">申请撤单</el-button>
-          <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <div v-if="type == 'order_list'">
+            <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
+              <el-button
+              size="mini"
+              @click="opendialogForApplyAlter(scope.$index, scope.row)">申请修改</el-button>
+              <el-button
+              size="mini"
+              @click="opendialogForApplyRevoke(scope.$index, scope.row)">申请撤单</el-button>
+              <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </div>
+          <div v-else-if="type == 'wait_audit'">
+                <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">查看申请信息</el-button>
+          </div>
+          <div v-else-if="type == 'pass'">
+                <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">查看申请信息</el-button>
+          </div>
+          <div v-else-if="type == 'no_pass'">
+                <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">查看信息</el-button>
+          </div>
       </template>
     </el-table-column>
   </el-table>
@@ -34,7 +51,7 @@
 <script>
     export default {
         name: "tableList",
-        props:['titles','tableData','operate'],
+        props:['titles','tableData','operate','type'],
         data() {
         return {
         }
@@ -76,6 +93,18 @@
           }
           if(row.column.className=='pact_status'&&row.row.pact_status=='已完成'){
             return 'color:#8bc34a';
+          }
+          if(row.column.className=='status'&&row.row.status=='待审核'){
+            return 'color:#FF9800';
+          }
+          if(row.column.className=='status'&&row.row.status=='已通过'){
+            return 'color:#8bc34a';
+          }
+          if(row.column.className=='status'&&row.row.status=='不通过'){
+            return 'color:#e70012';
+          }
+          if(row.column.className=='audit_remark'){
+            return 'color:#e70012';
           }
         },
         handleDelete(index,row){

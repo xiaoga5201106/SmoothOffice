@@ -2,7 +2,7 @@
   <div id="main">
     <searchTools :searchDatas="searchDatas" level="0"></searchTools>
     <toolBtn :btns="btns"></toolBtn>
-    <tableList :titles="titles" :tableData="tableData" operate="true" @open="open"></tableList>
+    <tableList :titles="titles" :tableData="tableData" operate="true" @open="open" type="order_list"></tableList>
 
     <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
 
