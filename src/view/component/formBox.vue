@@ -4,7 +4,7 @@
     <el-form-item 
     v-for="label in labels"
      :label="label.title">
-    <el-input v-if="label.key=='1'" style="width:400px" :placeholder="'请输入'+label.title"></el-input>
+    <el-input v-if="label.key=='1'" style="width:400px" :placeholder="'请输入'+label.title" v-model="label.value"></el-input>
     <el-select v-if="label.key=='2'" style="width:400px" v-model="label.value">
       <el-option 
          v-for="item in label.items"

@@ -2,7 +2,7 @@
 
   <div id="main">
    <formBox :labels="labels"></formBox>
-  	<formButton state4="提交"></formButton>
+  	<formButton state4="提交" @submit="submit(labels)"></formButton>
   	
   </div>
 </template>
@@ -99,32 +99,44 @@
                },
                    {
                  key:'1',
-               	title:'客户名称'
+               	title:'客户名称',
+                value:''
                },
                    {
                  key:'1',
-               	title:'联系方式'
+               	title:'联系方式',
+                value:''
                },
                     {
                  key:'1',
-               	title:'合伙人名称'
+               	title:'合伙人名称',
+                value:''
                },
                     {
                  key:'1',
-               	title:'合伙人销售'
+               	title:'合伙人销售',
+                value:''
                },
                     {
                  key:'1',
-               	title:'线索（个人）'
+               	title:'线索（个人）',
+                value:''
                },
                     {
                  key:'1',
-               	title:'协助单位（内部）'
+               	title:'协助单位（内部）',
+                value:''
                },
           ],
       
       }
 
+    },
+    methods:{
+        submit(labels){
+          for(let i=0;i<labels.length;i++)
+          console.log(labels[i].value)
+        }
     }
 
 
