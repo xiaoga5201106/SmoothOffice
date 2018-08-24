@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="250px">
         <img class="logo" src="../../static/img/logo.png"/>
-        <div class="role" @click="returnHome"><router-link to="/home">{{role}}</router-link></div>
+        <div class="role" @click="returnHome"><router-link to="/sale_home">{{role}}</router-link></div>
         <el-col>
           <el-menu
             default-active="0"
@@ -639,7 +639,7 @@
       return{
         bars:bars,
         role:role,
-        menu:[{title1:role,title2:"工作台"}]
+        menu:[{title1:"工作台",title2:""}]
         }
       },
     methods: {

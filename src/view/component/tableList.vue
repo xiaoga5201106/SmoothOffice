@@ -11,10 +11,10 @@
       v-bind:class-name="title.prop"
       align="center">
     </el-table-column>
-    <el-table-column label="操作" v-if="operate=='true'" align="center">
+    <el-table-column label="操作" v-if="operate=='true'" align="center" width="130px">
       <template slot-scope="scope" >
           <div v-if="type == 'order_list'">
-            <el-button 
+            <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
               <el-button
@@ -29,32 +29,32 @@
               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </div>
           <div v-else-if="type == 'wait_audit'">
-                <el-button 
+                <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">查看申请信息</el-button>
           </div>
           <div v-else-if="type == 'pass'">
-                <el-button 
+                <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">查看申请信息</el-button>
           </div>
           <div v-else-if="type == 'no_pass'">
-                <el-button 
+                <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">查看信息</el-button>
           </div>
             <div v-else-if="type == 'standing_book'">
-                <el-button 
+                <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">查看总台账信息</el-button>
           </div>
           <div v-else-if="type == 'certificate'" >
-                <el-button 
+                <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">下载</el-button>
           </div>
            <div v-else-if="type == 'delete_order'" >
-                <el-button 
+                <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">查看订单详情</el-button>
           </div>
@@ -75,17 +75,17 @@
             opendialogForEditor(index,row){
               index++;
               let flag = "编辑";
-              this.$emit('open',index,flag);            
+              this.$emit('open',index,flag);
             },
             opendialogForApplyAlter(index,row){
               index++;
               let flag = "申请修改";
-              this.$emit('open',index,flag);            
+              this.$emit('open',index,flag);
             },
             opendialogForApplyRevoke(index,row){
               index++;
               let flag = "申请撤单";
-              this.$emit('open',index,flag);            
+              this.$emit('open',index,flag);
             },
         headerColor(row, rowIndex) {
           return 'background:#e70012;color:#fff';
@@ -138,6 +138,5 @@
   .el-button{
     display: block;
     margin:5px 0 5px 0;
-
   }
 </style>

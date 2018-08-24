@@ -8,6 +8,7 @@ import apply_edit from '@/view/sales/apply_edit'
 import apply_cancle from '@/view/sales/apply_cancle'
 import apply_change from '@/view/sales/apply_change'
 import certificate from '@/view/sales/certificate'
+import sale_home from '@/view/sales/sale_home'
 import standing_book from '@/view/sales/standing_book'
 import delete_order from '@/view/sales/delete_order'
 import cancle_pact from '@/view/housekeeping/cancle_pact'
@@ -81,6 +82,11 @@ export default new Router({
       component: home,
       children: [
         //销售权限
+        {
+          path: '/sale_home',
+          name: 'sale_home',
+          component: sale_home
+        },
         {
           path: '/add_order',
           name: 'add_order',

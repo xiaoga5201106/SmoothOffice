@@ -49,7 +49,7 @@
         },
         methods: {
           login() {
-            this.$router.push({path: '/home'});
+            this.$router.push({path: '/sale_home'});
           }
         }
     }
