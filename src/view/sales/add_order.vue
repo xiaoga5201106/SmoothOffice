@@ -1,14 +1,16 @@
 <template>
 
   <div id="main">
-  	<formBox :labels="labels"></formBox>
+   <formBox :labels="labels"></formBox>
   	<formButton state4="提交"></formButton>
+  	
   </div>
 </template>
 
 <script>
 	import formBox from '../component/formBox'
 	import formButton from '../component/formButton'
+	
   export default {
       name: "add_order",
       components:{
@@ -17,6 +19,8 @@
       },
     data () {
       return{
+
+
           labels:[
                {
                	key:'2',
@@ -130,6 +134,6 @@
 <style scoped>
    #main{
    	background: #fff;
-   	padding: 0 300px 20px;
+   padding: 0 300px 20px;
    }
 </style>

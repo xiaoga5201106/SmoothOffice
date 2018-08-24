@@ -71,14 +71,34 @@
     <el-col :span="8"><div class="grid-content bg-purple" >合同应首付金额(元)</div></el-col>
   <el-col :span="16"><div class="grid-content bg-purple-light"><el-input v-if="flag=='edit'"  v-model="form.totalPrice"></el-input><span v-if="flag=='show'">{{form.totalPrice}}</span></div></el-col>
 </el-row> 
-<formButton state4="提交"></formButton>
+<el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark">其他</div></el-col>
+</el-row>
+<el-row>
+    <el-col :span="8"><div class="grid-content bg-purple" >外勤</div></el-col>
+  <el-col :span="16"><div class="grid-content bg-purple-light"><el-select v-if="flag=='edit'" v-model="form.value4"><el-option v-for="items in selectItems" :label="items.field" v-model="items.field"></el-option></el-select><span v-if="flag=='show'">{{form.value4}}</span></div></el-col>
+</el-row> 
+<el-row>
+    <el-col :span="8"><div class="grid-content bg-purple" >类型</div></el-col>
+  <el-col :span="16"><div class="grid-content bg-purple-light"><span>合同凭证</span></div></el-col>
+</el-row> 
+<el-row >
+    <el-col :span="8"><div class="grid-content bg-purple" >凭证内容(图片)</div></el-col>
+  <el-col :span="16"><div class="grid-content bg-purple-light" ><upload flag="图片" ></upload></div></el-col>
+</el-row> 
+<el-row>
+    <el-col :span="8"><div class="grid-content bg-purple" >凭证内容(文件)</div></el-col>
+  <el-col :span="16"><div class="grid-content bg-purple-light" ><upload flag="文件"></upload></div></el-col>
+</el-row> 
+<formButton state4="提交" style="margin: 20px;"></formButton>
 </el-form>
 
 </template>
 <script>
   import formButton from './formButton'
+  import upload from './upload'
   export default {
-    components:{formButton}
+    components:{formButton,upload},
     props:["form","selectItems","flag"],
     data() {
       return {  
@@ -94,6 +114,7 @@
 </script>
 <style scoped>
   .el-row {
+    border: 1px solid black;
     margin: auto;
      width: 80%;
   }
@@ -102,17 +123,12 @@
      width: 80%;
   }
   .el-col {
-    border: 1px solid black;
+    border-left: 1px solid black;
+
   }
   .bg-purple-dark {
     background: #d3dce6;
     font-size: 25px;
-  }
-  .bg-purple {
-    background: #fff;
-  }
-  .bg-purple-light {
-    background: #fff;
   }
   .grid-content {
     min-height: 50px;
@@ -124,4 +140,8 @@
   .el-input{
     width: 80%;
   }
+      .el-select{
+    width: 80%;
+  }
+
 </style>

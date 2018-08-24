@@ -21,12 +21,10 @@
     position: relative;
   }
   .el-upload-list{
-    padding-top:50px; 
+    
   	width: 100%;
   }
   .el-upload{
-   position: absolute;
-   right: 0;
   }
   .el-upload-list--picture .el-upload-list__item{
   	width: 10%;
