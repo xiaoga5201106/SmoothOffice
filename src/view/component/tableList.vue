@@ -43,6 +43,21 @@
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">查看信息</el-button>
           </div>
+            <div v-else-if="type == 'standing_book'">
+                <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">查看总台账信息</el-button>
+          </div>
+          <div v-else-if="type == 'certificate'" >
+                <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">下载</el-button>
+          </div>
+           <div v-else-if="type == 'delete_order'" >
+                <el-button 
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">查看订单详情</el-button>
+          </div>
       </template>
     </el-table-column>
   </el-table>
@@ -105,6 +120,9 @@
           }
           if(row.column.className=='audit_remark'){
             return 'color:#e70012';
+          }
+           if(row.column.className=='state'){
+            return 'color:#8bc34a';
           }
         },
         handleDelete(index,row){
