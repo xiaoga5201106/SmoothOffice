@@ -91,6 +91,43 @@
     <formButton state4="提交" @close="close"></formButton>
   </div>
 </el-dialog>
+
+<el-dialog v-else-if="flag == '申请变更'"
+  :title="flag"
+  :visible="dialogVisible"
+  width="40%"
+  :before-close="handleClose"
+  >
+  <div class="pOff">
+     <p>{{flag}}备注</p>
+     <p>*必填</p>
+  </div>
+     <el-input
+    type="textarea"
+    :rows="6"
+    :maxlength="200"
+    placeholder="请输入内容"
+    resize="none"
+    @input="handleInput"
+    >
+  </el-input>
+  <div class="limit">
+    <p>{{inputSum}}/200</p>
+    
+  </div>
+   <div class="upload">
+    <div class="uploadTip">上传凭证(照片)</div>
+    <div><upload flag="图片"></upload></div>
+   </div>
+   <div class="upload">
+    <div class="uploadTip">上传凭证(文件)</div>
+    <div><upload flag="文件"></upload></div>
+   </div>
+
+  <div slot="footer" class="dialog-footer" align="center">
+    <formButton state4="提交" @close="close"></formButton>
+  </div>
+</el-dialog>
 </template>
 <style>
   .pOff{

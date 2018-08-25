@@ -25,6 +25,9 @@
               @click="opendialogForApplyRevoke(scope.$index, scope.row)">申请撤单</el-button>
               <el-button
               size="mini"
+              @click="opendialogForApplyChange(scope.$index, scope.row)">申请变更</el-button>
+              <el-button
+              size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)">删除</el-button>
           </div>
@@ -87,49 +90,54 @@
               let flag = "申请撤单";
               this.$emit('open',index,flag);
             },
-        headerColor(row, rowIndex) {
-          return 'background:#e70012;color:#fff';
-        },
-        cellStyle(row, column, rowIndex, columnIndex){
-          if(row.column.className=='order_status'&&row.row.order_status=='已提交'){
-            return 'color:#8bc34a';
-          }
-          if(row.column.className=='order_status'&&row.row.order_status=='待提交'){
-            return 'color:#e70012';
-          }
-          if(row.column.className=='pact_status'&&row.row.pact_status=='正办理'){
-            return 'color:#FF9800';
-          }
-          if(row.column.className=='pact_status'&&row.row.pact_status=='待签订'){
-            return 'color:#ccc';
-          }
-          if(row.column.className=='pact_status'&&row.row.pact_status=='已撤单'){
-            return 'color:#e70012';
-          }
-          if(row.column.className=='pact_status'&&row.row.pact_status=='已完成'){
-            return 'color:#8bc34a';
-          }
-          if(row.column.className=='status'&&row.row.status=='待审核'){
-            return 'color:#FF9800';
-          }
-          if(row.column.className=='status'&&row.row.status=='已通过'){
-            return 'color:#8bc34a';
-          }
-          if(row.column.className=='status'&&row.row.status=='不通过'){
-            return 'color:#e70012';
-          }
-          if(row.column.className=='audit_remark'){
-            return 'color:#e70012';
-          }
-           if(row.column.className=='state'){
-            return 'color:#8bc34a';
-          }
-        },
-        handleDelete(index,row){
-          console.log(index);
+            opendialogForApplyChange(index,row){
+              index++;
+              let flag = "申请变更";
+              this.$emit('open',index,flag);
+            },
+            headerColor(row, rowIndex) {
+              return 'background:#e70012;color:#fff';
+            },
+            cellStyle(row, column, rowIndex, columnIndex){
+              if(row.column.className=='order_status'&&row.row.order_status=='已提交'){
+                return 'color:#8bc34a';
+              }
+              if(row.column.className=='order_status'&&row.row.order_status=='待提交'){
+                return 'color:#e70012';
+              }
+              if(row.column.className=='pact_status'&&row.row.pact_status=='正办理'){
+                return 'color:#FF9800';
+              }
+              if(row.column.className=='pact_status'&&row.row.pact_status=='待签订'){
+                return 'color:#ccc';
+              }
+              if(row.column.className=='pact_status'&&row.row.pact_status=='已撤单'){
+                return 'color:#e70012';
+              }
+              if(row.column.className=='pact_status'&&row.row.pact_status=='已完成'){
+                return 'color:#8bc34a';
+              }
+              if(row.column.className=='status'&&row.row.status=='待审核'){
+                return 'color:#FF9800';
+              }
+              if(row.column.className=='status'&&row.row.status=='已通过'){
+                return 'color:#8bc34a';
+              }
+              if(row.column.className=='status'&&row.row.status=='不通过'){
+                return 'color:#e70012';
+              }
+              if(row.column.className=='audit_remark'){
+                return 'color:#e70012';
+              }
+               if(row.column.className=='state'){
+                return 'color:#8bc34a';
+              }
+            },
+            handleDelete(index,row){
+              console.log(index);
 
 
-        }
+            }
       }
     }
 </script>
