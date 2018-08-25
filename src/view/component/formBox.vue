@@ -21,7 +21,7 @@
       <span>123456</span>
      </el-form-item>
     </el-form>
-    <el-form :inline="true" label-position="center" label-width="100px">
+    <el-form :inline="true" label-position="left" label-width="100px">
       <el-form-item class="informationTitle" v-for="(label,index) in labels" :label="label.title" v-if="index>1 && index<=3">
       <span>123456</span>
      </el-form-item>
