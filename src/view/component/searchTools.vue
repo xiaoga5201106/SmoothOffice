@@ -23,6 +23,7 @@
         </el-option>
       </el-select>
       <el-input v-if="searchData.content=='input'" :placeholder="searchData.placeholder"></el-input>
+       <el-date-picker v-if="searchData.content=='datapicker'"  v-model="searchData.value" type="date" placeholder="选择日期"></el-date-picker>
     </div>
     <el-button type="danger" class="searchBtn">搜索</el-button>
     <el-button type="primary" class="searchBtn" v-if="level==1">高级搜索</el-button>

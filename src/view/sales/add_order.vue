@@ -3,6 +3,7 @@
   <div id="main">
    <formBox :labels="labels" flag="newOrder"></formBox>
   	<formButton state4="提交" @submit="submit(labels)"></formButton>
+    
   	
   </div>
 </template>
@@ -10,12 +11,14 @@
 <script>
 	import formBox from '../component/formBox'
 	import formButton from '../component/formButton'
+  import contract from '../component/contract'
 	
   export default {
       name: "add_order",
       components:{
       	formBox,
-      	formButton
+      	formButton,
+        contract
       },
     data () {
       return{
@@ -128,7 +131,7 @@
                 value:''
                },
           ],
-      
+           
       }
 
     },
