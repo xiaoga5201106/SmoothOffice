@@ -8,6 +8,7 @@ import apply_edit from '@/view/sales/apply_edit'
 import apply_cancle from '@/view/sales/apply_cancle'
 import apply_change from '@/view/sales/apply_change'
 import certificate from '@/view/sales/certificate'
+import apply_information from '@/view/sales/apply_information'
 import sale_home from '@/view/sales/sale_home'
 import standing_book from '@/view/sales/standing_book'
 import delete_order from '@/view/sales/delete_order'
@@ -126,6 +127,11 @@ export default new Router({
           path: '/delete_order',
           name: 'delete_order',
           component: delete_order
+        },
+        {
+          path: '/apply_information',
+          name: 'apply_information',
+          component: apply_information
         },
         //内务权限
         {

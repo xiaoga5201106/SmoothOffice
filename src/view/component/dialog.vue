@@ -122,6 +122,14 @@
     position: absolute;
     margin-left: 10px;
   }
+  .el-upload{
+   position: absolute;
+   right: 0;
+  }
+  .el-upload-list{
+    
+    padding-top: 50px;
+  }
   .tip{
     text-align: right;
   }

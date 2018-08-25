@@ -31,7 +31,7 @@
           <div v-else-if="type == 'wait_audit'">
                 <el-button
               size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">查看申请信息</el-button>
+              <router-link :to="'/apply_information'">查看申请信息</router-link></el-button>
           </div>
           <div v-else-if="type == 'pass'">
                 <el-button

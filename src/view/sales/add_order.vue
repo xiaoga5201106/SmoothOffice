@@ -1,7 +1,7 @@
 <template>
 
   <div id="main">
-   <formBox :labels="labels"></formBox>
+   <formBox :labels="labels" flag="newOrder"></formBox>
   	<formButton state4="提交" @submit="submit(labels)"></formButton>
   	
   </div>
