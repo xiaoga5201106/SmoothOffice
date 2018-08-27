@@ -18,7 +18,7 @@
                 size="mini" @click="opendialogForSee(scope.$index, scope.row)">查看订单详情</el-button>
               <el-button
               size="mini"
-              @click=""><router-link :to="'/order_progress'">查看进度</router-link></el-button>
+              @click=""><router-link :to="{name:'order_progress', query: {order_id:tableData[scope.$index].order_id}}">查看进度</router-link></el-button>
               <el-button
               size="mini"
               @click="opendialogForApplyAlter(scope.$index, scope.row)">申请修改</el-button>

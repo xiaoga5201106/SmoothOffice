@@ -5,6 +5,9 @@ body,html{
 button{
   font-family: '微软雅黑';
 }
+button a{
+  color: #606266;
+}
 input,select,.el-message-box{
   font-family: '微软雅黑';
 }
