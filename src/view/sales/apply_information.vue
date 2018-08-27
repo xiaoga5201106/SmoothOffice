@@ -5,23 +5,32 @@
       <formBox :labels="labels" flag="viewInformation"></formBox>
     </div>
     <div class="record">
-      <div><el-tag>申请修改记录</el-tag></div>
+      <div>
+        <div class="title">申请修改记录</div>
+        <div class="btn" v-if="type == 'no_pass'"><el-button size="medium" type="danger"
+              @click="showDialogbox">再次申请</el-button></div>
+      </div>
       <tableList :titles="titles" :tableData="tableData" operate="false"></tableList>
     </div>
+    <dialogbox :dialogVisible="show"  @close="show=false" flag="再次申请"></dialogbox>
   </div>
 </template>
 
 <script>
    import formBox from '../component/formBox'
    import tableList from '../component/tableList'
+   import dialogbox from '../component/dialog'
     export default {
         name: "apply_information",
         components: {
          formBox,
-         tableList
+         tableList,
+         dialogbox
         },
       data () {
         return{
+          type:this.$route.query.type,
+          show:false,
           labels:[
                {
                  key:'1',
@@ -128,6 +137,11 @@
               auditor_remark:'凭证上传出错'
               }],
         }
+      },
+      methods:{
+        showDialogbox(){
+          this.show = true;
+        }
       }
     }
 </script>
@@ -142,5 +156,14 @@
  }
  .record{
   margin-top:15px; 
+ }
+ .title{
+  font-size: 23px;
+  float: left;
+  margin-bottom:20px;
+ }
+ .btn{
+  float: right;
+  
  }
 </style>

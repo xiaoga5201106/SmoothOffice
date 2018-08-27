@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="tab in Menutabs" :label="tab.label" :name="tab.name">
         <div>
-          <tableList :titles="tab.titles" :tableData="tab.tableData" :operate="operate" type="wait_audit"></tableList>
+          <tableList :titles="tab.titles" :tableData="tab.tableData" :operate="operate" :type="tab.type"></tableList>
         </div>
       </el-tab-pane>
     </el-tabs>

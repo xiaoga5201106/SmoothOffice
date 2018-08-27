@@ -42,17 +42,17 @@
           <div v-else-if="type == 'wait_audit'">
                 <el-button
               size="mini">
-              <router-link :to="'/apply_information'">查看申请信息</router-link></el-button>
+              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'wait_audit'}}">查看申请信息</router-link></el-button>
           </div>
           <div v-else-if="type == 'pass'">
                 <el-button
-              size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">查看申请信息</el-button>
+              size="mini">
+              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'pass'}}">查看申请信息</router-link></el-button>
           </div>
           <div v-else-if="type == 'no_pass'">
                 <el-button
-              size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">查看信息</el-button>
+              size="mini">
+              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'no_pass'}}">查看信息</router-link></el-button>
           </div>
             <div v-else-if="type == 'standing_book'">
                 <el-button
@@ -87,6 +87,7 @@
               index++;
               let flag = "编辑";
               this.$emit('open',index,flag);
+              console.log(index);
             },
             opendialogForSee(index,row){
               index++;

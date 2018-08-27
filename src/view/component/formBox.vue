@@ -1,15 +1,15 @@
 <template id="formBox">
   <div class="formBox" v-if="flag == 'newOrder'">
     <el-form   label-width="150px" label-position="left">
-     <el-form-item
+     <el-form-item 
       v-for="label in labels"
        :label="label.title">
       <el-input v-if="label.key=='1'" style="width:400px" :placeholder="'请输入'+label.title" v-model="label.value"></el-input>
       <el-select v-if="label.key=='2'" style="width:400px" v-model="label.value">
-        <el-option
+        <el-option 
            v-for="item in label.items"
           :label="item.item"
-           v-model="item.item">
+           v-model="item.item">  
         </el-option>
       </el-select>
      </el-form-item>
@@ -45,7 +45,7 @@
     props:["labels","flag"],
     data() {
       return {
-
+           
       }
     },
     methods: {
@@ -61,22 +61,22 @@
   }
   .informationBox{
     background: #fff;
-    text-align: center;
+    text-align: center;   
   }
   .informationBox .el-form{
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #000; 
   }
    .informationBox .el-form:nth-child(4){
-    border-bottom: 0px;
+    border-bottom: 0px; 
   }
   .informationTitle{
      margin-right:50px;
   }
-  .informationTitle label{
-    color: red;
+  .el-form-item__label{
+    color: red !important;
   }
   .informationTitle .el-form-item__content span{
-
+    
   }
   .el-form-item{
     margin-bottom: 0 !important;

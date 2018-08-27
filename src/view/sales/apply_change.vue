@@ -23,6 +23,7 @@
           Menutabs:[{
             label:'待审核',
             name:'1',
+            type:'wait_audit',
             /*待审核表头*/
             titles:[
               { prop:'order_id',
@@ -84,6 +85,7 @@
           },{
             label:'已通过',
             name:'2',
+            type:'pass',
             /*其他表头*/
             titles:[
               { prop:'order_id',
@@ -166,6 +168,7 @@
           },{
             label:'不通过',
             name:'3',
+            type:'no_pass',
             /*其他表头*/
             titles:[
               { prop:'order_id',
