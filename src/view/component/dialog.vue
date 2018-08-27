@@ -38,7 +38,7 @@
   </el-input>
   <div class="limit">
     <p>{{inputSum}}/200</p>
-    
+
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
@@ -76,7 +76,7 @@
   </el-input>
   <div class="limit">
     <p>{{inputSum}}/200</p>
-    
+
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
@@ -113,7 +113,7 @@
   </el-input>
   <div class="limit">
     <p>{{inputSum}}/200</p>
-    
+
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
@@ -136,23 +136,23 @@
   }
   .pOff p{
     margin-top: 0px;
-    margin-left: 10px;  
+    margin-left: 10px;
   }
   .pOff p:nth-child(2){
     color: red;
     text-align: right;
-    font-size: 15px;  
+    font-size: 15px;
   }
   .el-textarea{
     width: 70%;
-    margin-left: 10px; 
+    margin-left: 10px;
   }
   .limit{
     text-align: right;
-    padding-right:16px; 
+    padding-right:16px;
   }
   .upload{
-    margin-top:15px; 
+    margin-top:15px;
   }
   .uploadTip{
     font-size: 18px;
@@ -164,7 +164,7 @@
    right: 0;
   }
   .el-upload-list{
-    
+
     padding-top: 50px;
   }
   .tip{
@@ -184,11 +184,11 @@
          formButton,
       },
       data(){
-        return{ 
+        return{
                  inputSum:0,
                  formLabelWidth:'120px',
         }
-      },    
+      },
       methods: {
                       closedialog(){
                       	this.$emit("close")
@@ -203,10 +203,10 @@
                          console.log(event);
                          this.inputSum = event.length;
                          if(event.length == 200){
-                          this.$message({  
-                              message: '已经到200字了！',  
-                              type: 'warning'  
-                          }); 
+                          this.$message({
+                              message: '已经到200字了！',
+                              type: 'warning'
+                          });
                          }
                       }
     }

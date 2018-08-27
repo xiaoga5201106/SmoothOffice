@@ -1,10 +1,10 @@
 <template>
 	<div id="main">
-	<searchTools :searchDatas="searchDatas" level="0"></searchTools>
+	<searchTools :searchDatas="searchDatas" level="1"></searchTools>
 	<tableList :titles="titles" :tableData="tableData" operate="true" type="standing_book"></tableList>
       <pagination></pagination>
 	</div>
-      
+
 </template>
 
 <script>

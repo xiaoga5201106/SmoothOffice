@@ -10,8 +10,10 @@ import apply_change from '@/view/sales/apply_change'
 import certificate from '@/view/sales/certificate'
 import apply_information from '@/view/sales/apply_information'
 import sale_home from '@/view/sales/sale_home'
+import percentage from '@/view/sales/percentage'
 import standing_book from '@/view/sales/standing_book'
 import delete_order from '@/view/sales/delete_order'
+import order_detail from '@/view/sales/order_detail'
 import cancle_pact from '@/view/housekeeping/cancle_pact'
 import commission_base from '@/view/housekeeping/commission_base'
 import commission_stage from '@/view/housekeeping/commission_stage'
@@ -132,6 +134,16 @@ export default new Router({
           path: '/apply_information',
           name: 'apply_information',
           component: apply_information
+        },
+        {
+          path: '/percentage',
+          name: 'percentage',
+          component: percentage
+        },
+        {
+          path: '/order_detail',
+          name: 'order_detail',
+          component: order_detail
         },
         //内务权限
         {

@@ -14,9 +14,11 @@
     <el-table-column label="操作" v-if="operate=='true'" align="center" width="130px">
       <template slot-scope="scope" >
           <div v-if="type == 'order_list'">
-            <el-button
+              <el-button
+                size="mini"><router-link :to="{path:'/order_detail',query:{tableData:tableData[scope.$index],titles:titles}}">查看订单详情</router-link></el-button>
+              <el-button
               size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
+              @click="">查看进度</el-button>
               <el-button
               size="mini"
               @click="opendialogForApplyAlter(scope.$index, scope.row)">申请修改</el-button>
@@ -28,12 +30,18 @@
               @click="opendialogForApplyChange(scope.$index, scope.row)">申请变更</el-button>
               <el-button
               size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
+              <el-button
+              size="mini"
+              @click="opendialogDelete(scope.$index, scope.row)">作废</el-button>
+              <el-button
+              size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="">提交</el-button>
           </div>
           <div v-else-if="type == 'wait_audit'">
                 <el-button
-              size="mini"
+              size="mini">
               <router-link :to="'/apply_information'">查看申请信息</router-link></el-button>
           </div>
           <div v-else-if="type == 'pass'">
@@ -95,6 +103,24 @@
               let flag = "申请变更";
               this.$emit('open',index,flag);
             },
+            opendialogDelete(index,row){
+              this.$confirm('是否确定作废?', '作废提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+              }).then(() => {
+                this.$message({
+                  type: 'success',
+                  message: '作废成功!'
+                });
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消作废'
+                });
+              });
+            },
             headerColor(row, rowIndex) {
               return 'background:#e70012;color:#fff';
             },
@@ -135,8 +161,6 @@
             },
             handleDelete(index,row){
               console.log(index);
-
-
             }
       }
     }

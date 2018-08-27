@@ -1,11 +1,11 @@
 <template id="formButton">
 	<div class="formButton">
-   <el-button v-if="state1=='确定'" type="primary">{{state1}}</el-button>
-   <el-button v-if="state2=='取消'" type="danger" @click="closedialog">{{state2}}</el-button>
-   <el-button v-if="state3=='上传'" type="danger">{{state3}}</el-button>
-   <el-button v-if="state4=='提交'" type="danger" @click="submit">{{state4}}</el-button>
-   <el-button v-if="state5=='通过'" type="danger">{{state5}}</el-button>
-   <el-button v-if="state6=='不通过'" type="danger">{{state6}}</el-button>
+   <el-button v-if="state1=='确定'" type="primary" size="small">{{state1}}</el-button>
+   <el-button v-if="state2=='取消'" @click="closedialog" size="small">{{state2}}</el-button>
+   <el-button v-if="state3=='上传'" type="danger" size="small">{{state3}}</el-button>
+   <el-button v-if="state4=='提交'" type="danger" @click="submit" size="small">{{state4}}</el-button>
+   <el-button v-if="state5=='通过'" type="danger" size="small">{{state5}}</el-button>
+   <el-button v-if="state6=='不通过'" type="danger" size="small">{{state6}}</el-button>
 	</div>
 </template>
 
@@ -26,7 +26,7 @@
                       submit(){
                       	this.$emit("submit")
                       }
-			
+
 		}
 	}
 </script>

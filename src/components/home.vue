@@ -108,7 +108,13 @@
         parentId:3,
         level:2,
         path:'/delete_order'
-      }
+      },
+      { title:'提成',
+        id:'3-4',
+        parentId:3,
+        level:2,
+        path:'/percentage'
+      },
     ]
   };
   if(userIndex==2){
@@ -607,11 +613,11 @@
         icon:"el-icon-setting",
         level:1
       },
-      { title:'流程管理',
+      /*{ title:'流程管理',
         id:"2",
         icon:"el-icon-setting",
         level:1
-      },
+      },*/
       /*所有二级菜单*/
       { title:'账号列表',
         id:'1-1',
@@ -624,13 +630,13 @@
         parentId:1,
         level:2,
         path:'/add_count'
-      },
+      }/*,
       { title:'模板流程在线设计',
         id:'2-1',
         parentId:2,
         level:2,
         path:'/template_design'
-      }
+      }*/
     ]
   };
   export default {
@@ -716,8 +722,8 @@
     color: #e70012;
   }
   .logo{
-    width: 60%;
-    padding: 5% 20%;
+    width: 40%;
+    padding: 5% 30%;
     background: #354b60;
     display: block;
   }

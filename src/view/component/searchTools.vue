@@ -63,7 +63,7 @@
   }
   #searchTools .items span{
     float: left;
-    width: 80px;
+    width: 90px;
     text-align: left;
     line-height: 40px;
   }
