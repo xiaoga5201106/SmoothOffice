@@ -57,7 +57,7 @@
             <div v-else-if="type == 'standing_book'">
                 <el-button
               size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">查看总台账信息</el-button>
+              @click="opendialogForEditor(scope.$index, scope.row)"><router-link :to="'./standingbook_detail'">查看总台账信息</router-link></el-button>
           </div>
           <div v-else-if="type == 'certificate'" >
                 <el-button
@@ -67,7 +67,7 @@
            <div v-else-if="type == 'delete_order'" >
                 <el-button
               size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">查看订单详情</el-button>
+              @click="opendialogForSee1(scope.$index, scope.row)">查看订单详情</el-button>
           </div>
       </template>
     </el-table-column>
@@ -89,6 +89,11 @@
               this.$emit('open',index,flag);
             },
             opendialogForSee(index,row){
+              index++;
+              let flag = "查看订单详情";
+              this.$emit('open',index,flag);
+            },
+              opendialogForSee1(index,row){
               index++;
               let flag = "查看订单详情";
               this.$emit('open',index,flag);

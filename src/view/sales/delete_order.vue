@@ -1,7 +1,8 @@
 <template>
 	<div id="main">
 	<searchTools :searchDatas="searchDatas" level="0"></searchTools>
-	<tableList :titles="titles" :tableData="tableData" operate="true" type="delete_order"></tableList>
+	<tableList :titles="titles" :tableData="tableData" operate="true" type="delete_order" @open="open"></tableList>
+  <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
       <pagination></pagination>
 	</div>
 </template>
@@ -10,16 +11,22 @@
 		import tableList from '../component/tableList'
 	import pagination from'../component/pagination'
 	import searchTools from'../component/searchTools'
+  import dialogbox from'../component/dialog'
     export default {
         name: "delete_order",
         components:{
     		pagination,
     		tableList,
-    		searchTools
+    		searchTools,
+        dialogbox
     	},
     	data(){
     		return{
-titles:[
+             show:false,
+            index:0,
+            datas:"",
+            flag:"",
+              titles:[
               /*表头*/
            
               { prop:'id',
@@ -140,6 +147,52 @@ titles:[
               placeholder:'请输入客户名称'
             }],
     		}
+    },
+    methods:{
+      open(index,flag){
+              this.show = true;
+              this.index = index;
+              this.flag = flag;
+              //获取当前点击行里的内容
+              let data = this.getJsonById(this.index,this.tableData);
+              let label = [];
+              let data1 = [];
+              let dataIndex = 0;
+              let dataStr = "";
+             console.log(data);
+              /*
+               *要用for in 这种方法  json对象不支持使用变量键名获取value值 即.号后面不能是key值以外的其他值 否则报未定义
+               *  i 为键值 data[i]为value值
+               * 下面两个循环是为了重新构造显示出来的json数组 类型如下[{"name":"订单编号"，"data":"order_id"}]
+               */
+              for(let i in data){
+                   data1[dataIndex] = data[i];
+                   label[dataIndex] = this.titles[dataIndex].label;
+                   dataIndex++;
+              }
+              dataStr = "[";
+              for(let i = 0; i < dataIndex; i++){
+                dataStr += "{\"name\":\"" + label[i] + "\",\"data\":\"" + data1[i] + "\"}";
+                if(i != dataIndex-1){
+                  dataStr += ",";
+                }
+               }
+              dataStr += "]";
+              //一定要将这个数组转换为JSON对象，不然传到模态框内会出错
+              this.datas = JSON.parse(dataStr);
+
+            },
+            //通过表单组件返回的id来获取内容
+            getJsonById(id,json){
+              
+              for(let i = 0;i < json.length; i++){
+                if(json[i].id == id){
+                  return json[i];
+                  break;
+                }
+                 
+              }
+            }
     }
 }
 </script>

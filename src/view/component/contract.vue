@@ -90,7 +90,7 @@
     <el-col :span="8"><div class="grid-content bg-purple" >凭证内容(文件)</div></el-col>
   <el-col :span="16"><div class="grid-content bg-purple-light" ><upload flag="文件"></upload></div></el-col>
 </el-row> 
-<formButton state4="提交" style="margin: 20px;"></formButton>
+<formButton v-if="flag=='edit'" state4="提交" style="margin: 20px;"></formButton>
 </el-form>
 
 </template>
