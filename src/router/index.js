@@ -14,6 +14,7 @@ import percentage from '@/view/sales/percentage'
 import standing_book from '@/view/sales/standing_book'
 import delete_order from '@/view/sales/delete_order'
 import order_detail from '@/view/sales/order_detail'
+import order_progress from '@/view/sales/order_progress'
 import cancle_pact from '@/view/housekeeping/cancle_pact'
 import commission_base from '@/view/housekeeping/commission_base'
 import commission_stage from '@/view/housekeeping/commission_stage'
@@ -144,6 +145,11 @@ export default new Router({
           path: '/order_detail',
           name: 'order_detail',
           component: order_detail
+        },
+        {
+          path: '/order_progress',
+          name: 'order_progress',
+          component: order_progress
         },
         //内务权限
         {
