@@ -15,7 +15,21 @@
   </div>
 </el-dialog>
 
-
+<el-dialog v-else-if="flag == '查看订单详情'"
+           :title="flag"
+           :visible="dialogVisible"
+           width="30%"
+           :before-close="handleClose"
+>
+  <el-form >
+    <el-form-item v-for="datas1 in datas" v-bind:label="datas1.name" :label-width="formLabelWidth">
+      <span>{{datas1.data}}</span>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer" align="center">
+    <formButton state1="确定"  state2="取消" @close="close"></formButton>
+  </div>
+</el-dialog>
 
 <el-dialog v-else-if="flag == '申请修改'"
   :title="flag"

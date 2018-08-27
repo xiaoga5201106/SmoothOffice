@@ -15,7 +15,7 @@
       <template slot-scope="scope" >
           <div v-if="type == 'order_list'">
               <el-button
-                size="mini"><router-link :to="{path:'/order_detail',query:{tableData:tableData[scope.$index],titles:titles}}">查看订单详情</router-link></el-button>
+                size="mini" @click="opendialogForSee(scope.$index, scope.row)">查看订单详情</el-button>
               <el-button
               size="mini"
               @click="">查看进度</el-button>
@@ -86,6 +86,11 @@
             opendialogForEditor(index,row){
               index++;
               let flag = "编辑";
+              this.$emit('open',index,flag);
+            },
+            opendialogForSee(index,row){
+              index++;
+              let flag = "查看订单详情";
               this.$emit('open',index,flag);
             },
             opendialogForApplyAlter(index,row){
