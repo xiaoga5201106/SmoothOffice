@@ -23,10 +23,10 @@
         <el-tab-pane label="账号密码登录" name="username_login">
           <el-form label-width="60px" :label-position="labelPosition">
             <el-form-item label="账 号" prop="username">
-              <el-input></el-input>
+              <el-input v-model="username"></el-input>
             </el-form-item>
             <el-form-item label="密 码" prop="password">
-              <el-input type="password"></el-input>
+              <el-input type="password" v-model="password"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" @click="login()"><router-link to="">登 录</router-link></el-button>
@@ -44,12 +44,26 @@
         data() {
           return {
             activeName: 'message_login',
-            labelPosition:'left'
+            labelPosition:'left',
+            username:"",
+            password:""
           };
         },
         methods: {
           login() {
-            this.$router.push({path: '/sale_home'});
+            //this.$router.push({path: '/sale_home'});
+            //axios登录获取token
+              this.$axios.post('/api/authenticate',{
+                password:this.password,
+                rememberMe:'true',
+                username:this.username
+            })
+              .then(function(res){
+                console.log(res);
+              })
+              .catch(function(err){
+                console.log(err);
+              });
           }
         }
     }
