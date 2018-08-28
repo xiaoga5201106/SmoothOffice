@@ -59,6 +59,9 @@
                 username:this.username
             })
               .then(function(res){
+                //存token
+                const token = res.data.id_token;
+                localStorage.setItem('token', token);
                 that.$router.push({path: '/sale_home'});
               })
               .catch(function(err){
