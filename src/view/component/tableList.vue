@@ -21,23 +21,23 @@
               @click=""><router-link :to="{name:'order_progress', query: {order_id:tableData[scope.$index].order_id}}">查看进度</router-link></el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyAlter(scope.$index, scope.row)">申请修改</el-button>
+              @click="opendialogForApplyAlter(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请修改</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyRevoke(scope.$index, scope.row)">申请撤单</el-button>
+              @click="opendialogForApplyRevoke(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请撤单</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyChange(scope.$index, scope.row)">申请变更</el-button>
+              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请变更</el-button>
               <el-button
               size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)">编辑</el-button>
+              @click="opendialogForEditor(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">编辑</el-button>
               <el-button
               size="mini"
-              @click="opendialogDelete(scope.$index, scope.row)">作废</el-button>
+              @click="opendialogDelete(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">作废</el-button>
               <el-button
               size="mini"
               type="danger"
-              @click="">提交</el-button>
+              @click="" v-if="tableData[scope.$index].order_status=='待提交'">提交</el-button>
           </div>
           <div v-else-if="type == 'wait_audit'">
                 <el-button
