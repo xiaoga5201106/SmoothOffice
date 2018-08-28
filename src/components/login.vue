@@ -51,7 +51,7 @@
         },
         methods: {
           login() {
-            //this.$router.push({path: '/sale_home'});
+            let that=this;
             //axios登录获取token
               this.$axios.post('/api/authenticate',{
                 password:this.password,
@@ -59,10 +59,10 @@
                 username:this.username
             })
               .then(function(res){
-                console.log(res);
+                that.$router.push({path: '/sale_home'});
               })
               .catch(function(err){
-                console.log(err);
+                that.$message.error('账号或密码错误');
               });
           }
         }
