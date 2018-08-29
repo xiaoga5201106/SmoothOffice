@@ -49,7 +49,7 @@
                	value:'',
                	items:[
                	{
-               	    item:'筹税'	
+               	    item:'税筹'	
                	},
                		{
                	    item:'基本业务'	
@@ -137,13 +137,47 @@
     },
     methods:{
         submit(labels){
-          for(let i=0;i<labels.length;i++)
-          console.log(labels[i].value)
+          let that=this;
+          const token = localStorage.getItem('token');
+             console.log(labels.length);
+             this.$axios.post('/api/event/save-slb-order-events/new',{
+                      area: labels[0].value,
+                      assist: labels[9].value,
+                      clue: labels[8].value,
+                      contact: labels[5].value,
+                      customerName: labels[4].value,
+                      partnerName: labels[6].value,
+                      partnerSale: labels[7].value,
+                      type1: labels[1].value,
+                      type2: labels[2].value,
+                      type3: labels[3].value
+                   },
+                   {
+                    headers: {
+                          "Authorization": "Bearer"+" "+token
+                      }
+                   }
+              )
+             .then(function(res){
+              console.log(res);
+               that.$message({
+                message : '新建订单成功！',
+                type : 'success'
+               });
+               for(let i = 0; i < labels.length; i++){
+                  labels[i].value = '';
+               }
+             })
+             .catch(function(err){
+                that.$message({
+                message : '新建订单失败！',
+                type : 'warning'
+               });
+              });
+
+             }
         }
     }
-
-
-  }
 </script>
 
 <style scoped>
