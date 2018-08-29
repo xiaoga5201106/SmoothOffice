@@ -1,8 +1,9 @@
 <template>
 	<div id="main">
-	<searchTools :searchDatas="searchDatas" level="1"></searchTools>
-	<tableList :titles="titles" :tableData="tableData" operate="true" type="standing_book"></tableList>
-      <pagination></pagination>
+    <searchTools :searchDatas="searchDatas" level="1"  @open="open"></searchTools>
+    <tableList :titles="titles" :tableData="tableData" operate="true" type="standing_book"></tableList>
+    <pagination></pagination>
+    <dialogbox :dialogVisible="show"   @close="show=false" :flag="flag"></dialogbox>
 	</div>
 
 </template>
@@ -11,17 +12,21 @@
 	import tableList from '../component/tableList'
 	import pagination from'../component/pagination'
 	import searchTools from'../component/searchTools'
+  import dialogbox from'../component/dialog'
     import toolBtn from '../component/toolBtn'
     export default {
     	components:{
     		pagination,
     		tableList,
     		searchTools,
-             toolBtn
+        dialogbox,
+        toolBtn
     	},
         name: "standing_book",
         data(){
         	 return{
+             show:false,
+             flag:"",
         	 	 titles:[
               /*表头*/
               { prop:'number',
@@ -153,7 +158,14 @@
             },],
             /*功能按钮组*/
         	 }
+        },
+      methods:{
+        //返回点击的index值
+        open(flag) {
+          this.show = true;
+          this.flag = flag;
         }
+      }
     }
 </script>
 

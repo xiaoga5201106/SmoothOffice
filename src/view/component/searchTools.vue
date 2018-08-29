@@ -26,7 +26,7 @@
        <el-date-picker v-if="searchData.content=='datapicker'"  v-model="searchData.value" type="date" placeholder="选择日期"></el-date-picker>
     </div>
     <el-button type="danger" class="searchBtn">搜索</el-button>
-    <el-button type="primary" class="searchBtn" v-if="level==1">高级搜索</el-button>
+    <el-button type="primary" class="searchBtn" v-if="level==1" @click="openDialogTopsearch()">高级搜索</el-button>
   </div>
 </template>
 
@@ -40,7 +40,10 @@
           }
         },
         methods:{
-
+          openDialogTopsearch(){
+            let flag = "高级搜索";
+            this.$emit('open',flag);
+          }
       },
       //生命函数，加载页面时自动执行
       /*mounted:function(){

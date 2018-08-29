@@ -70,6 +70,7 @@
       breadcrumb
     },
     created: function () {
+      //拿到token
       const token = localStorage.getItem('token');
       let that=this;
       this.$axios.get('/api/currentUser/slb-accounts', {

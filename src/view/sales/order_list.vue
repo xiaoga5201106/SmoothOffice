@@ -237,7 +237,25 @@
                 }
               }
             }
-        }
+        },
+        created:function () {
+        //获取订单列表
+          let that=this;
+          //拿到token
+          const token = localStorage.getItem('token');
+          console.log(token)
+          this.$axios.get('/api/xiao-shou/slb-orders',{
+            headers: {
+              "Authorization": "Bearer"+" "+token
+            }
+          })
+            .then(function(res){
+                console.log(res)
+            })
+            .catch(function(err){
+
+            });
+      }
     }
 </script>
 
