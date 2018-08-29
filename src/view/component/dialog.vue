@@ -187,7 +187,7 @@
            :visible="dialogVisible"
            :before-close="handleClose"
 >
-  <div id="TopsearchTools">
+  <div id="searchTools">
     <div class="items">
       <span>业务类型</span>
       <el-select v-model="value1" placeholder="请选择">
@@ -397,35 +397,35 @@
   .tip{
     text-align: right;
   }
-  #TopsearchTools{
+  #searchTools{
     background: #fff;
     margin-bottom: 20px;
     overflow: auto;
     padding: 10px 10px 0 10px;
   }
-  #TopsearchTools .items{
+  #searchTools .items{
     float: left;
     overflow: auto;
     padding-bottom: 10px;
     width: 100%;
   }
-  #TopsearchTools .items span{
+  #searchTools .items span{
     float: left;
     width: 90px;
     text-align: left;
     line-height: 40px;
   }
-  #TopsearchTools .items>div{
+  #searchTools .items>div{
     float: left;
     margin-right: 20px;
   }
-  #TopsearchTools .el-input{
+  #searchTools .el-input{
     width: 200px;
   }
-  #TopsearchTools .items .el-input.short{
+  #searchTools .items .el-input.short{
     width: 72px;
   }
-  #TopsearchTools .items span.short{
+  #searchTools .items span.short{
     width: 36px;
     text-align: left;
   }

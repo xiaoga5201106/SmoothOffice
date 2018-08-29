@@ -68,55 +68,7 @@
               }
             ],
             /*表格数据*/
-            tableData:[{
-              order_id: '01',
-              name: '王小虎',
-              service_type: '税筹-自有业务-一次性付款',
-              partner:'xx有限公司',
-              line:'/',
-              area:'贵港',
-              add_time:'2018-08-13',
-              edit_time:'2018-08-13',
-              order_status:'已提交',
-              pact_status:'正办理',
-              progress:'未签合同'
-              }, {
-                order_id: '02',
-                name: '王小虎',
-                service_type: '税筹-自有业务-一次性付款',
-                partner:'xx有限公司',
-                line:'/',
-                area:'贵港',
-                add_time:'2018-08-13',
-                edit_time:'2018-08-13',
-                order_status:'待提交',
-                pact_status:'待签订',
-                progress:'未签合同'
-              }, {
-                order_id: '03',
-                name: '王小虎',
-                service_type: '税筹-自有业务-一次性付款',
-                partner:'xx有限公司',
-                line:'/',
-                area:'贵港',
-                add_time:'2018-08-13',
-                edit_time:'2018-08-13',
-                order_status:'已提交',
-                pact_status:'已撤单',
-                progress:'未签合同'
-              }, {
-                order_id: '04',
-                name: '王小虎',
-                service_type: '税筹-自有业务-一次性付款',
-                partner:'xx有限公司',
-                line:'/',
-                area:'贵港',
-                add_time:'2018-08-13',
-                edit_time:'2018-08-13',
-                order_status:'已提交',
-                pact_status:'已完成',
-                progress:'未签合同'
-              }],
+            tableData:[],
             /*搜索表单数据*/
             searchDatas:[{
               item:'业务类型',
@@ -243,14 +195,47 @@
           let that=this;
           //拿到token
           const token = localStorage.getItem('token');
-          console.log(token)
-          this.$axios.get('/api/xiao-shou/slb-orders',{
+          this.$axios.get('/api/xiao-shou/slb-orders?isCancel=false&page=0&pageSize=10&size=10',{
             headers: {
               "Authorization": "Bearer"+" "+token
             }
           })
             .then(function(res){
-                console.log(res)
+              console.log(res)
+                res.data.forEach(function(value,index,array){
+                  let order_status,pact_status;
+                  if(value.submitStates==1){
+                    order_status='待提交'
+                  }
+                  if(value.submitStates==2){
+                    order_status='已提交'
+                  }
+                  if(value.contractStates==1){
+                    pact_status='待签订'
+                  }
+                  if(value.contractStates==2){
+                    pact_status='正办理'
+                  }
+                  if(value.contractStates==3){
+                    pact_status='已完成'
+                  }
+                  if(value.contractStates==4){
+                    pact_status='已撤单'
+                  }
+                  that.tableData.push({
+                    order_id:value.id,
+                    name: value.customerName,
+                    service_type: value.type1+'-'+value.type2+'-'+value.type3,
+                    partner:value.partnerName ,
+                    line:value.clue,
+                    area:value.area,
+                    add_time:value.createTime,
+                    edit_time:value.submitTime,
+                    order_status:order_status,
+                    pact_status:pact_status ,
+                    progress:value.currentProgress
+                  });
+              })
             })
             .catch(function(err){
 
