@@ -1,7 +1,7 @@
 <template>
   <div id="toolBtn">
     <div v-for="btn in btns">
-      <el-button :type="btn.color">{{btn.label}}</el-button>
+      <el-button @click="submit" :type="btn.color">{{btn.label}}</el-button>
     </div>
   </div>
 </template>
@@ -9,7 +9,12 @@
 <script>
     export default {
         name: "tool-btn",
-        props:['btns']
+        props:['btns'],
+        methods:{
+           submit(){
+            this.$emit("submit")
+           }
+        }
     }
 </script>
 

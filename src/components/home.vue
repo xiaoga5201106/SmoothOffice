@@ -73,7 +73,7 @@
       //拿到token
       const token = localStorage.getItem('token');
       let that=this;
-      this.$axios.get('/api/currentUser/slb-accounts', {
+      this.$axios.get('/api/currentUser/slb-accounts',{
         headers: {
           "Authorization": "Bearer"+" "+token
         }

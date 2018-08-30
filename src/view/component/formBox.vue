@@ -42,7 +42,7 @@
 <script>
   export default {
     name:'formBox',
-    props:["labels","flag"],
+    props:["labels","flag","rules"],
     data() {
       return {
            

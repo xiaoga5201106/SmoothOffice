@@ -19,13 +19,15 @@
           v-for="item in searchData.option"
           :key="item.value"
           :label="item.label"
-          :value="item.value">
+          :value="item.value"
+          v-model="item.label"
+          >
         </el-option>
       </el-select>
-      <el-input v-if="searchData.content=='input'" :placeholder="searchData.placeholder"></el-input>
-       <el-date-picker v-if="searchData.content=='datapicker'"  v-model="searchData.value" type="date" placeholder="选择日期"></el-date-picker>
+      <el-input v-if="searchData.content=='input'" :placeholder="searchData.placeholder" v-model="searchData.value"></el-input>
+       <el-date-picker v-if="searchData.content=='datapicker'"  v-model="searchData.value" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
     </div>
-    <el-button type="danger" class="searchBtn">搜索</el-button>
+    <el-button type="danger" class="searchBtn" @click="searchCounts">搜索</el-button>
     <el-button type="primary" class="searchBtn" v-if="level==1" @click="openDialogTopsearch()">高级搜索</el-button>
   </div>
 </template>
@@ -40,10 +42,14 @@
           }
         },
         methods:{
+
           openDialogTopsearch(){
             let flag = "高级搜索";
             this.$emit('open',flag);
-          }
+          },
+                  searchCounts(){
+                     this.$emit('searchCounts')
+                  }
       },
       //生命函数，加载页面时自动执行
       /*mounted:function(){

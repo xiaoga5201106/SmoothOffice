@@ -1,7 +1,7 @@
 <template>
 	<div id="main">
-		<formBox :labels="labels"></formBox>
-		<formButton state4="提交"></formButton>
+		<formBox :labels="labels" flag="newOrder"></formBox>
+		<formButton state4="提交" @submit="submit(labels)" ></formButton>
 	</div>
      
 </template>
@@ -57,8 +57,8 @@
                   {
                  key:'1',
                	title:'账号',
-               	value:'',
-               },
+               	value:''             
+              },
                   {
                  key:'1',
                	title:'姓名',
@@ -80,14 +80,9 @@
 
                },
                    {
-                 key:'2',
+                 key:'1',
                	title:'年龄',
                 value:'',
-                items:[
-                  {
-                  	item:'18-65'
-                  }
-                ]
                },
                     {
                  key:'2',
@@ -126,6 +121,45 @@
                },
           ],
         	}
+        },
+        methods:{
+             submit(labels){
+              const token = localStorage.getItem('token');
+              let that=this;
+              let data=[];
+            for (var i = 0; i < labels.length; i++) {
+                         data[i]=labels[i].value           
+            }
+               this.$axios.post('/api/event/create-slbAccount',{
+                age:data[5],
+                area:data[1],
+                login:data[2],
+                name:data[3],
+                passWord:data[7],
+                rePassWord:data[8],
+                role:data[0],
+                sex:data[4],
+                xueLi:data[6],
+              
+              },
+              {
+                headers:{
+                  "Authorization": "Bearer"+" "+token
+                }
+              })
+            
+            .then(function(ret){
+                 that.$message({
+                  message:"创建成功",
+                  type:'success'
+                 })
+            })
+              .catch(function(err){
+                 that.$message.error("创建失败！")
+            })
+              
+             
+             }
         }
     }
 </script>
