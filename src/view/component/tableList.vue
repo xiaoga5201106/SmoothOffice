@@ -98,7 +98,7 @@
               console.log(index);
             },
             opendialogForSee(index,row){
-              console.log(index);
+              console.log(this.tableData[index]);
               index++;
               let flag = "查看订单详情";
               this.$emit('open',index,flag);
