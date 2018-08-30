@@ -6,7 +6,7 @@
 
     <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
 
-    <pagination></pagination>
+    <pagination :listTotal="listTotal" @page="page"></pagination>
   </div>
 </template>
 
@@ -31,6 +31,7 @@
             index:0,
             datas:"",
             flag:"",
+            listTotal:0,
             titles:[
               /*表头*/
               { prop:'order_id',
@@ -188,20 +189,28 @@
                   break;
                 }
               }
+            },
+            //翻页
+          page(val){
+              this.getList(val);
+          },
+          getList(val){
+            //获取订单列表
+            let that=this;
+            if(val==undefined){
+              val=1;
+            }else{
+              that.tableData=[];
             }
-        },
-        created:function () {
-        //获取订单列表
-          let that=this;
-          //拿到token
-          const token = localStorage.getItem('token');
-          this.$axios.get('/api/xiao-shou/slb-orders?isCancel=false&page=0&pageSize=10&size=10',{
-            headers: {
-              "Authorization": "Bearer"+" "+token
-            }
-          })
-            .then(function(res){
-              console.log(res)
+            //拿到token
+            const token = localStorage.getItem('token');
+            this.$axios.get('/api/slb-orders?isCancel=false&page='+(val-1)+'&pageSize=10&size=10',{
+              headers: {
+                "Authorization": "Bearer"+" "+token
+              }
+            })
+              .then(function(res){
+                that.listTotal=parseInt(res.headers['x-total-count']);
                 res.data.forEach(function(value,index,array){
                   let order_status,pact_status;
                   if(value.submitStates==1){
@@ -235,11 +244,15 @@
                     pact_status:pact_status ,
                     progress:value.currentProgress
                   });
+                })
               })
-            })
-            .catch(function(err){
+              .catch(function(err){
 
-            });
+              });
+          }
+        },
+        created:function () {
+          this.getList();
       }
     }
 </script>
