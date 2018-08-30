@@ -19,10 +19,20 @@
         contract
       },
     data () {
-      return{
-
-
+      return{   
+          order_id: this.$route.query.order_id,
+          contact:'',
           labels:[
+               {
+                key:'0',
+                title:'订单编号',
+                value:'',
+               },
+               {
+                key:'1',
+                title:'客户名称',
+                value:'',
+               },
                {
                	key:'2',
                	title:'区域',
@@ -37,9 +47,7 @@
                			{
                	    item:'钦州'	
                	},	   
-         
-      
-               	]
+                ]
                },
                  {
                  key:'2',
@@ -100,20 +108,10 @@
                },
                    {
                  key:'1',
-               	title:'客户名称',
-                value:''
-               },
-                   {
-                 key:'1',
-               	title:'联系方式',
-                value:''
-               },
-                    {
-                 key:'1',
                	title:'合伙人名称',
                 value:''
                },
-                    {
+                   {
                  key:'1',
                	title:'合伙人销售',
                 value:''
@@ -128,6 +126,16 @@
                	title:'协助单位（内部）',
                 value:''
                },
+               {
+                 key:'0',
+                title:'提交时间',
+                value:''
+               },
+               {
+                 key:'0',
+                title:'最后修改时间',
+                value:''
+               }
           ],
            
       }
@@ -137,18 +145,21 @@
         submit(labels){
           let that=this;
           const token = localStorage.getItem('token');
-             console.log(labels.length);
-             this.$axios.post('/api/event/save-slb-order-events/new',{
-                      area: labels[0].value,
+          for( let i = 0; i<10 ;i++){
+            console.log(labels[i].value)
+          }
+             this.$axios.post('/api/event/save-slb-order-events/update',{
+                      slbOrderId:labels[0].value,
+                      area: labels[2].value,
                       assist: labels[9].value,
                       clue: labels[8].value,
-                      contact: labels[5].value,
-                      customerName: labels[4].value,
+                      customerName: labels[1].value,
                       partnerName: labels[6].value,
                       partnerSale: labels[7].value,
-                      type1: labels[1].value,
-                      type2: labels[2].value,
-                      type3: labels[3].value
+                      type1: labels[3].value,
+                      type2: labels[4].value,
+                      type3: labels[5].value,
+                      contact:  that.contact
                    },
                    {
                     headers: {
@@ -162,19 +173,50 @@
                 message : '新建订单成功！',
                 type : 'success'
                });
-               for(let i = 0; i < labels.length; i++){
-                  labels[i].value = '';
-               }
+              
              })
              .catch(function(err){
+              console.log(err);
                 that.$message({
                 message : '新建订单失败！',
                 type : 'warning'
                });
               });
 
-             }
-        }
+             },
+         getData(){
+           let that=this;
+          const token = localStorage.getItem('token');
+          this.$axios.get('/api/slb-orders/' + this.order_id,{
+            headers: {
+                "Authorization": "Bearer" + " " + token
+              }
+          })
+          .then(function(res){
+             console.log(res);
+             that.labels[0].value = res.data.id;
+             that.labels[1].value = res.data.customerName;
+             that.labels[2].value = res.data.area;
+             that.labels[3].value = res.data.type1;
+             that.labels[4].value = res.data.type2;
+             that.labels[5].value = res.data.type3;
+             that.labels[6].value = res.data.partnerName;
+             that.labels[7].value = res.data.partnerSale;
+             that.labels[8].value = res.data.clue;
+             that.labels[9].value = res.data.assist;
+             that.labels[10].value = res.data.createTime;
+             that.labels[11].value = res.data.submitTime;
+             that.contact = res.data.contact;
+          })
+          .catch(function(err){
+            console.log(err)
+          })
+         }    
+        },
+     created:function(){
+          this.getData();     
+     }   
+
     }
 </script>
 
