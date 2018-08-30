@@ -71,7 +71,7 @@
               @click="opendialogForEditor(scope.$index, scope.row)">下载</el-button>
           </div>
 
-          <div v-else-if="type == 'delete_order'" >
+           <div v-else-if="type == 'delete_order'" >
                 <el-button
               size="mini"
               @click="opendialogForSee1(scope.$index, scope.row)">查看订单详情</el-button>
@@ -92,38 +92,29 @@
       },
       methods: {
             opendialogForEditor(index,row){
-              index++;
               let flag = "编辑";
-              this.$emit('open',index,flag);
-              console.log(index);
+              this.$emit('open',row.order_id,flag);
+
             },
             opendialogForSee(index,row){
-              console.log(this.tableData[index]);
-              index++;
               let flag = "查看订单详情";
-              this.$emit('open',index,flag);
-
-
+              this.$emit('open',row.order_id,flag);
             },
               opendialogForSee1(index,row){
-              index++;
               let flag = "查看订单详情";
-              this.$emit('open',index,flag);
+              this.$emit('open',row.order_id,flag);
             },
             opendialogForApplyAlter(index,row){
-              index++;
               let flag = "申请修改";
-              this.$emit('open',index,flag);
+              this.$emit('open',row.order_id,flag);
             },
             opendialogForApplyRevoke(index,row){
-              index++;
               let flag = "申请撤单";
-              this.$emit('open',index,flag);
+              this.$emit('open',row.order_id,flag);
             },
             opendialogForApplyChange(index,row){
-              index++;
               let flag = "申请变更";
-              this.$emit('open',index,flag);
+              this.$emit('open',row.order_id,flag);
             },
             opendialogDelete(index,row){
               this.$confirm('是否确定作废?', '作废提示', {
