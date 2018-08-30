@@ -12,9 +12,9 @@
     </div>
     <div class="items"><span>订单编号</span><el-input v-model="input" placeholder="请输入订单编号"></el-input></div>
     <div class="items"><span>客户名称</span><el-input v-model="input" placeholder="请输入客户名称"></el-input></div>-->
-    <div class="items"  v-for="searchData in searchDatas">
+    <div class="items"  v-for="(searchData,index) in searchDatas">
       <span  v-if="searchData.item!==undefined">{{searchData.item}}</span>
-      <el-select v-if="searchData.content=='select'" v-model="searchData.value" :placeholder="searchData.placeholder">
+      <el-select v-if="searchData.content=='select'" v-model="selectValue[index]" :placeholder="searchData.placeholder">
         <el-option
           v-for="item in searchData.option"
           :key="item.value"
@@ -24,7 +24,7 @@
           >
         </el-option>
       </el-select>
-      <el-input v-if="searchData.content=='input'" :placeholder="searchData.placeholder" v-model="searchData.value"></el-input>
+      <el-input v-if="searchData.content=='input'" :placeholder="searchData.placeholder" v-model="inputValue[index]"></el-input>
        <el-date-picker v-if="searchData.content=='datapicker'"  v-model="searchData.value" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
     </div>
     <el-button type="danger" class="searchBtn" @click="searchCounts">搜索</el-button>
@@ -38,7 +38,8 @@
         props:['searchDatas','level'],
         data() {
           return {
-            value: ''
+            inputValue: [],
+            selectValue:[]
           }
         },
         methods:{
@@ -47,14 +48,10 @@
             let flag = "高级搜索";
             this.$emit('open',flag);
           },
-                  searchCounts(){
-                     this.$emit('searchCounts')
-                  }
-      },
-      //生命函数，加载页面时自动执行
-      /*mounted:function(){
-        console.log(this.searchDatas[0].item)
-      }*/
+          searchCounts(){
+             this.$emit('search',this.inputValue,this.selectValue);
+          }
+      }
     }
 </script>
 

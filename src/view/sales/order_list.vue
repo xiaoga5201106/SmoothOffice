@@ -1,12 +1,12 @@
 <template>
   <div id="main">
-    <searchTools :searchDatas="searchDatas" level="0"></searchTools>
+    <searchTools :searchDatas="searchDatas" level="0" @search="search"></searchTools>
     <toolBtn :btns="btns"></toolBtn>
-    <tableList :titles="titles" :tableData="tableData" operate="true" @open="open" type="order_list"></tableList>
+    <tableList :titles="titles" :tableData="tableData" operate="true" @open="open" @refresh="refresh" type="order_list"></tableList>
 
     <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
 
-    <pagination :listTotal="listTotal" @page="page"></pagination>
+    <pagination :listTotal="listTotal" @page="page" :paginationShow="paginationShow"></pagination>
   </div>
 </template>
 
@@ -31,6 +31,7 @@
             index:0,
             datas:"",
             flag:"",
+            paginationShow:true,
             listTotal:0,
             titles:[
               /*表头*/
@@ -77,7 +78,7 @@
               placeholder:'请选择',
               option:[{
                 value: '1',
-                label: '筹税'
+                label: '税筹'
               },{
                 value: '2',
                 label: '基础业务'
@@ -87,7 +88,7 @@
               placeholder:'请选择',
               option:[{
                 value: '3',
-                label: '自由业务'
+                label: '自有业务'
               },{
                 value: '4',
                 label: '转包业务'
@@ -193,17 +194,51 @@
           page(val) {
             this.getList(val);
           },
-          getList(val) {
+          refresh(){
+            //策略进行DOM的更新，表格以及分页刷新
+            this.paginationShow = false;
+            this.$nextTick(function () {
+              this.getList(1);
+              this.paginationShow = true;
+            })
+          },
+          //搜索
+          search(inputValue,selectValue){
+            let type1=selectValue[0];
+            let type2=selectValue[1];
+            let type3=selectValue[2];
+            let area=selectValue[3];
+            let order_id=inputValue[4];
+            let customerName=inputValue[5];
+            this.getList(1,type1,type2,type3,area,order_id,customerName);
+          },
+          getList(val,type1,type2,type3,area,order_id,customerName) {
             //获取订单列表
             let that = this;
             if (val == undefined) {
               val = 1;
-            } else {
+            }
+            if(val!=undefined){
               that.tableData = [];
+            }
+            if(type1==undefined){
+              type1="";
+            }
+            if(type2==undefined){
+              type2="";
+            }
+            if(type3==undefined){
+              type3="";
+            }
+            if(area==undefined){
+              area="";
+            }
+            if(customerName==undefined){
+              customerName="";
             }
             //拿到token
             const token = localStorage.getItem('token');
-            this.$axios.get('/api/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10', {
+            this.$axios.get('/api/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
               headers: {
                 "Authorization": "Bearer" + " " + token
               }

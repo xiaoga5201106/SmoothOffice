@@ -117,18 +117,38 @@
               this.$emit('open',row.order_id,flag);
             },
             opendialogDelete(index,row){
+              let that=this;
               this.$confirm('是否确定作废?', '作废提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning',
                 center: true
               }).then(() => {
-                this.$message({
-                  type: 'success',
-                  message: '作废成功!'
+                //拿到token
+                const token = localStorage.getItem('token');
+                //废除订单
+                this.$axios.post('/api/event/cancel-slb-orders',{
+                  slbOrderId:row.order_id,
+                },{
+                  headers: {
+                    "Authorization": "Bearer" + " " + token
+                  }
+                })
+                  .then(function (res) {
+                    that.$message({
+                      type: 'success',
+                      message: '作废成功!'
+                    });
+                    //表格刷新
+                    that.$emit('refresh');
+                  }).catch(function (err) {
+                  that.$message({
+                    type: 'error',
+                    message: '作废失败!'
+                  });
                 });
               }).catch(() => {
-                this.$message({
+                that.$message({
                   type: 'info',
                   message: '已取消作废'
                 });

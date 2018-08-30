@@ -1,11 +1,10 @@
 <template>
   <div class="block">
-    <el-pagination
+    <el-pagination v-if="paginationShow"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage1"
       :page-sizes="[10, 20, 30, 40]"
-      :page-size="100"
+      :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="listTotal">
     </el-pagination>
@@ -14,7 +13,7 @@
 
 <script>
     export default {
-      props:['listTotal'],
+      props:['listTotal','paginationShow'],
       methods: {
         handleSizeChange(val) {
           console.log(`每页 ${val} 条`);
@@ -23,15 +22,11 @@
           this.$emit('page',val);
         }
       },
-      create(){
-        console.log(this.listTotal)
+      created(){
+
     },
       data() {
         return {
-          currentPage1: 1,
-          currentPage2: 2,
-          currentPage3: 3,
-          currentPage4: 4
         };
       }
     }

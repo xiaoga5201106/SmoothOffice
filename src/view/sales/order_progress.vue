@@ -158,6 +158,55 @@
             }).catch(() => {
             });;
           }
+      },
+      created(){
+          let order_id=this.$route.query.order_id;
+          let that = this;
+          //拿到token
+          const token = localStorage.getItem('token');
+          /*this.$axios.get('/api/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10', {
+            headers: {
+              "Authorization": "Bearer" + " " + token
+            }
+          })
+          .then(function (res) {
+            res.data.forEach(function (value, index, array) {
+              let order_status, pact_status;
+              if (value.submitStates == 1) {
+                order_status = '待提交'
+              }
+              if (value.submitStates == 2) {
+                order_status = '已提交'
+              }
+              if (value.contractStates == 1) {
+                pact_status = '待签订'
+              }
+              if (value.contractStates == 2) {
+                pact_status = '正办理'
+              }
+              if (value.contractStates == 3) {
+                pact_status = '已完成'
+              }
+              if (value.contractStates == 4) {
+                pact_status = '已撤单'
+              }
+              that.tableData.push({
+                order_id: value.id,
+                name: value.customerName,
+                service_type: value.type1 + '-' + value.type2 + '-' + value.type3,
+                partner: value.partnerName,
+                line: value.clue,
+                area: value.area,
+                add_time: that.$util.formatDate(value.createTime),
+                edit_time: that.$util.formatDate(value.submitTime),
+                order_status: order_status,
+                pact_status: pact_status,
+                progress: value.currentProgress
+              });
+            });
+          }).catch(function (err) {
+
+        });*/
       }
     }
 </script>
