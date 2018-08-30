@@ -195,13 +195,13 @@
           let that=this;
           //拿到token
           const token = localStorage.getItem('token');
-          this.$axios.get('/api/xiao-shou/slb-orders?isCancel=false&page=0&pageSize=10&size=10',{
+          this.$axios.get('/api/slb-orders?isCancel=false&page=0&pageSize=10&size=10',{
             headers: {
               "Authorization": "Bearer"+" "+token
             }
           })
             .then(function(res){
-              console.log(res)
+              console.log(res.data);
                 res.data.forEach(function(value,index,array){
                   let order_status,pact_status;
                   if(value.submitStates==1){
@@ -226,7 +226,7 @@
                     order_id:value.id,
                     name: value.customerName,
                     service_type: value.type1+'-'+value.type2+'-'+value.type3,
-                    partner:value.partnerName ,
+                    partner:value.partnerName,
                     line:value.clue,
                     area:value.area,
                     add_time:value.createTime,

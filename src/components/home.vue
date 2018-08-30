@@ -28,7 +28,8 @@
         <el-header height="50px">
           <div class="personal"><img src="../../static/img/personal.png"/><span>{{role}},你好</span><img src="../../static/img/exit.png"/><span><router-link to="/">退出</router-link></span></div>
         </el-header>
-        <el-main><breadcrumb :menu1="menu[0].title1" :menu2="menu[0].title2"></breadcrumb><router-view></router-view></el-main>
+        <el-main><breadcrumb :menu1="menu[0].title1" :menu2="menu[0].title2"></breadcrumb>
+        <router-view v-if="isRouterAlive"></router-view></el-main>
         <el-footer height="50px">Footer</el-footer>
       </el-container>
     </el-container>
@@ -43,13 +44,22 @@
 
   export default {
     name: 'home',
+    provide(){
+       return{
+        reload: this.reload
+       }
+    },
     data () {
       return{
         bars:bars,
         role:role,
-        menu:[{title1:"工作台",title2:""}]
+        menu:[{title1:"工作台",title2:""}],
+        isRouterAlive:true
         }
-      },
+    },
+    components: {
+      breadcrumb
+    },
     methods: {
       handleSelect(key, keyPath) {
         let title1,title2="";
@@ -64,11 +74,15 @@
       },
       returnHome(){
         this.menu=[{title1:"工作台",title2:""}];
+      },
+      reload(){
+        this.isRouterAlive = false;
+        this.$nextTick(function(){
+          this.isRouterAlive = true;
+        })
       }
-    },
-    components: {
-      breadcrumb
-    },
+      },
+    
     created: function () {
       //拿到token
       const token = localStorage.getItem('token');
