@@ -21,13 +21,17 @@
               @click=""><router-link :to="{name:'order_progress', query: {order_id:tableData[scope.$index].order_id}}">查看进度</router-link></el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyAlter(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请修改</el-button>
+              @click="opendialogForApplyAlter(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'">申请修改</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyRevoke(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请撤单</el-button>
+              @click="opendialogForApplyRevoke(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'">申请撤单</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请变更</el-button>
+              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理' 
+                &&(tableData[scope.$index].service_type == '税筹-自有业务-一次付款' || tableData[scope.$index].service_type == '税筹-转包业务-自签业务' || tableData[scope.$index].service_type == '基础--自有业务-工商业务' || tableData[scope.$index].service_type == '基础--自有业务-转包业务')">申请变更</el-button>
+              <el-button
+              size="mini"
+              @click="opendialogForEditor(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">修改</el-button>
               <el-button
               size="mini"
               @click="opendialogDelete(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">作废</el-button>
@@ -36,32 +40,38 @@
               type="danger"
               @click="submit(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">提交</el-button>
           </div>
+
           <div v-else-if="type == 'wait_audit'">
                 <el-button
               size="mini">
               <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'wait_audit'}}">查看申请信息</router-link></el-button>
           </div>
+
           <div v-else-if="type == 'pass'">
                 <el-button
               size="mini">
               <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'pass'}}">查看申请信息</router-link></el-button>
           </div>
+
           <div v-else-if="type == 'no_pass'">
                 <el-button
               size="mini">
               <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'no_pass'}}">查看信息</router-link></el-button>
           </div>
-            <div v-else-if="type == 'standing_book'">
+
+          <div v-else-if="type == 'standing_book'">
                 <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)"><router-link :to="'./standingbook_detail'">查看总台账信息</router-link></el-button>
           </div>
+
           <div v-else-if="type == 'certificate'" >
                 <el-button
               size="mini"
               @click="opendialogForEditor(scope.$index, scope.row)">下载</el-button>
           </div>
-           <div v-else-if="type == 'delete_order'" >
+
+          <div v-else-if="type == 'delete_order'" >
                 <el-button
               size="mini"
               @click="opendialogForSee1(scope.$index, scope.row)">查看订单详情</el-button>
@@ -88,9 +98,12 @@
               console.log(index);
             },
             opendialogForSee(index,row){
+              console.log(this.tableData[index]);
               index++;
               let flag = "查看订单详情";
               this.$emit('open',index,flag);
+
+
             },
               opendialogForSee1(index,row){
               index++;
