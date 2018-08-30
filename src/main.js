@@ -7,10 +7,12 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/style/base.css'
+import util from '../src/util/util.js'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+Vue.prototype.$util = util
 Vue.prototype.$axios=axios;
 /* eslint-disable no-new */
 new Vue({

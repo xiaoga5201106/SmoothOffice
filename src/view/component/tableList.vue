@@ -27,7 +27,7 @@
               @click="opendialogForApplyRevoke(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'">申请撤单</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理' 
+              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'
                 &&(tableData[scope.$index].service_type == '税筹-自有业务-一次付款' || tableData[scope.$index].service_type == '税筹-转包业务-自签业务' || tableData[scope.$index].service_type == '基础--自有业务-工商业务' || tableData[scope.$index].service_type == '基础--自有业务-转包业务')">申请变更</el-button>
               <el-button
               size="mini"
@@ -98,7 +98,7 @@
               console.log(index);
             },
             opendialogForSee(index,row){
-              console.log(this.tableData[index]);
+              console.log(index);
               index++;
               let flag = "查看订单详情";
               this.$emit('open',index,flag);

@@ -158,7 +158,6 @@
             let data1 = [];
             let dataIndex = 0;
             let dataStr = "";
-            console.log(data);
             /*
                *要用for in 这种方法  json对象不支持使用变量键名获取value值 即.号后面不能是key值以外的其他值 否则报未定义
                *  i 为键值 data[i]为value值
@@ -238,8 +237,8 @@
                     partner: value.partnerName,
                     line: value.clue,
                     area: value.area,
-                    add_time: value.createTime,
-                    edit_time: value.submitTime,
+                    add_time: that.$util.formatDate(value.createTime),
+                    edit_time: that.$util.formatDate(value.submitTime),
                     order_status: order_status,
                     pact_status: pact_status,
                     progress: value.currentProgress
