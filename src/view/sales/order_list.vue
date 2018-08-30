@@ -146,110 +146,109 @@
           }
         },
 
-        methods:{
+        methods: {
           //返回点击的index值
-            open(index,flag){
-              this.show = true;
-              this.index = index;
-              this.flag = flag;
-              //获取当前点击行里的内容
-              let data = this.getJsonById(this.index,this.tableData);
-              let label = [];
-              let data1 = [];
-              let dataIndex = 0;
-              let dataStr = "";
-             console.log(data);
-              /*
+          open(index, flag) {
+            this.show = true;
+            this.index = index;
+            this.flag = flag;
+            //获取当前点击行里的内容
+            let data = this.getJsonById(this.index, this.tableData);
+            let label = [];
+            let data1 = [];
+            let dataIndex = 0;
+            let dataStr = "";
+            console.log(data);
+            /*
                *要用for in 这种方法  json对象不支持使用变量键名获取value值 即.号后面不能是key值以外的其他值 否则报未定义
                *  i 为键值 data[i]为value值
                * 下面两个循环是为了重新构造显示出来的json数组 类型如下[{"name":"订单编号"，"data":"order_id"}]
                */
-              for(let i in data){
-                   data1[dataIndex] = data[i];
-                   label[dataIndex] = this.titles[dataIndex].label;
-                   dataIndex++;
+            for (let i in data) {
+              data1[dataIndex] = data[i];
+              label[dataIndex] = this.titles[dataIndex].label;
+              dataIndex++;
+            }
+            dataStr = "[";
+            for (let i = 0; i < dataIndex; i++) {
+              dataStr += "{\"name\":\"" + label[i] + "\",\"data\":\"" + data1[i] + "\"}";
+              if (i != dataIndex - 1) {
+                dataStr += ",";
               }
-              dataStr = "[";
-              for(let i = 0; i < dataIndex; i++){
-                dataStr += "{\"name\":\"" + label[i] + "\",\"data\":\"" + data1[i] + "\"}";
-                if(i != dataIndex-1){
-                  dataStr += ",";
-                }
-               }
-              dataStr += "]";
-              //一定要将这个数组转换为JSON对象，不然传到模态框内会出错
-              this.datas = JSON.parse(dataStr);
+            }
+            dataStr += "]";
+            //一定要将这个数组转换为JSON对象，不然传到模态框内会出错
+            this.datas = JSON.parse(dataStr);
 
-            },
-            //通过表单组件返回的id来获取内容
-            getJsonById(id,json){
-              for(let i = 0;i < json.length; i++){
-                if(json[i].order_id == id){
-                  return json[i];
-                  break;
-                }
-              }
-            },
-            //翻页
-          page(val){
-              this.getList(val);
           },
-          getList(val){
+          //通过表单组件返回的id来获取内容
+          getJsonById(id, json) {
+            for (let i = 0; i < json.length; i++) {
+              if (json[i].order_id == id) {
+                return json[i];
+                break;
+              }
+            }
+          },
+          //翻页
+          page(val) {
+            this.getList(val);
+          },
+          getList(val) {
             //获取订单列表
-            let that=this;
-            if(val==undefined){
-              val=1;
-            }else{
-              that.tableData=[];
+            let that = this;
+            if (val == undefined) {
+              val = 1;
+            } else {
+              that.tableData = [];
             }
             //拿到token
             const token = localStorage.getItem('token');
-            this.$axios.get('/api/slb-orders?isCancel=false&page='+(val-1)+'&pageSize=10&size=10',{
+            this.$axios.get('/api/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10', {
               headers: {
-                "Authorization": "Bearer"+" "+token
+                "Authorization": "Bearer" + " " + token
               }
             })
-              .then(function(res){
-                that.listTotal=parseInt(res.headers['x-total-count']);
-                res.data.forEach(function(value,index,array){
-                  let order_status,pact_status;
-                  if(value.submitStates==1){
-                    order_status='待提交'
+              .then(function (res) {
+                that.listTotal = parseInt(res.headers['x-total-count']);
+                res.data.forEach(function (value, index, array) {
+                  let order_status, pact_status;
+                  if (value.submitStates == 1) {
+                    order_status = '待提交'
                   }
-                  if(value.submitStates==2){
-                    order_status='已提交'
+                  if (value.submitStates == 2) {
+                    order_status = '已提交'
                   }
-                  if(value.contractStates==1){
-                    pact_status='待签订'
+                  if (value.contractStates == 1) {
+                    pact_status = '待签订'
                   }
-                  if(value.contractStates==2){
-                    pact_status='正办理'
+                  if (value.contractStates == 2) {
+                    pact_status = '正办理'
                   }
-                  if(value.contractStates==3){
-                    pact_status='已完成'
+                  if (value.contractStates == 3) {
+                    pact_status = '已完成'
                   }
-                  if(value.contractStates==4){
-                    pact_status='已撤单'
+                  if (value.contractStates == 4) {
+                    pact_status = '已撤单'
                   }
                   that.tableData.push({
-                    order_id:value.id,
+                    order_id: value.id,
                     name: value.customerName,
-                    service_type: value.type1+'-'+value.type2+'-'+value.type3,
-                    partner:value.partnerName ,
-                    line:value.clue,
-                    area:value.area,
-                    add_time:value.createTime,
-                    edit_time:value.submitTime,
-                    order_status:order_status,
-                    pact_status:pact_status ,
-                    progress:value.currentProgress
+                    service_type: value.type1 + '-' + value.type2 + '-' + value.type3,
+                    partner: value.partnerName,
+                    line: value.clue,
+                    area: value.area,
+                    add_time: value.createTime,
+                    edit_time: value.submitTime,
+                    order_status: order_status,
+                    pact_status: pact_status,
+                    progress: value.currentProgress
                   });
-                })
-              })
-              .catch(function(err){
+                });
+              }).catch(function (err) {
 
-              });
-          }
+            });
+          },
         },
         created:function () {
           this.getList();

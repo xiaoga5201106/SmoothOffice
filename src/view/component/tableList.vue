@@ -30,14 +30,11 @@
               @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].pact_status=='正办理'||tableData[scope.$index].pact_status=='已完成'">申请变更</el-button>
               <el-button
               size="mini"
-              @click="opendialogForEditor(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">编辑</el-button>
-              <el-button
-              size="mini"
               @click="opendialogDelete(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">作废</el-button>
               <el-button
               size="mini"
               type="danger"
-              @click="" v-if="tableData[scope.$index].order_status=='待提交'">提交</el-button>
+              @click="submit(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">提交</el-button>
           </div>
           <div v-else-if="type == 'wait_audit'">
                 <el-button
@@ -78,6 +75,7 @@
     export default {
         name: "tableList",
         props:['titles','tableData','operate','type'],
+        inject: ['reload'],
         data() {
         return {
         }
@@ -131,6 +129,30 @@
                   message: '已取消作废'
                 });
               });
+            },
+            submit(index,row){
+              let that = this;
+              const token = localStorage.getItem('token');
+                this.$axios.post('api/event/submit-slb-orders',{
+                  slbOrderId:row.order_id
+                  },
+                  {
+                    headers: {
+                       "Authorization": "Bearer"+" "+token
+                       }
+                  }
+                )
+                .then(function(res){
+                  that.$message({
+                    message : '提交订单成功！',
+                    type : 'success'
+                   });
+
+                        that.reload()
+                })
+                .catch(function(err){
+                  console.log(err);
+                })
             },
             headerColor(row, rowIndex) {
               return 'background:#e70012;color:#fff';

@@ -13,6 +13,7 @@ import sale_home from '@/view/sales/sale_home'
 import percentage from '@/view/sales/percentage'
 import standing_book from '@/view/sales/standing_book'
 import delete_order from '@/view/sales/delete_order'
+import change_order from '@/view/sales/change_order'
 import order_detail from '@/view/sales/order_detail'
 import order_progress from '@/view/sales/order_progress'
 import cancle_pact from '@/view/housekeeping/cancle_pact'
@@ -151,6 +152,11 @@ export default new Router({
           path: '/order_progress',
           name: 'order_progress',
           component: order_progress
+        },
+        {
+          path: '/change_order',
+          name: 'change_order',
+          component: change_order
         },
         //内务权限
         {
