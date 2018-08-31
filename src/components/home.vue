@@ -89,7 +89,7 @@
           console.log(this.menu);
       }
       },
-      
+
     created: function () {
       //拿到token
       const token = localStorage.getItem('token');

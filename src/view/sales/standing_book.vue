@@ -15,6 +15,7 @@
   import dialogbox from'../component/dialog'
     import toolBtn from '../component/toolBtn'
     export default {
+      inject: ['newMenu'],
     	components:{
     		pagination,
     		tableList,
@@ -165,6 +166,10 @@
           this.show = true;
           this.flag = flag;
         }
+      },
+      created(){
+        //三級麵包屑
+        this.newMenu('查看','总台账','详细台账');
       }
     }
 </script>

@@ -38,6 +38,9 @@
               { prop:'order_id',
                 label:"订单编号"
               },
+              { prop:'id',
+                label:"id"
+              },
               { prop:'name',
                 label:"客户名称"
               },
@@ -142,7 +145,8 @@
             btns:[{
                 label:"新建订单",
                 color:"danger",
-                func:""
+                func:"routeGo",
+                path:"/add_order"
             }]
           }
         },
@@ -184,7 +188,7 @@
           //通过表单组件返回的id来获取内容
           getJsonById(id, json) {
             for (let i = 0; i < json.length; i++) {
-              if (json[i].order_id == id) {
+              if (json[i].id == id) {
                 return json[i];
                 break;
               }
@@ -210,7 +214,12 @@
             let area=selectValue[3];
             let order_id=inputValue[4];
             let customerName=inputValue[5];
-            this.getList(1,type1,type2,type3,area,order_id,customerName);
+            //策略进行DOM的更新，表格以及分页刷新
+            this.paginationShow = false;
+            this.$nextTick(function () {
+              this.getList(undefined,type1,type2,type3,area,order_id,customerName);
+              this.paginationShow = true;
+            })
           },
           getList(val,type1,type2,type3,area,order_id,customerName) {
             //获取订单列表
@@ -233,12 +242,15 @@
             if(area==undefined){
               area="";
             }
+            if(order_id==undefined){
+              order_id="";
+            }
             if(customerName==undefined){
               customerName="";
             }
             //拿到token
             const token = localStorage.getItem('token');
-            this.$axios.get('/api/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
+            this.$axios.get('/api/slb-orders?code='+order_id+'&isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
               headers: {
                 "Authorization": "Bearer" + " " + token
               }
@@ -266,7 +278,8 @@
                     pact_status = '已撤单'
                   }
                   that.tableData.push({
-                    order_id: value.id,
+                    order_id: value.code,
+                    id:value.id,
                     name: value.customerName,
                     service_type: value.type1 + '-' + value.type2 + '-' + value.type3,
                     partner: value.partnerName,

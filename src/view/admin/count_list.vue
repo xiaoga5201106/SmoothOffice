@@ -35,15 +35,15 @@
               },
               { prop:'job',
                 label:"职务"
-              },   
+              },
               { prop:'createtime',
                 label:"创建时间"
-              },      
+              },
               { prop:'state',
                 label:"状态"
               }
             ],
-           
+
         		 searchDatas:[
               {
               item:'账号ID',
@@ -116,7 +116,7 @@
             btns:[{
                 label:"添加账号",
                 color:"danger",
-                func:""
+                func:"submit"
             }],
             tableData:[]
         	}
@@ -156,7 +156,7 @@
                  if (createTime==undefined) {
                      createTime=" "
                  }
-                 
+
                 this.$axios.get('/api/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state,{
                        headers:{
                            "Authorization": "Bearer"+" "+token
@@ -180,7 +180,7 @@
                  .catch(function(err){
                          console.log(err)
                 })
-                
+
 
              },
              addCount(){
@@ -208,8 +208,8 @@
               createtime:value.createTime,
               state:''
                     })
-              }) 
-          
+              })
+
             })
              .catch(function(err){
               console.log(err)

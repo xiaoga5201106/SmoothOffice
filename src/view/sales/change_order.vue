@@ -2,7 +2,7 @@
 
   <div id="main">
    <formBox :labels="labels" flag="newOrder"></formBox>
-  	<formButton state4="提交" @submit="submit(labels)"></formButton> 	
+  	<formButton state4="提交" @submit="submit(labels)"></formButton>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 	import formBox from '../component/formBox'
 	import formButton from '../component/formButton'
   import contract from '../component/contract'
-	
+
   export default {
       name: "add_order",
       inject: ['newMenu'],
@@ -20,7 +20,7 @@
         contract
       },
     data () {
-      return{   
+      return{
           order_id: this.$route.query.order_id,
           contact:'',
           labels:[
@@ -40,14 +40,14 @@
                	value:'',
                	items:[
                	{
-               	    item:'柳州'	
+               	    item:'柳州'
                	},
                		{
-               	    item:'贺州'	
-               	},	
+               	    item:'贺州'
+               	},
                			{
-               	    item:'钦州'	
-               	},	   
+               	    item:'钦州'
+               	},
                 ]
                },
                  {
@@ -56,12 +56,12 @@
                	value:'',
                	items:[
                	{
-               	    item:'税筹'	
+               	    item:'税筹'
                	},
                		{
-               	    item:'基本业务'	
-               	},	
-      
+               	    item:'基本业务'
+               	},
+
                	]
                },
                   {
@@ -70,11 +70,11 @@
                	value:'',
                	items:[
                	{
-               	    item:'自有业务'	
+               	    item:'自有业务'
                	},
                		{
-               	    item:'转包业务'	
-               	},	   
+               	    item:'转包业务'
+               	},
                	]
                },
                   {
@@ -83,28 +83,28 @@
                	value:'',
                	items:[
                	{
-               	    item:'一次性付款'	
+               	    item:'一次性付款'
                	},
                		{
-               	    item:'多次付款'	
-               	},	
+               	    item:'多次付款'
+               	},
                			{
-               	    item:'自签业务'	
+               	    item:'自签业务'
                	},
                				{
-               	    item:'返佣业务'	
+               	    item:'返佣业务'
                	},
                				{
-               	    item:'工商业务'	
+               	    item:'工商业务'
                	},
                				{
-               	    item:'转包业务'	
+               	    item:'转包业务'
                	},
                				{
-               	    item:'财务业务'	
-               	},			   
-         
-      
+               	    item:'财务业务'
+               	},
+
+
                	]
                },
                    {
@@ -138,7 +138,7 @@
                 value:''
                }
           ],
-           
+
       }
 
     },
@@ -150,7 +150,7 @@
             console.log(labels[i].value)
           }
              this.$axios.post('/api/event/save-slb-order-events/update',{
-                      slbOrderId:labels[0].value,
+                      slbOrderId:that.order_id,
                       area: labels[2].value,
                       assist: labels[9].value,
                       clue: labels[8].value,
@@ -175,7 +175,7 @@
                 type : 'success'
                });
                that.$router.go(-1);
-              
+
              })
              .catch(function(err){
               console.log(err);
@@ -196,7 +196,8 @@
           })
           .then(function(res){
              console.log(res);
-             that.labels[0].value = res.data.id;
+             //订单编号是code
+             that.labels[0].value = res.data.code;
              that.labels[1].value = res.data.customerName;
              that.labels[2].value = res.data.area;
              that.labels[3].value = res.data.type1;
@@ -208,17 +209,19 @@
              that.labels[9].value = res.data.assist;
              that.labels[10].value = res.data.createTime;
              that.labels[11].value = res.data.submitTime;
+             //这个才是订单id
+             that.labels[12].value = res.data.id;
              that.contact = res.data.contact;
           })
           .catch(function(err){
             console.log(err)
           })
-         }    
+         }
         },
      created:function(){
           this.getData();
-          this.newMenu('我的订单','订单列表','修改订单');       
-     }   
+          this.newMenu('我的订单','订单列表','修改订单');
+     }
 
     }
 </script>

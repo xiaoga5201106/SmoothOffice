@@ -23,6 +23,7 @@
 <script>
     export default {
         name: "order_progess",
+        inject: ['newMenu'],
         data () {
           return{
             //用id去查询
@@ -160,6 +161,8 @@
           }
       },
       created(){
+          //三級麵包屑
+          this.newMenu('我的订单','订单列表','查看进度');
           let order_id=this.$route.query.order_id;
           let that = this;
           //拿到token

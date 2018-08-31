@@ -6,6 +6,7 @@
     :cell-style="cellStyle">
     <el-table-column
       v-for="title in titles"
+      v-if="title.label!='id'"
       v-bind:prop="title.prop"
       v-bind:label="title.label"
       v-bind:class-name="title.prop"
@@ -31,7 +32,7 @@
                 &&(tableData[scope.$index].service_type == '税筹-自有业务-一次付款' || tableData[scope.$index].service_type == '税筹-转包业务-自签业务' || tableData[scope.$index].service_type == '基础--自有业务-工商业务' || tableData[scope.$index].service_type == '基础--自有业务-转包业务')">申请变更</el-button>
               <el-button
               size="mini"
-              v-if="tableData[scope.$index].order_status=='待提交'"><router-link :to="{name:'change_order', query:{order_id:tableData[scope.$index].order_id}}">修改</router-link></el-button>
+              v-if="tableData[scope.$index].order_status=='待提交'"><router-link :to="{name:'change_order', query:{order_id:tableData[scope.$index].id}}">修改</router-link></el-button>
               <el-button
               size="mini"
               @click="opendialogDelete(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='待提交'">作废</el-button>
@@ -93,28 +94,28 @@
       methods: {
             opendialogForEditor(index,row){
               let flag = "编辑";
-              this.$emit('open',row.order_id,flag);
+              this.$emit('open',row.id,flag);
 
             },
             opendialogForSee(index,row){
               let flag = "查看订单详情";
-              this.$emit('open',row.order_id,flag);
+              this.$emit('open',row.id,flag);
             },
               opendialogForSee1(index,row){
               let flag = "查看订单详情";
-              this.$emit('open',row.order_id,flag);
+              this.$emit('open',row.id,flag);
             },
             opendialogForApplyAlter(index,row){
               let flag = "申请修改";
-              this.$emit('open',row.order_id,flag);
+              this.$emit('open',row.id,flag);
             },
             opendialogForApplyRevoke(index,row){
               let flag = "申请撤单";
-              this.$emit('open',row.order_id,flag);
+              this.$emit('open',row.id,flag);
             },
             opendialogForApplyChange(index,row){
               let flag = "申请变更";
-              this.$emit('open',row.order_id,flag);
+              this.$emit('open',row.id,flag);
             },
             opendialogDelete(index,row){
               let that=this;

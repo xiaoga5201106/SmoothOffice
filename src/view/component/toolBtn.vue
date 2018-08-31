@@ -1,8 +1,9 @@
 <template>
   <div id="toolBtn">
-    <div v-for="btn in btns">
-      <el-button @click="submit" :type="btn.color">{{btn.label}}</el-button>
+    <div v-for="(btn,index) in btns">
+      <el-button @click="click(btn.func,index)" :type="btn.color">{{btn.label}}</el-button>
     </div>
+
   </div>
 </template>
 
@@ -10,11 +11,20 @@
     export default {
         name: "tool-btn",
         props:['btns'],
-        methods:{
-           submit(){
-            this.$emit("submit")
-           }
+      data () {
+        return{
         }
+      },
+      methods:{
+         click(func,index){
+          if(func=="submit"){
+            this.$emit("submit");
+          }
+          if(func=="routeGo"){
+            this.$router.push(this.btns[index].path);
+          }
+         }
+      }
     }
 </script>
 
