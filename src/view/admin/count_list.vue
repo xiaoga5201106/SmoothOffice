@@ -123,20 +123,41 @@
         },
 
         methods:{
-             searchCounts(searchDatas){
+             searchCounts(inputValue,selectValue){
                const token = localStorage.getItem('token');
                 let that=this;
-                let data=[];
-                for (var i = 0; i < searchDatas.length; i++) {
-                     data[i]=searchDatas[i].value
-                }
-                 if (data[6]=="可用") {
-                     data[6]="true"
+                let loginKey=inputValue[1];
+                let name=inputValue[2];
+                let role=selectValue[3];
+                let area=selectValue[4];
+                let createTime=selectValue[5];
+                let state=selectValue[6];
+                 if (state=="可用") {
+                     state="true"
                  }
-                   else if (data[6]=="停用") {
-                     data[6]="false"
+                 if (state=="停用") {
+                     state="false"
                  }
-                this.$axios.get('/api/slb-accounts?area='+data[4]+'&loginKey='+data[1]+'&nameKey='+data[2]+'&role='+data[3]+'&createDay='+data[5]+'&activated='+data[6],{
+                  if (state==undefined) {
+                     state=" "
+                 }
+                  if (loginKey==undefined) {
+                     loginKey=" "
+                 }
+                if (name==undefined) {
+                     name=" "
+                 }
+                if (role==undefined) {
+                     role=" "
+                 }
+                if (area==undefined) {
+                     area=" "
+                 }
+                 if (createTime==undefined) {
+                     createTime=" "
+                 }
+                 
+                this.$axios.get('/api/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state,{
                        headers:{
                            "Authorization": "Bearer"+" "+token
                         }

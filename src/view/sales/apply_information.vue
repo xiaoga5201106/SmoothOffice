@@ -32,39 +32,48 @@
         return{
           type:this.$route.query.type,
           father:this.$route.query.father,
+           order_id:this.$route.query.order_id,
           show:false,
           labels:[
                {
                  key:'1',
-                title:'订单编号'
+                title:'订单编号',
+                message:''
                },
                {
                  key:'1',
-                title:'客户名称'
+                title:'客户名称',
+                message:''
                },
                {
                  key:'1',
-                title:'区域'
+                title:'区域',
+                message:''
                },
                {
                  key:'1',
-                title:'合伙人名称'
+                title:'合伙人名称',
+                message:''
                },
                {
                  key:'1',
-                title:'业务类型'
+                title:'业务类型',
+                message:''
                },
                {
                  key:'1',
-                title:'合伙人销售'
+                title:'合伙人销售',
+                message:''
                },
                {
                  key:'1',
-                title:'协助成单'
+                title:'协助成单',
+                message:''
                },
                {
                  key:'1',
-                title:'订单提交时间'
+                title:'订单提交时间',
+                message:''
                }
              ],
              titles:[
@@ -156,6 +165,39 @@
           this.father = '申请变更'
         }
         this.newMenu('申请列表',this.father,'申请信息');
+        const token=localStorage.getItem('token');
+                let that=this;
+                this.$axios.get('/api/slb-order-applications-records?id=1',{
+                  headers:{
+                    "Authorization": "Bearer"+" "+token
+                  }
+                })
+                  .then(function(ret){
+                    let data=ret.data;
+                     console.log(order_id)
+                    let order_id=that.order_id;
+                    for (var i = 0; i < that.labels.length; i++) {
+                          that.labels[i].message
+                    }
+                       data.forEach(function(value,index,array){
+                                if (order_id==value.code) {
+                                  console.log(111)
+                                  that.labels[0].message=value.code,
+                                  that.labels[1].message=value.customerName,
+                                  that.labels[2].message=value.area,
+                                  that.labels[3].message=value.partnerName,
+                                  that.labels[4].message=value.type1+'-'+value.type2+'-'+value.type3,
+                                  that.labels[5].message=value.partnerSale,
+                                  that.labels[6].message=value.assist,
+                                  that.labels[7].message=value.submitTime
+                                }
+                             
+                       })
+                     
+                  })
+                  .catch(function(err){
+                      console.log(err )
+                  })  
       }
     }
 </script>

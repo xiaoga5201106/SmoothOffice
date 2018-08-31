@@ -16,25 +16,25 @@
      </el-form-item>
     </el-form>
   </div>
-  <div class="informationBox" v-else-if="flag == 'viewInformation'">
-    <el-form :inline="true" label-position="left" label-width="100px">
+    <div class="informationBox" v-else-if="flag == 'viewInformation'">
+    <el-form :inline="true" label-width="100px">
       <el-form-item class="informationTitle" v-for="(label,index) in labels" :label="label.title" v-if="index<=1">
-      <span>123456</span>
+      <span>{{label.message}}</span>
      </el-form-item>
     </el-form>
-    <el-form :inline="true" label-position="left" label-width="100px">
+    <el-form :inline="true"  label-width="100px">
       <el-form-item class="informationTitle" v-for="(label,index) in labels" :label="label.title" v-if="index>1 && index<=3">
-      <span>123456</span>
+      <span>{{label.message}}</span>
      </el-form-item>
     </el-form>
-    <el-form :inline="true" label-position="left" label-width="100px">
+    <el-form :inline="true"  label-width="100px">
       <el-form-item  class="informationTitle" v-for="(label,index) in labels" :label="label.title" v-if="index>3 && index<=5">
-      <span>123456</span>
+      <span>{{label.message}}</span>
      </el-form-item>
     </el-form>
-    <el-form :inline="true" label-position="left" label-width="100px">
+    <el-form :inline="true"  label-width="100px">
       <el-form-item class="informationTitle" v-for="(label,index) in labels" :label="label.title" v-if="index>5 && index<=7">
-      <span>123456</span>
+      <span>{{label.message}}</span>
      </el-form-item>
     </el-form>
   </div>
@@ -70,9 +70,11 @@
    .informationBox .el-form:nth-child(4){
     border-bottom: 0px; 
   }
-  .informationTitle{
-     margin-right:50px;
+    .informationBox span{
+    display: inline-block;
+    width: 200px;
   }
+
   .el-form-item__label{
     color: red !important;
   }
