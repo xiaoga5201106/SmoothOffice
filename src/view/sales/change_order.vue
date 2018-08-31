@@ -170,15 +170,16 @@
              .then(function(res){
               console.log(res);
                that.$message({
-                message : '新建订单成功！',
+                message : '修改订单成功！',
                 type : 'success'
                });
+               that.$router.go(-1);
               
              })
              .catch(function(err){
               console.log(err);
                 that.$message({
-                message : '新建订单失败！',
+                message : '修改订单失败！',
                 type : 'warning'
                });
               });
