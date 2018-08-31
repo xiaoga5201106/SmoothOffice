@@ -28,7 +28,7 @@
         <el-header height="50px">
           <div class="personal"><img src="../../static/img/personal.png"/><span>{{role}},你好</span><img src="../../static/img/exit.png"/><span><router-link to="/">退出</router-link></span></div>
         </el-header>
-        <el-main><breadcrumb :menu1="menu[0].title1" :menu2="menu[0].title2"></breadcrumb>
+        <el-main><breadcrumb :menu1="menu[0].title1" :menu2="menu[0].title2" :menu3="menu[0].title3"></breadcrumb>
         <router-view v-if="isRouterAlive"></router-view></el-main>
         <el-footer height="50px">Footer</el-footer>
       </el-container>
@@ -46,14 +46,15 @@
     name: 'home',
     provide(){
        return{
-        reload: this.reload
+        reload: this.reload,
+        newMenu: this.newMenu
        }
     },
     data () {
       return{
         bars:bars,
         role:role,
-        menu:[{title1:"工作台",title2:""}],
+        menu:[{title1:"工作台",title2:"",title3:""}],
         isRouterAlive:true
         }
     },
@@ -62,7 +63,7 @@
     },
     methods: {
       handleSelect(key, keyPath) {
-        let title1,title2="";
+        let title1,title2,title3="";
         title1=this.bars[keyPath[0]-1].title;
         for(let i=0;i<this.bars.length;i++){
           if(this.bars[i].id==key){
@@ -70,19 +71,25 @@
             break;
           }
         }
-        this.menu=[{title1,title2}];
+        this.menu=[{title1,title2,title3}];
       },
       returnHome(){
-        this.menu=[{title1:"工作台",title2:""}];
+        this.menu=[{title1:"工作台",title2:"",title3:""}];
       },
+      //刷新当前页面
       reload(){
         this.isRouterAlive = false;
         this.$nextTick(function(){
           this.isRouterAlive = true;
         })
+      },
+      //添加第三级面包屑
+      newMenu(title1,title2,title3){
+          this.menu=[{title1,title2,title3}];
+          console.log(this.menu);
       }
       },
-    
+      
     created: function () {
       //拿到token
       const token = localStorage.getItem('token');

@@ -13,6 +13,7 @@
 	
   export default {
       name: "add_order",
+      inject: ['newMenu'],
       components:{
       	formBox,
       	formButton,
@@ -215,7 +216,8 @@
          }    
         },
      created:function(){
-          this.getData();     
+          this.getData();
+          this.newMenu('我的订单','订单列表','修改订单');       
      }   
 
     }

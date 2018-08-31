@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <searchTools :searchDatas="searchDatas" level="0"></searchTools>
-    <tabs :Menutabs="Menutabs" operate="true"></tabs>
+    <tabs :Menutabs="Menutabs" operate="true" father="apply_edit"></tabs>
     <pagination></pagination>
   </div>
 </template>

@@ -22,6 +22,7 @@
    import dialogbox from '../component/dialog'
     export default {
         name: "apply_information",
+        inject: ['newMenu'],
         components: {
          formBox,
          tableList,
@@ -30,6 +31,7 @@
       data () {
         return{
           type:this.$route.query.type,
+          father:this.$route.query.father,
           show:false,
           labels:[
                {
@@ -142,6 +144,18 @@
         showDialogbox(){
           this.show = true;
         }
+      },
+      created: function(){
+        if(this.father =='apply_edit'){
+          this.father = '申请修改'
+        }
+        else if(this.father =='apply_cancle'){
+          this.father = '申请撤单'
+        }
+        else{
+          this.father = '申请变更'
+        }
+        this.newMenu('申请列表',this.father,'申请信息');
       }
     }
 </script>
@@ -166,4 +180,8 @@
   float: right;
   
  }
+ .el-upload{
+   position: absolute;
+   right: 0;
+  }
 </style>

@@ -20,8 +20,7 @@
   	
     position: relative;
   }
-  .el-upload-list{
-    
+  .el-upload-list{   
   	width: 100%;
   }
   .el-upload{
@@ -42,6 +41,13 @@
     left: 10px;
     top:60px;
    }
+  .el-upload{
+   position: absolute;
+   right: 0;
+  }
+  .el-upload-list{
+    padding-top: 50px;
+  }
 </style>
 <script>
 	export default{

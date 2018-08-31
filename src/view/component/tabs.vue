@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="tab in Menutabs" :label="tab.label" :name="tab.name">
         <div>
-          <tableList :titles="tab.titles" :tableData="tab.tableData" :operate="operate" :type="tab.type"></tableList>
+          <tableList :titles="tab.titles" :tableData="tab.tableData" :operate="operate" :type="tab.type" :father="father"></tableList>
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -14,7 +14,7 @@
 import tableList from './tableList'
     export default {
         name: "tabs",
-        props:['Menutabs','operate'],
+        props:['Menutabs','operate','father'],
         components:{
           tableList,
         },
