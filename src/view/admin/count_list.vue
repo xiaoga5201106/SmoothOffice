@@ -1,6 +1,6 @@
 <template>
    <div id="main">
-   	<searchTools :searchDatas="searchDatas" level="0" @searchCounts="searchCounts(searchDatas)"></searchTools>
+   	<searchTools :searchDatas="searchDatas" level="0" @search="searchCounts"></searchTools>
    	 <toolBtn :btns="btns" @submit="addCount"></toolBtn>
    	 <tableList :titles="titles" :tableData="tableData" operate="false" type="order_list"></tableList>
    </div>

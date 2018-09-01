@@ -27,7 +27,7 @@
       <el-input v-if="searchData.content=='input'" :placeholder="searchData.placeholder" v-model="inputValue[index]"></el-input>
        <el-date-picker v-if="searchData.content=='datapicker'"  v-model="searchData.value" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"></el-date-picker>
     </div>
-    <el-button type="danger" class="searchBtn" @click="searchCounts">搜索</el-button>
+    <el-button type="danger" class="searchBtn" @click="search">搜索</el-button>
     <el-button type="primary" class="searchBtn" v-if="level==1" @click="openDialogTopsearch()">高级搜索</el-button>
   </div>
 </template>
@@ -48,7 +48,7 @@
             let flag = "高级搜索";
             this.$emit('open',flag);
           },
-          searchCounts(){
+          search(){
              this.$emit('search',this.inputValue,this.selectValue);
           }
       }
