@@ -23,9 +23,9 @@
                closedialog(){
                       	this.$emit("close");
                       },
-                      submit(){
-                      	this.$emit("submit")
-                      }
+               submit(){
+                   this.$emit("submit")
+               }
 
 		}
 	}

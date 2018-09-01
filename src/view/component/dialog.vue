@@ -64,7 +64,7 @@
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
-    <formButton state4="提交" @close="close"></formButton>
+    <formButton state4="提交" @close="close" @submit="submit"></formButton>
   </div>
 </el-dialog>
 
@@ -102,7 +102,7 @@
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
-    <formButton state4="提交" @close="close"></formButton>
+   <formButton state4="提交" @close="close" @submit="submit"></formButton>
   </div>
 </el-dialog>
 
@@ -139,7 +139,7 @@
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
-    <formButton state4="提交" @close="close"></formButton>
+    <formButton state4="提交" @close="close" @submit="submit"></formButton>
   </div>
 </el-dialog>
 
@@ -177,7 +177,7 @@
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
-    <formButton state4="提交" @close="close"></formButton>
+    <formButton state4="提交" @close="close" @submit="submit"></formButton>
   </div>
 </el-dialog>
 
@@ -437,6 +437,7 @@
       },
       data(){
         return{
+                 inputData:'',
                  inputSum:0,
                  value1:'',
                  value2:'',
@@ -460,8 +461,11 @@
                       close(){
                         this.$emit("close")
                       },
+                      submit(){
+                        console.log(this.inputData)
+                      },
                       handleInput(event){
-                         console.log(event);
+                         this.inputData = event;
                          this.inputSum = event.length;
                          if(event.length == 200){
                           this.$message({

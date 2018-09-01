@@ -8,7 +8,6 @@
   :file-list="fileList"
   :before-upload="beforeAvatarUpload"
   :auto-upload="false"
-  :http-request="upload"
   list-type="picture">
   <div class="tip">
   <el-button size="small" type="primary">选择{{flag}}</el-button>
@@ -67,8 +66,6 @@
            };
     },
     methods:{
-         upload(item){
-         },
          handChange(file, fileList){
            this.fileList.push({
                name: file.name,
