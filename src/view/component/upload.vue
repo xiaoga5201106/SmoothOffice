@@ -68,7 +68,6 @@
     },
     methods:{
          upload(item){
-              console.log(item);
          },
          handChange(file, fileList){
            this.fileList.push({
