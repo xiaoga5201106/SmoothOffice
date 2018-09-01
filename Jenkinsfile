@@ -1,49 +1,22 @@
 #!/usr/bin/env groovy
-
 node {
- stage('checkout') {
+    stage('checkout') {
         checkout scm
     }
-
-    stage('check npm') {
+    stage('check npm&&node') {
         sh "npm -version"
+    sh "node -v"
     }
-
-    stage('clean') {
-        sh "chmod +x mvnw"
-        sh "./mvnw clean"
+    stage('npm install') {
+        sh "apt-get install -y npm"
     }
-
-    stage('install tools') {
-        sh "./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.11.3 -DyarnVersion=v1.6.0"
+    stage('tests') {
+        sh "npm test"
     }
-
-    stage('node install') {
-        sh "yarn add node"
-    }
-
-    stage('backend tests') {
-        try {
-            sh "./mvnw test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
-    }
-
-
-
     stage('packaging') {
-        sh "./mvnw verify  -Pprod  -DskipTests"
-        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+        sh "npm run build"
     }
-
-     stage('deploy') {
-        
-                   sh "chmod +x deploy.sh"
-                   sh "JENKINS_NODE_COOKIE=dontKillMe ./deploy.sh"            
-              
-     }
-
+    stage('deploy') {
+        sh "npm run dev"
+    }
 }

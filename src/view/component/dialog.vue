@@ -56,11 +56,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片"></upload></div>
+    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件"></upload></div>
+    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -94,11 +94,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片"></upload></div>
+    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件"></upload></div>
+    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -131,11 +131,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片"></upload></div>
+    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件"></upload></div>
+    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -169,11 +169,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片"></upload></div>
+    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件"></upload></div>
+    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">

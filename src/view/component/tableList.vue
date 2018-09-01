@@ -22,14 +22,13 @@
               @click=""><router-link :to="{name:'order_progress', query: {order_id:tableData[scope.$index].order_id}}">查看进度</router-link></el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyAlter(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'">申请修改</el-button>
+              @click="opendialogForApplyAlter(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'">申请修改</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyRevoke(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'">申请撤单</el-button>
+              @click="opendialogForApplyRevoke(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'">申请撤单</el-button>
               <el-button
               size="mini"
-              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'&& tableData[scope.$index].pact_status=='正办理'
-                &&(tableData[scope.$index].service_type == '税筹-自有业务-一次付款' || tableData[scope.$index].service_type == '税筹-转包业务-自签业务' || tableData[scope.$index].service_type == '基础--自有业务-工商业务' || tableData[scope.$index].service_type == '基础--自有业务-转包业务')">申请变更</el-button>
+              @click="opendialogForApplyChange(scope.$index, scope.row)" v-if="tableData[scope.$index].order_status=='已提交'">申请变更</el-button>
               <el-button
               size="mini"
               v-if="tableData[scope.$index].order_status=='待提交'"><router-link :to="{name:'change_order', query:{order_id:tableData[scope.$index].id}}">修改</router-link></el-button>
