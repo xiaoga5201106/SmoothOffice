@@ -56,11 +56,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
+    <div><upload flag="图片" ref="getPath1" @getImg="getImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
+    <div><upload flag="文件" ref="getPath2" @getPdf="getPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -94,11 +94,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
+    <div><upload flag="图片" ref="getPath1" @getImg="getImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
+    <div><upload flag="文件" ref="getPath2" @getPdf="getPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -131,11 +131,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
+    <div><upload flag="图片" ref="getPath1" @getImg="getImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
+    <div><upload flag="文件" ref="getPath2" @getPdf="getPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -169,11 +169,11 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片" @uploadImg="uploadImg"></upload></div>
+    <div><upload flag="图片" ref="getPath1" @getImg="getImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
-    <div><upload flag="文件" @uploadPdf="uploadPdf"></upload></div>
+    <div><upload flag="文件" ref="getPath2" @getPdf="getPdf"></upload></div>
    </div>
 
   <div slot="footer" class="dialog-footer" align="center">
@@ -439,6 +439,8 @@
         return{
                  inputData:'',
                  inputSum:0,
+                 pdfList:'',
+                 imgList:'',
                  value1:'',
                  value2:'',
                  value3:'',
@@ -461,8 +463,29 @@
                       close(){
                         this.$emit("close")
                       },
+                      //获取pdf路径
+                      getPdf(pdfList){
+                        this.pdfList = pdfList;
+                      },
+                      //获取img路径
+                       getImg(imgList){
+                        this.imgList = imgList;
+                      },
                       submit(){
-                        console.log(this.inputData)
+                        if(this.inputData.length == 0){
+                          this.$message({
+                              message: '需要填写申请信息！',
+                              type: 'warning'
+                          });
+                        }
+                        else{
+
+                            this.$refs.getPath1.uploadData();
+                            this.$refs.getPath2.uploadData();
+                          
+                            console.log(this.pdfList);
+                            console.log(this.imgList);
+                        }
                       },
                       handleInput(event){
                          this.inputData = event;

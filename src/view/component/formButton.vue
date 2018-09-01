@@ -24,7 +24,7 @@
                       	this.$emit("close");
                       },
                submit(){
-                   this.$emit("submit")
+                   this.$emit("submit");
                }
 
 		}

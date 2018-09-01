@@ -12,7 +12,7 @@
   <div class="tip">
   <el-button size="small" type="primary">选择{{flag}}</el-button>
   <i v-if="flag == '图片'">只能上传jpg/png文件,且不超过50kb</i>
-  <i v-if="flag == '文件'">只能上传PDF格式文件,且不超过50kb</i>
+  <i v-else-if="flag == '文件'">只能上传PDF格式文件,且不超过50kb</i>
  </div>
 </el-upload>
 </template>
@@ -82,7 +82,17 @@
          },
          handlePreview(file) {
           console.log(file);
-            },
+         },
+         uploadData(){
+          console.log(this.flag);
+           if(this.flag == '图片'){
+            console.log('tupa ');
+              this.$emit('getImg',this.fileList);
+           }
+           else if(this.flag == '文件'){
+              this.$emit('getPdf',this.fileList);
+           }
+         },
          beforeAvatarUpload(file){
           let fileType = file.name.substring(file.name.lastIndexOf('.')+1);
           if (fileType != 'jpg' && fileType !='png'){
