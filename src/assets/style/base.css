@@ -12,19 +12,19 @@ input,select,.el-message-box{
   font-family: '微软雅黑';
 }
 .el-button--danger {
-  background-color: #e70012;
-  border-color: #cc3300;
+  background-color: #e70012 !important;
+  border-color: #cc3300 !important;
 }
 button--danger:hover {
-  background: #cc0000;
-  border-color: #cc0000;
+  background: #cc0000 !important;
+  border-color: #cc0000 !important;
 }
 .el-tabs__item.is-active {
-  color: #006699;
+  color: #006699 !important;
 }
 .el-tabs__item.is-active {
-  color: #006699;
+  color: #006699 !important;
 }
 .el-menu {
-  border-right: 0;
+  border-right: none !important;
 }
