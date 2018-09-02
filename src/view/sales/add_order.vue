@@ -3,8 +3,8 @@
   <div id="main">
    <formBox :labels="labels" flag="newOrder"></formBox>
   	<formButton state4="提交" @submit="submit(labels)"></formButton>
-    
-  	
+
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 	import formBox from '../component/formBox'
 	import formButton from '../component/formButton'
   import contract from '../component/contract'
-	
+
   export default {
       name: "add_order",
       components:{
@@ -31,16 +31,16 @@
                	value:'',
                	items:[
                	{
-               	    item:'柳州'	
+               	    item:'柳州'
                	},
                		{
-               	    item:'贺州'	
-               	},	
+               	    item:'贺州'
+               	},
                			{
-               	    item:'钦州'	
-               	},	   
-         
-      
+               	    item:'钦州'
+               	},
+
+
                	]
                },
                  {
@@ -49,12 +49,12 @@
                	value:'',
                	items:[
                	{
-               	    item:'税筹'	
+               	    item:'税筹'
                	},
                		{
-               	    item:'基本业务'	
-               	},	
-      
+               	    item:'基本业务'
+               	},
+
                	]
                },
                   {
@@ -63,11 +63,11 @@
                	value:'',
                	items:[
                	{
-               	    item:'自有业务'	
+               	    item:'自有业务'
                	},
                		{
-               	    item:'转包业务'	
-               	},	   
+               	    item:'转包业务'
+               	},
                	]
                },
                   {
@@ -76,28 +76,28 @@
                	value:'',
                	items:[
                	{
-               	    item:'一次性付款'	
+               	    item:'一次性付款'
                	},
                		{
-               	    item:'多次付款'	
-               	},	
+               	    item:'多次付款'
+               	},
                			{
-               	    item:'自签业务'	
+               	    item:'自签业务'
                	},
                				{
-               	    item:'返佣业务'	
+               	    item:'返佣业务'
                	},
                				{
-               	    item:'工商业务'	
+               	    item:'工商业务'
                	},
                				{
-               	    item:'转包业务'	
+               	    item:'转包业务'
                	},
                				{
-               	    item:'财务业务'	
-               	},			   
-         
-      
+               	    item:'财务业务'
+               	},
+
+
                	]
                },
                    {
@@ -131,7 +131,7 @@
                 value:''
                },
           ],
-           
+
       }
 
     },
@@ -140,7 +140,7 @@
           let that=this;
           const token = localStorage.getItem('token');
              console.log(labels.length);
-             this.$axios.post('/api/event/save-slb-order-events/new',{
+             this.$axios.post(this.$baseURL+'/event/save-slb-order-events/new',{
                       area: labels[0].value,
                       assist: labels[9].value,
                       clue: labels[8].value,

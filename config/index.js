@@ -11,13 +11,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/api":{
+      /*"/api":{
         target: 'http://192.168.3.101:8010/slbapi',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/'
         }
-      }
+      }*/
     },
 
     // Various Dev Server settings
@@ -51,7 +51,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

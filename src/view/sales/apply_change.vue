@@ -191,7 +191,7 @@
         created:function(){
              const token=localStorage.getItem('token');
              let that=this;
-             this.$axios.get('/api/slb-order-applications-records',{
+             this.$axios.get(this.$baseURL+'/slb-order-applications-records',{
                    headers:{
                       "Authorization": "Bearer"+" "+token
                    }
@@ -203,8 +203,8 @@
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
                 }
-                       
-                      
+
+
                       data.forEach(function(value,index,array){
                         let status;
                         if (value.submitStates=="1") {
@@ -246,13 +246,13 @@
                                  status:status
                            })
                         }
-                         
+
                       })
               })
                .catch(function(err){
                 console.log(err)
               })
-             
+
         },
            methods:{
              searchApplyList(inputValue,selectValue){
@@ -263,7 +263,7 @@
                 let type3=selectValue[2];
                 let code=inputValue[3];
                 let name=inputValue[4];
-                
+
                 if (type1==undefined) {
                      type1=" "
                  }
@@ -279,8 +279,8 @@
                  if (name==undefined) {
                      name=" "
                  }
-                 
-                this.$axios.get('/api/slb-order-applications-records?code='+code+'&customerName='+name+'&type1='+type1+'&type2='+type2+'&type3='+type3,{
+
+                this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&type1='+type1+'&type2='+type2+'&type3='+type3,{
                        headers:{
                            "Authorization": "Bearer"+" "+token
                         }
@@ -292,8 +292,8 @@
 
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
-                }       
-                      
+                }
+
                       data.forEach(function(value,index,array){
                         let status;
                         if (value.submitStates=="1") {
@@ -338,7 +338,7 @@
                                  status:status
                            })
                         }
-                         
+
                       })
 
                 })

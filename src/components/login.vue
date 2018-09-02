@@ -53,7 +53,7 @@
           login() {
             let that=this;
             //axios登录获取token
-              this.$axios.post('/api/authenticate',{
+              this.$axios.post(this.$baseURL+'/authenticate',{
                 password:this.password,
                 rememberMe:'true',
                 username:this.username

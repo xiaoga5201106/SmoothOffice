@@ -157,7 +157,7 @@
                      createTime=" "
                  }
 
-                this.$axios.get('/api/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state,{
+                this.$axios.get(this.$baseURL+'/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state,{
                        headers:{
                            "Authorization": "Bearer"+" "+token
                         }
@@ -190,7 +190,7 @@
         created:function(){
              const token = localStorage.getItem('token');
             let that=this;
-            this.$axios.get('/api/slb-accounts',{
+            this.$axios.get(this.$baseURL+'/slb-accounts',{
                headers:{
                   "Authorization": "Bearer"+" "+token
                }

@@ -75,7 +75,6 @@ import standingbook_detail from '@/view/sales/standingbook_detail'
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
   routes: [
     {
       path: '/',

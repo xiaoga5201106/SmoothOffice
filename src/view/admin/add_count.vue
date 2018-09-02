@@ -3,7 +3,7 @@
 		<formBox :labels="labels" flag="newOrder"></formBox>
 		<formButton state4="提交" @submit="submit(labels)" ></formButton>
 	</div>
-     
+
 </template>
 
 <script>
@@ -24,20 +24,20 @@
                	value:'',
                	items:[
                	{
-               	    item:'销售'	
+               	    item:'销售'
                	},
                		{
-               	    item:'内务'	
-               	},	
+               	    item:'内务'
+               	},
                			{
-               	    item:'审核'	
-               	},	  
+               	    item:'审核'
+               	},
                				{
-               	    item:'财务'	
-               	},	
+               	    item:'财务'
+               	},
                				{
-               	    item:'外勤'	
-               	},	
+               	    item:'外勤'
+               	},
                	]
                },
                  {
@@ -46,24 +46,24 @@
                	value:'',
                	items:[
                	{
-               	    item:'柳州'	
+               	    item:'柳州'
                	},
                		{
-               	    item:'贺州'	
-               	},	
-      
+               	    item:'贺州'
+               	},
+
                	]
                },
                   {
                  key:'1',
                	title:'账号',
-               	value:''             
+               	value:''
               },
                   {
                  key:'1',
                	title:'姓名',
                	value:'',
-          
+
                },
                    {
                  key:'2',
@@ -128,9 +128,9 @@
               let that=this;
               let data=[];
             for (var i = 0; i < labels.length; i++) {
-                         data[i]=labels[i].value           
+                         data[i]=labels[i].value
             }
-               this.$axios.post('/api/event/create-slbAccount',{
+               this.$axios.post(this.$baseURL+'/event/create-slbAccount',{
                 age:data[5],
                 area:data[1],
                 login:data[2],
@@ -140,14 +140,14 @@
                 role:data[0],
                 sex:data[4],
                 xueLi:data[6],
-              
+
               },
               {
                 headers:{
                   "Authorization": "Bearer"+" "+token
                 }
               })
-            
+
             .then(function(ret){
                  that.$message({
                   message:"创建成功",
@@ -157,8 +157,8 @@
               .catch(function(err){
                  that.$message.error("创建失败！")
             })
-              
-             
+
+
              }
         }
     }

@@ -10,10 +10,11 @@ import './assets/style/base.css'
 import util from '../src/util/util.js'
 
 Vue.config.productionTip = false
-
+export const baseURL = 'http://192.168.3.101:8010/slbapi';
 Vue.use(ElementUI);
 Vue.prototype.$util = util
 Vue.prototype.$axios=axios;
+Vue.prototype.$baseURL=baseURL;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

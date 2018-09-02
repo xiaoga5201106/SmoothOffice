@@ -167,7 +167,7 @@
         this.newMenu('申请列表',this.father,'申请信息');
         const token=localStorage.getItem('token');
                 let that=this;
-                this.$axios.get('/api/slb-order-applications-records?id=1',{
+                this.$axios.get(this.$baseURL+'/slb-order-applications-records?id=1',{
                   headers:{
                     "Authorization": "Bearer"+" "+token
                   }
@@ -191,13 +191,13 @@
                                   that.labels[6].message=value.assist,
                                   that.labels[7].message=value.submitTime
                                 }
-                             
+
                        })
-                     
+
                   })
                   .catch(function(err){
                       console.log(err )
-                  })  
+                  })
       }
     }
 </script>
@@ -211,7 +211,7 @@
   font-size: 15px;
  }
  .record{
-  margin-top:15px; 
+  margin-top:15px;
  }
  .title{
   font-size: 23px;
@@ -220,7 +220,7 @@
  }
  .btn{
   float: right;
-  
+
  }
  .el-upload{
    position: absolute;

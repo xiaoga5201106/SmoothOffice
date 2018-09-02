@@ -250,7 +250,7 @@
             }
             //拿到token
             const token = localStorage.getItem('token');
-            this.$axios.get('/api/slb-orders?code='+order_id+'&isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
+            this.$axios.get(this.$baseURL+'/slb-orders?code='+order_id+'&isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
               headers: {
                 "Authorization": "Bearer" + " " + token
               }

@@ -167,7 +167,7 @@
           let that = this;
           //拿到token
           const token = localStorage.getItem('token');
-          /*this.$axios.get('/api/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10', {
+          /*this.$axios.get(this.$baseURL+'/slb-orders?isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10', {
             headers: {
               "Authorization": "Bearer" + " " + token
             }

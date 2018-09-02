@@ -127,7 +127,7 @@
                 //拿到token
                 const token = localStorage.getItem('token');
                 //废除订单
-                this.$axios.post('/api/event/cancel-slb-orders',{
+                this.$axios.post(this.$baseURL+'/event/cancel-slb-orders',{
                   slbOrderId:row.order_id,
                 },{
                   headers: {

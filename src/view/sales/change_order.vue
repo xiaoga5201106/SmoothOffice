@@ -149,7 +149,7 @@
           for( let i = 0; i<10 ;i++){
             console.log(labels[i].value)
           }
-             this.$axios.post('/api/event/save-slb-order-events/update',{
+             this.$axios.post(this.$baseURL+'/event/save-slb-order-events/update',{
                       slbOrderId:that.order_id,
                       area: labels[2].value,
                       assist: labels[9].value,
@@ -189,7 +189,7 @@
          getData(){
            let that=this;
           const token = localStorage.getItem('token');
-          this.$axios.get('/api/slb-orders/' + this.order_id,{
+          this.$axios.get(this.$baseURL+'/slb-orders/' + this.order_id,{
             headers: {
                 "Authorization": "Bearer" + " " + token
               }
