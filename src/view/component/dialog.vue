@@ -34,7 +34,7 @@
 <el-dialog v-else-if="flag == '申请修改'"
   :title="flag"
   :visible="dialogVisible"
-  width="40%"
+  width="30%"
   :before-close="handleClose"
   >
   <div class="pOff">
@@ -72,7 +72,7 @@
 <el-dialog v-else-if="flag == '申请撤单'"
   :title="flag"
   :visible="dialogVisible"
-  width="40%"
+  width="30%"
   :before-close="handleClose"
   >
   <div class="pOff">
@@ -109,7 +109,7 @@
 <el-dialog v-else-if="flag == '申请变更'"
   :title="flag"
   :visible="dialogVisible"
-  width="40%"
+  width="30%"
   :before-close="handleClose"
   >
   <div class="pOff">
@@ -386,7 +386,7 @@
     position: absolute;
     margin-left: 10px;
   }
- 
+
   .tip{
     text-align: right;
   }
@@ -482,9 +482,77 @@
 
                             this.$refs.getPath1.uploadData();
                             this.$refs.getPath2.uploadData();
-                          
-                            console.log(this.pdfList);
-                            console.log(this.imgList);
+
+                            //console.log(this.pdfList);
+                            //console.log(this.imgList);
+                            //把图片上传到阿里云
+                            let that=this;
+                            //获取token
+                            const token = localStorage.getItem('token');
+                            that.$axios.get(this.$baseURL+'/oss/benyun-test-oss/postPolicy?dir=user-dir',{
+                              headers: {
+                                "Authorization": "Bearer" + " " + token
+                              }
+                            })
+                            .then(function(res){
+                              const accessid = res.data.accessid;
+                              const signature = res.data.signature;
+                              const host =res.data.host;
+                              const dir =res.data.dir;
+                              //const expire =res.data.expire;
+                              const policy =res.data.policy;
+                              const filesName=[];
+                              //组装发送数据
+                              for(let i=0;i<that.imgList.length;i++){
+                                const request = new FormData();
+                                filesName[i]=new Date().getTime()+'.jpg';
+                                request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
+                                request.append("policy",policy);//policy规定了请求的表单域的合法性
+                                request.append("signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+                                //---以上都是阿里的认证策略
+                                request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
+                                request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
+                                request.append('file', that.imgList[i]);//需要上传的文件 file
+                                that.$axios.post(host,{request},
+                                  {
+                                    headers: {
+                                      "Authorization": "Bearer"+" "+token
+                                    }
+                                  }
+                                )
+                                  .then(function(res){
+                                    that.$message({
+                                      message : '修改成功！',
+                                      type : 'success'
+                                    });
+                                  })
+                                  .catch(function(err){
+                                    that.$message({
+                                      message : '修改失败！',
+                                      type : 'warning'
+                                    });
+                                  });
+                                /*$.ajax({
+                                  url : host,  //上传阿里地址
+                                  data : request,
+                                  processData: false,//默认true，设置为 false，不需要进行序列化处理
+                                  cache: false,//设置为false将不会从浏览器缓存中加载请求信息
+                                  async: false,//发送同步请求
+                                  contentType: false,//避免服务器不能正常解析文件---------具体的可以查下这些参数的含义
+                                  type : 'post',
+                                  success : function(callbackBody, request) { //callbackHost：success,request中就是 回调的一些信息，包括状态码什么的
+                                    imageList.push('benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/hsj/'+filesName[i]);
+                                    console.log(imageList[i])
+                                  },
+                                  error : function(returndata) {
+                                    alert(JSON.stringify(returndata));
+                                  }
+                                });*/
+                              }
+                            })
+                            .catch(function(err){
+
+                            });
                         }
                       },
                       handleInput(event){
