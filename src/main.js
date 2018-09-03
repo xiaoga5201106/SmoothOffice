@@ -15,6 +15,9 @@ Vue.use(ElementUI);
 Vue.prototype.$util = util
 Vue.prototype.$axios=axios;
 Vue.prototype.$baseURL=baseURL;
+Vue.prototype.changeRole=function(role){
+	     
+}
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -130,6 +130,21 @@
             for (var i = 0; i < labels.length; i++) {
                          data[i]=labels[i].value
             }
+            if (data[0]=="销售") {
+              data[0]="ROLE_XIAO_SHOU"
+            }
+             if (data[0]=="内务") {
+              data[0]="ROLE_NEI_WU"
+            }
+             if (data[0]=="审核") {
+              data[0]="ROLE_SHEN_HE"
+            }
+             if (data[0]=="财务") {
+              data[0]="ROLE_XIAO_SHOU"
+            }
+             if (data[0]=="外勤") {
+              data[0]="ROLE_WAI_QING"
+            }
                this.$axios.post(this.$baseURL+'/event/create-slbAccount',{
                 age:data[5],
                 area:data[1],

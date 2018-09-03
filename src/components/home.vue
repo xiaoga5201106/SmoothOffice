@@ -100,7 +100,7 @@
         }
       })
         .then(function (res) {
-          if(res.data.role=='ROLE_XIAO_SHOU'||res.data.role=='销售'){
+          if(res.data.role=='ROLE_XIAO_SHOU'){
             that.role="销售";
             that.bars=[
               /*所有第一级菜单*/
@@ -176,7 +176,7 @@
               },
             ]
           }
-          if(res.data.role=='ROLE_NEI_WU'||res.data.role=='内务'){
+          if(res.data.role=='ROLE_NEI_WU'){
             that.role="内务";
             that.bars=[
               /*所有第一级菜单*/
@@ -315,7 +315,7 @@
               },
             ]
           };
-          if(res.data.role=='ROLE_SHEN_HE'||res.data.role=='审核'){
+          if(res.data.role=='ROLE_SHEN_HE'){
             that.role="审核";
             that.bars=[
               /*所有第一级菜单*/
@@ -414,7 +414,7 @@
               }
             ]
           };
-          if(res.data.role=='ROLE_WAI_QING'||res.data.role=='外勤'){
+          if(res.data.role=='ROLE_WAI_QING'){
             that.role="外勤";
             that.bars=[
               /*所有第一级菜单*/
@@ -478,7 +478,7 @@
               }
             ]
           };
-          if(res.data.role=='ROLE_CAI_WU'||res.data.role=='财务'){
+          if(res.data.role=='ROLE_CAI_WU'){
             that.role="财务";
             that.bars=[
               /*所有第一级菜单*/
@@ -587,7 +587,7 @@
               }
             ]
           };
-          if(res.data.role=='ROLE_GAO_GUAN'||res.data.role=='高管'){
+          if(res.data.role=='ROLE_GAO_GUAN'){
             that.role="高管";
             that.bars=[
               /*所有第一级菜单*/
@@ -616,7 +616,7 @@
               }
             ]
           };
-          if(res.data.role=='ROLE_YE_WU_KUAI_JI_QING'||res.data.role=='业务会计'){
+          if(res.data.role=='ROLE_YE_WU_KUAI_JI_QING'){
             that.role="业务会计";
             that.bars=[
               /*所有第一级菜单*/
@@ -663,7 +663,7 @@
               }
             ]
           };
-          if(res.data.role=='ROLE_ADMIN'||res.data.role=='管理员'){
+          if(res.data.role=='ROLE_ADMIN'){
             that.role="管理员";
             that.bars=[
               /*所有第一级菜单*/
