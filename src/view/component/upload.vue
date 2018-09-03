@@ -1,20 +1,23 @@
 <template id="upload">
-  <el-upload
-  class="upload-demo"
-  action="string"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :on-change="handChange"
-  :file-list="fileList"
-  :before-upload="beforeAvatarUpload"
-  :auto-upload="false"
-  list-type="picture">
-  <div class="tip">
-  <el-button size="small" type="primary">选择{{flag}}</el-button>
-  <i v-if="flag == '图片'">只能上传jpg/png文件,且不超过50kb</i>
-  <i v-else-if="flag == '文件'">只能上传PDF格式文件,且不超过50kb</i>
- </div>
-</el-upload>
+ <div>  
+     <div class="tip"> 
+       <el-button size="small" type="primary" @click="choose">选择{{flag}}</el-button> 
+      <i v-if="flag == '图片'">只能上传jpg/png文件,且不超过50kb</i>
+      <i v-else-if="flag == '文件'">只能上传PDF格式文件,且不超过50kb</i>
+     </div>
+    <el-upload
+    class="upload-demo"
+    action="string"
+    :on-preview="handlePreview"
+    :on-remove="handleRemove"
+    :on-change="handChange"
+    :file-list="fileList"
+    :before-upload="beforeAvatarUpload"
+    :auto-upload="false"
+    list-type="picture">
+    </el-upload>
+     <input type="file" name="" :id="id" style="display:none" @change="tirggerFile($event)">
+ </div> 
 </template>
 <style>
   .upload-demo{
@@ -42,15 +45,8 @@
     left: 10px;
     top:60px;
    }
-  .el-upload{
-   position: absolute;
-   right:0;
-  }
-  .el-upload-list{
-    padding-top: 50px;
-  }
   .tip{
-    width: 100%
+   text-align: right;
   }
 </style>
 <script>
@@ -60,21 +56,56 @@
     data(){
           
            return{
-            
-            fileList: [],
-              
+            id:'file',
+            fileList:[],
+            fileListShow: [],              
            };
     },
     methods:{
-         handChange(file, fileList){
+         //点击按钮后触发input[type=file]事件
+         choose(){
+          document.getElementById('file').click();
+         },
+         //input事件操作
+         tirggerFile(event) {
+           let file = event.target.files;
+           let imgDataUrl =this.getObjectURL(document.getElementById(this.id).files[0]); 
+          
            this.fileList.push({
-               name: file.name,
-               url: file.url
+                 file:file
            });
+           this.fileListShow.push({
+               name: file[0].name,
+               url: imgDataUrl
+           });
+           console.log(file);
+           console.log(this.fileList);
+           
+          },
+          //获取当前图片路径
+          getObjectURL (file) {
+            let url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+              url = window.createObjectURL(file) ;
+            }else if (window.webkitURL!=undefined) { // webkit or chrome
+              url = window.webkitURL.createObjectURL(file) ;
+            }else if (window.URL!=undefined) { // mozilla(firefox)
+              url = window.URL.createObjectURL(file) ;
+            }
+            return url ;
+          },
+         handChange(file, fileList){
+          console.log(file)           
          },
          handleRemove(file, fileList) {
+             for(let i = 0; i< this.fileListShow.length; i++){
+               if(this.fileListShow[i].name == file.name){
+                   this.fileList.splice(i,1);
+                   break;
+               }
+             }
              for(let i = 0; i< this.fileList.length; i++){
-               if(this.fileList[i].name == file.name){
+               if(this.fileList[i][0].name == file.name){
                    this.fileList.splice(i,1);
                    break;
                }

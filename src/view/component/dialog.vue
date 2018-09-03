@@ -34,7 +34,7 @@
 <el-dialog v-else-if="flag == '申请修改'"
   :title="flag"
   :visible="dialogVisible"
-  width="30%"
+  width="40%"
   :before-close="handleClose"
   >
   <div class="pOff">
@@ -72,7 +72,7 @@
 <el-dialog v-else-if="flag == '申请撤单'"
   :title="flag"
   :visible="dialogVisible"
-  width="30%"
+  width="40%"
   :before-close="handleClose"
   >
   <div class="pOff">
@@ -109,7 +109,7 @@
 <el-dialog v-else-if="flag == '申请变更'"
   :title="flag"
   :visible="dialogVisible"
-  width="30%"
+  width="40%"
   :before-close="handleClose"
   >
   <div class="pOff">
@@ -385,6 +385,7 @@
     font-size: 18px;
     position: absolute;
     margin-left: 10px;
+ 
   }
 
   .tip{
