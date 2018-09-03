@@ -63,8 +63,10 @@
                 const token = res.data.id_token;
                 localStorage.setItem('token', token);
                 that.$router.push({path: '/sale_home'});
+               
               })
               .catch(function(err){
+                 console.log(err);
                 that.$message.error('账号或密码错误');
               });
           }

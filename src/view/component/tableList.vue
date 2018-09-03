@@ -157,7 +157,7 @@
             submit(index,row){
               let that = this;
               const token = localStorage.getItem('token');
-                this.$axios.post('api/event/submit-slb-orders',{
+                this.$axios.post(this.$baseURL+'/event/submit-slb-orders',{
                   slbOrderId:row.order_id
                   },
                   {

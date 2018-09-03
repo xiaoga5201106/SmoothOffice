@@ -100,7 +100,9 @@
         }
       })
         .then(function (res) {
+
           if(res.data.role=='ROLE_XIAO_SHOU'){
+
             that.role="销售";
             that.bars=[
               /*所有第一级菜单*/
