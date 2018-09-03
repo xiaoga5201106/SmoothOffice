@@ -28,3 +28,6 @@ button--danger:hover {
 .el-menu {
   border-right: none !important;
 }
+.el-tabs__active-bar{
+  background-color: #006699 !important;
+}

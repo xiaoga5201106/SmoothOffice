@@ -56,7 +56,7 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片" ref="getPath1" @getImg="getImg"></upload></div>
+    <div><upload flag="图片" ref="getPath1" @returnFile="returnFile"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
@@ -385,7 +385,7 @@
     font-size: 18px;
     position: absolute;
     margin-left: 10px;
- 
+
   }
 
   .tip{
@@ -441,7 +441,8 @@
                  inputData:'',
                  inputSum:0,
                  pdfList:'',
-                 imgList:'',
+                 imgList:[],
+                 ossObject:[],
                  value1:'',
                  value2:'',
                  value3:'',
@@ -468,9 +469,9 @@
                       getPdf(pdfList){
                         this.pdfList = pdfList;
                       },
-                      //获取img路径
-                       getImg(imgList){
-                        this.imgList = imgList;
+                      //每次点击选择图片的时候，把图片增加到数组
+                      returnFile(){
+                        this.imgList.push(document.getElementsByClassName("el-upload__input")[0].files[0]);
                       },
                       submit(){
                         if(this.inputData.length == 0){
@@ -484,8 +485,6 @@
                             this.$refs.getPath1.uploadData();
                             this.$refs.getPath2.uploadData();
 
-                            //console.log(this.pdfList);
-                            //console.log(this.imgList);
                             //把图片上传到阿里云
                             let that=this;
                             //获取token
@@ -514,42 +513,40 @@
                                 request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
                                 request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
                                 request.append('file', that.imgList[i]);//需要上传的文件 file
-                                that.$axios.post(host,{request},
-                                  {
-                                    headers: {
-                                      "Authorization": "Bearer"+" "+token
-                                    }
-                                  }
-                                )
+                                that.ossObject.push({"fileName":filesName[i],"ossUrl": "https://benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/user-dir/1536008029915.jpg"})
+                                /*that.$axios.post(host,request)
                                   .then(function(res){
-                                    that.$message({
-                                      message : '修改成功！',
-                                      type : 'success'
-                                    });
+                                    that.ossObject.push({"fileName":filesName[i],"ossUrl": "https://benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/user-dir/"+filesName[i]})
+                                    console.log(that.ossObject)
                                   })
                                   .catch(function(err){
-                                    that.$message({
-                                      message : '修改失败！',
-                                      type : 'warning'
-                                    });
-                                  });
-                                /*$.ajax({
-                                  url : host,  //上传阿里地址
-                                  data : request,
-                                  processData: false,//默认true，设置为 false，不需要进行序列化处理
-                                  cache: false,//设置为false将不会从浏览器缓存中加载请求信息
-                                  async: false,//发送同步请求
-                                  contentType: false,//避免服务器不能正常解析文件---------具体的可以查下这些参数的含义
-                                  type : 'post',
-                                  success : function(callbackBody, request) { //callbackHost：success,request中就是 回调的一些信息，包括状态码什么的
-                                    imageList.push('benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/hsj/'+filesName[i]);
-                                    console.log(imageList[i])
-                                  },
-                                  error : function(returndata) {
-                                    alert(JSON.stringify(returndata));
-                                  }
-                                });*/
+                                  });*/
                               }
+                              //把oss图片上传到我们本地服务器
+                              that.$axios.post(that.$baseURL+'/event/apply-for-udpate-slb-orders',{
+                                  imageList: [{"fileName":"1536008029915.jpg","ossUrl": "https://benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/user-dir/1536008029915.jpg"}],
+                                  message: "测试上传图片",
+                                  pdfList: [],
+                                  slbOrderId: 1535509168137
+                                },
+                                {
+                                  headers: {
+                                    "Authorization": "Bearer"+" "+token
+                                  }
+                                }
+                              )
+                                .then(function(res){
+                                  that.$message({
+                                    message : '修改成功！',
+                                    type : 'success'
+                                  });
+                                })
+                                .catch(function(err){
+                                  that.$message({
+                                    message : '修改失败！',
+                                    type : 'warning'
+                                  });
+                                });
                             })
                             .catch(function(err){
 
