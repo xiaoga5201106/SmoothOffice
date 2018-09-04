@@ -16,10 +16,11 @@
         	formButton
         },
         data(){
-        	return{
+        	return{          
              labels:[
                {
                	key:'2',
+                prop:"role",
                	title:'职务',
                	value:'',
                	items:[
@@ -42,6 +43,7 @@
                },
                  {
                  key:'2',
+                  prop:"area",
                	title:'所属区域',
                	value:'',
                	items:[
@@ -56,17 +58,20 @@
                },
                   {
                  key:'1',
+                  prop:"loginKey",
                	title:'账号',
                	value:''
               },
                   {
                  key:'1',
+                  prop:"name",
                	title:'姓名',
                	value:'',
 
                },
                    {
                  key:'2',
+                  prop:"sex",
                	title:'性别',
                 value:'',
                 items:[
@@ -81,11 +86,13 @@
                },
                    {
                  key:'1',
+                 prop:'age',
                	title:'年龄',
                 value:'',
                },
                     {
                  key:'2',
+                  prop:"xueLi",
                	title:'学历',
                 value:'',
                 items:[
@@ -111,11 +118,13 @@
                },
                     {
                  key:'1',
+                  prop:"passWord",
                	title:'密码',
                 value:''
                },
                     {
                  key:'1',
+                  prop:"rePassWord",
                	title:'确认密码',
                 value:''
                },
@@ -127,6 +136,7 @@
               const token = localStorage.getItem('token');
               let that=this;
               let data=[];
+              let str=/(18|19)|([2-5]\d)|(6[0-5])/;
             for (var i = 0; i < labels.length; i++) {
                          data[i]=labels[i].value
             }
@@ -145,7 +155,20 @@
              if (data[0]=="外勤") {
               data[0]="ROLE_WAI_QING"
             }
-               this.$axios.post(this.$baseURL+'/event/create-slbAccount',{
+               if (data[2]=="") {
+                    that.$message.error("账号不能为空！")
+               }
+                else if (!str.test(data[5])) {
+                    that.$message.error("年龄必须在18-65岁之间!")
+               }
+               else if(data[7].length<6){
+                that.$message.error("密码必须大于6位！")
+               }
+                else if(data[8]!=data[7]){
+                that.$message.error("两次密码不同！")
+               }
+               else{
+                    this.$axios.post(this.$baseURL+'/event/create-slbAccount',{
                 age:data[5],
                 area:data[1],
                 login:data[2],
@@ -170,13 +193,16 @@
                  })
             })
               .catch(function(err){
-                 that.$message.error("创建失败！")
+                   that.$message.error("创建失败") 
             })
+               }
+           
 
 
              }
+                }
         }
-    }
+    
 </script>
 
 <style scoped>

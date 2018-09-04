@@ -66,6 +66,7 @@
       };
     },
     methods:{
+
       handChange(file, fileList){
         this.fileList.push({
           name: file.name,
@@ -104,7 +105,11 @@
           return false;
         }
       }
+
+    
+     }
+
     }
-  }
+
 
 </script>

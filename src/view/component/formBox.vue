@@ -3,7 +3,8 @@
     <el-form   label-width="150px" label-position="left">
      <el-form-item 
       v-for="label in labels"
-       :label="label.title">
+       :label="label.title"
+       :prop="label.prop">
       <span v-if="label.key=='0'" style="width:400px">{{label.value}}</span>
       <el-input v-else-if="label.key=='1'" style="width:400px" :placeholder="'请输入'+label.title" v-model="label.value" ></el-input>
       <el-select v-else-if="label.key=='2'" style="width:400px" v-model="label.value">
@@ -43,15 +44,16 @@
 <script>
   export default {
     name:'formBox',
-    props:["labels","flag","rules"],
+    props:["labels","flag"],
     data() {
       return {
-           
+      
       }
     },
     methods: {
       onSubmit() {
-        console.log('1111');
+
+
       }
     }
   }
