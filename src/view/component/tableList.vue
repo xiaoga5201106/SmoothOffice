@@ -44,19 +44,19 @@
           <div v-else-if="type == 'wait_audit'">
                 <el-button
               size="mini">
-              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'wait_audit',father:father}}">查看申请信息</router-link></el-button>
+              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id,id:tableData[scope.$index].id, type:'wait_audit',father:father}}">查看申请信息</router-link></el-button>
           </div>
 
           <div v-else-if="type == 'pass'">
                 <el-button
               size="mini">
-              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'pass',father:father}}">查看申请信息</router-link></el-button>
+              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id,id:tableData[scope.$index].id, type:'pass',father:father}}">查看申请信息</router-link></el-button>
           </div>
 
           <div v-else-if="type == 'no_pass'">
                 <el-button
               size="mini">
-              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, type:'no_pass',father:father}}">查看信息</router-link></el-button>
+              <router-link :to="{name:'apply_information', query:{order_id:tableData[scope.$index].order_id, id:tableData[scope.$index].id,type:'no_pass',father:father}}">查看信息</router-link></el-button>
           </div>
 
           <div v-else-if="type == 'standing_book'">

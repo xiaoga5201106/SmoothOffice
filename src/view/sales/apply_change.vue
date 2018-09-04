@@ -26,6 +26,9 @@
             type:'wait_audit',
             /*待审核表头*/
             titles:[
+            { prop:'id',
+                label:"序号"
+              },
               { prop:'order_id',
                 label:"订单编号"
               },
@@ -56,6 +59,9 @@
             type:'pass',
             /*其他表头*/
             titles:[
+              { prop:'id',
+                label:"序号"
+              },
               { prop:'order_id',
                 label:"订单编号"
               },
@@ -95,6 +101,9 @@
             type:'no_pass',
             /*其他表头*/
             titles:[
+             { prop:'id',
+                label:"序号"
+              },
               { prop:'order_id',
                 label:"订单编号"
               },
@@ -199,53 +208,63 @@
               .then(function(ret){
                 let data=ret.data;
                 let menu=[];
-
+                console.log(111)
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
                 }
 
 
+
                       data.forEach(function(value,index,array){
-                        let status;
-                        if (value.submitStates=="1") {
+                        if (value.type=="3") {
+                           let status;
+                        if (value.states=="1") {
                                 status="待审核"
                         }
-                        if (value.submitStates=="2") {
+                        if (value.states=="2") {
                                 status="已通过"
                         }
-                        if (value.submitStates=="3") {
+                        if (value.states=="3") {
                                 status="未通过"
                         }
-                        if (value.submitStates==menu[0].name) {
+                        if (value.states==menu[0].name) {
                             menu[0].tableData.push({
-                                 order_id:value.id,
+                                 id:value.id,
+                                 order_id:value.slbOrder.code,
                                  contract_id:'',
-                                 name:value.customerName,
-                                 service_type:value.type1+'-'+value.type2+'-'+value.type3,
-                                 apply_time:value.submitTime,
-                                 status:status
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
                            })
                         }
-                         else if (value.submitStates==menu[1].name) {
+                         else if (value.states==menu[1].name) {
                             menu[1].tableData.push({
-                                  order_id:value.id,
+                                 id:value.id,
+                                 order_id:value.slbOrder.code,
                                  contract_id:'',
-                                 name:value.customerName,
-                                 service_type:value.type1+'-'+value.type2+'-'+value.type3,
-                                 apply_time:value.submitTime,
-                                 status:status
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
                            })
                         }
-                         else  if (value.submitStates==menu[2].name) {
+                         else  if (value.states==menu[2].name) {
                             menu[2].tableData.push({
-                                  order_id:value.id,
+                                 id:value.id,
+                                order_id:value.slbOrder.code,
                                  contract_id:'',
-                                 name:value.customerName,
-                                 service_type:value.type1+'-'+value.type2+'-'+value.type3,
-                                 apply_time:value.submitTime,
-                                 status:status
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
                            })
                         }
+                        }
+                       
 
                       })
               })
@@ -295,48 +314,56 @@
                 }
 
                       data.forEach(function(value,index,array){
-                        let status;
-                        if (value.submitStates=="1") {
+                        if (value.type=="3") {
+                            let status;
+                        if (value.states=="1") {
                                 status="待审核"
                         }
-                        if (value.submitStates=="2") {
+                        if (value.states=="2") {
                                 status="已通过"
                         }
-                        if (value.submitStates=="3") {
+                        if (value.states=="3") {
                                 status="未通过"
                         }
-                        if (value.submitStates==menu[0].name) {
-                           menu[0].tableData=[]
+                        if (value.states==menu[0].name) {
+                            menu[0].tableData=[];
                             menu[0].tableData.push({
-                                 order_id:value.code,
+                                 id:value.id,
+                                 order_id:value.slbOrder.code,
                                  contract_id:'',
-                                 name:value.customerName,
-                                 service_type:value.type1+'-'+value.type2+'-'+value.type3,
-                                 apply_time:value.submitTime,
-                                 status:status
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
                            })
                         }
-                         else if (value.submitStates==menu[1].name) {
-                          menu[1].tableData=[]
+                         else if (value.states==menu[1].name) {
+                          menu[0].tableData=[];
                             menu[1].tableData.push({
-                                  order_id:value.code,
+                                 id:value.id,
+                                 order_id:value.slbOrder.code,
                                  contract_id:'',
-                                 name:value.customerName,
-                                 service_type:value.type1+'-'+value.type2+'-'+value.type3,
-                                 apply_time:value.submitTime,
-                                 status:status
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
                            })
                         }
-                         else  if (value.submitStates==menu[2].name) {
-                          menu[2].tableData=[]
+                         else  if (value.states==menu[2].name) {
+                          menu[0].tableData=[];
                             menu[2].tableData.push({
-                                  order_id:value.code,
+                                 id:value.id,
+                                order_id:value.slbOrder.code,
                                  contract_id:'',
-                                 name:value.customerName,
-                                 service_type:value.type1+'-'+value.type2+'-'+value.type3,
-                                 apply_time:value.submitTime,
-                                 status:status
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
                            })
+                        }
                         }
 
                       })

@@ -6,7 +6,7 @@
     </div>
     <div class="record">
       <div>
-        <div class="title">申请修改记录</div>
+        <div class="title">{{this.father+'信息'}}</div>
         <div class="btn" v-if="type == 'no_pass'"><el-button size="medium" type="danger"
               @click="showDialogbox">再次申请</el-button></div>
       </div>
@@ -33,6 +33,7 @@
           type:this.$route.query.type,
           father:this.$route.query.father,
            order_id:this.$route.query.order_id,
+           id:this.$route.query.id,
           show:false,
           labels:[
                {
@@ -106,47 +107,7 @@
                 label:"审核备注"
               }
             ],
-            tableData:[{
-              id: '01',
-              apply_remark: '申请修改合同金额',
-              apply_time: '2018-8-3 10:11:29',
-              vouchers_content:'这里是图片',
-              type:'申请修改凭证',
-              auditor:'李姐',
-              auditor_time:'2018-8-3 10:11:29',
-              status:'不通过',
-              auditor_remark:'凭证上传出错'
-              }, {
-                id: '02',
-              apply_remark: '申请修改合同金额',
-              apply_time: '2018-8-3 10:11:29',
-              vouchers_content:'这里是图片',
-              type:'申请修改凭证',
-              auditor:'李姐',
-              auditor_time:'2018-8-3 10:11:29',
-              status:'不通过',
-              auditor_remark:'凭证上传出错'
-              }, {
-                id: '03',
-              apply_remark: '申请修改合同金额',
-              apply_time: '2018-8-3 10:11:29',
-              vouchers_content:'这里是图片',
-              type:'申请修改凭证',
-              auditor:'李姐',
-              auditor_time:'2018-8-3 10:11:29',
-              status:'不通过',
-              auditor_remark:'凭证上传出错'
-              }, {
-                id: '04',
-              apply_remark: '申请修改合同金额',
-              apply_time: '2018-8-3 10:11:29',
-              vouchers_content:'这里是图片',
-              type:'申请修改凭证',
-              auditor:'李姐',
-              auditor_time:'2018-8-3 10:11:29',
-              status:'不通过',
-              auditor_remark:'凭证上传出错'
-              }],
+            tableData:[],
         }
       },
       methods:{
@@ -167,7 +128,7 @@
         this.newMenu('申请列表',this.father,'申请信息');
         const token=localStorage.getItem('token');
                 let that=this;
-                this.$axios.get(this.$baseURL+'/slb-order-applications-records?id=1',{
+                this.$axios.get(this.$baseURL+'/slb-order-applications-records?id='+that.id,{
                   headers:{
                     "Authorization": "Bearer"+" "+token
                   }
@@ -180,16 +141,40 @@
                           that.labels[i].message
                     }
                        data.forEach(function(value,index,array){
-                                if (order_id==value.code) {
+                        let status;
+                        if (value.states=="1") {
+                                status="待审核"
+                        }
+                        if (value.states=="2") {
+                                status="已通过"
+                        }
+                        if (value.states=="3") {
+                                status="未通过"
+                        }
+                                if (order_id==value.slbOrder.code) {
                                   console.log(111)
-                                  that.labels[0].message=value.code,
-                                  that.labels[1].message=value.customerName,
-                                  that.labels[2].message=value.area,
-                                  that.labels[3].message=value.partnerName,
-                                  that.labels[4].message=value.type1+'-'+value.type2+'-'+value.type3,
-                                  that.labels[5].message=value.partnerSale,
-                                  that.labels[6].message=value.assist,
-                                  that.labels[7].message=value.submitTime
+                                  that.labels[0].message=value.slbOrder.code,
+                                  that.labels[1].message=value.slbOrder.customerName,
+                                  that.labels[2].message=value.slbOrder.area,
+                                  that.labels[3].message=value.slbOrder.partnerName,
+                                  that.labels[4].message=value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                  that.labels[5].message=value.slbOrder.partnerSale,
+                                  that.labels[6].message=value.slbOrder.assist,
+                                  that.labels[7].message=value.slbOrder.submitTime,
+                                  that.tableData=[
+                                      {
+                                        id:that.id,
+                                        apply_remark:value.message,
+                                        apply_time:value.createTime,
+                                        type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                        auditor:value.auditor,
+                                        auditor_time:value.auditTime,
+                                        status:status,
+                                        auditor_remark:value.auditMessage,
+                                        vouchers_content:''
+
+                                      }
+                                  ]
                                 }
 
                        })
