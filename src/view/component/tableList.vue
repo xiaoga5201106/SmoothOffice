@@ -1,7 +1,7 @@
 <template id="tableList">
   <el-table
     :data="tableData"
-    style="width: 100%"
+    style="width: 100%"  
     :header-cell-style="headerColor"
     :cell-style="cellStyle">
     <el-table-column
@@ -88,6 +88,7 @@
         inject: ['reload'],
         data() {
         return {
+          height:200,
         }
       },
       methods: {
@@ -219,8 +220,10 @@
             handleDelete(index,row){
               console.log(index);
             }
-      }
-    }
+      },
+      
+}
+    
 </script>
 
 <style scoped>

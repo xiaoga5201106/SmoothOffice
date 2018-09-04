@@ -5,8 +5,8 @@
     :on-preview="handlePreview"
     :on-remove="handleRemove"
     :on-change="handChange"
-    :file-list="fileList"
-    :before-upload="beforeAvatarUpload"
+    :file-list="fileListShow"
+    :accept="type"
     :auto-upload="false"
     list-type="picture">
     <div class="tip">
@@ -18,7 +18,6 @@
 </template>
 <style>
   .upload-demo{
-
     position: relative;
   }
   .el-upload-list{
@@ -58,23 +57,48 @@
     name:"upload",
     props:["flag"],
     data(){
-
       return{
-
-        fileList: [],
-
+        fileListShow: [],
+        fileList:[],
+        type:[],
       };
     },
     methods:{
 
       handChange(file, fileList){
-        this.fileList.push({
-          name: file.name,
-          url: file.url
-        });
-        this.$emit('returnFile');
+          let tempFile = '';
+        if(this.flag == '图片'){
+          tempFile = document.getElementsByClassName("el-upload__input")[0].files[0];
+        }
+        else if(this.flag == '文件'){
+          tempFile = document.getElementsByClassName("el-upload__input")[1].files[0];
+        }
+         //判断是否超过大小
+         //把下面个push代码放在if外面是因为组件本身原因，导致即使没有push进入fileListShow也会显示出图片
+         //所以在外面统一放进去后在else里删除最后一个元素
+         this.fileListShow.push({
+            name: file.name,
+            url: file.url
+          });
+        if((tempFile.size/1024) < 50){           
+           this.fileList.push(tempFile);
+        }
+        else{
+          this.$message({
+            message : '超出大小限制！',
+            type : 'warning'
+          })
+          this.fileListShow.splice(this.fileListShow.length-1,1);
+        }
+
       },
       handleRemove(file, fileList) {
+        for(let i = 0; i< this.fileListShow.length; i++){
+          if(this.fileListShow[i].name == file.name){
+            this.fileListShow.splice(i,1);
+            break;
+          }
+        }
         for(let i = 0; i< this.fileList.length; i++){
           if(this.fileList[i].name == file.name){
             this.fileList.splice(i,1);
@@ -83,33 +107,27 @@
         }
       },
       handlePreview(file) {
-
       },
-      uploadData(){
-        console.log(this.flag);
+      getUploadData(){
         if(this.flag == '图片'){
-          console.log('tupa ');
           this.$emit('getImg',this.fileList);
         }
         else if(this.flag == '文件'){
           this.$emit('getPdf',this.fileList);
         }
       },
-      beforeAvatarUpload(file){
-        let fileType = file.name.substring(file.name.lastIndexOf('.')+1);
-        if (fileType != 'jpg' && fileType !='png'){
-          this.$message({
-            message: '上传文件只能是 jpg、png格式!',
-            type: 'warning'
-          });
-          return false;
-        }
-      }
 
-    
+     },
+     //限制上传的文件格式
+     created :function(){
+       if(this.flag == '图片'){
+         this.type='.jpg,.png';
+       }
+       else if(this.flag == '文件'){
+         this.type='.pdf';
+       }
      }
 
+
     }
-
-
 </script>

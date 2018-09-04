@@ -56,7 +56,7 @@
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
-    <div><upload flag="图片" ref="getPath1" @returnFile="returnFile"></upload></div>
+    <div><upload flag="图片" ref="getPath1" @getImg="getImg"></upload></div>
    </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(文件)</div>
@@ -385,9 +385,7 @@
     font-size: 18px;
     position: absolute;
     margin-left: 10px;
-
   }
-
   .tip{
     text-align: right;
   }
@@ -431,7 +429,7 @@
  import formButton from './formButton'
   export default{
       name:'dialogbox',
-      props:["datas","dialogVisible","flag"],
+      props:["datas","dialogVisible","flag","id"],
       components:{
          upload,
          formButton,
@@ -440,9 +438,10 @@
         return{
                  inputData:'',
                  inputSum:0,
-                 pdfList:'',
+                 pdfList:[],
                  imgList:[],
-                 ossObject:[],
+                 ossImgObject:[],
+                 ossPdfObject:[],
                  value1:'',
                  value2:'',
                  value3:'',
@@ -457,7 +456,7 @@
       },
       methods: {
                       closedialog(){
-                      	this.$emit("close")
+                        this.$emit("close")
                       },
                       handleClose(){
                         this.$emit("close")
@@ -469,9 +468,8 @@
                       getPdf(pdfList){
                         this.pdfList = pdfList;
                       },
-                      //每次点击选择图片的时候，把图片增加到数组
-                      returnFile(){
-                        this.imgList.push(document.getElementsByClassName("el-upload__input")[0].files[0]);
+                      getImg(imgList){
+                        this.imgList = imgList;
                       },
                       submit(){
                         if(this.inputData.length == 0){
@@ -481,10 +479,8 @@
                           });
                         }
                         else{
-
-                            this.$refs.getPath1.uploadData();
-                            this.$refs.getPath2.uploadData();
-
+                            this.$refs.getPath1.getUploadData();
+                            this.$refs.getPath2.getUploadData();
                             //把图片上传到阿里云
                             let that=this;
                             //获取token
@@ -495,6 +491,7 @@
                               }
                             })
                             .then(function(res){
+                              console.log(res);
                               const accessid = res.data.accessid;
                               const signature = res.data.signature;
                               const host =res.data.host;
@@ -513,21 +510,50 @@
                                 request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
                                 request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
                                 request.append('file', that.imgList[i]);//需要上传的文件 file
-                                that.ossObject.push({"fileName":filesName[i],"ossUrl": "https://benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/user-dir/1536008029915.jpg"})
-                                /*that.$axios.post(host,request)
+                                //得到oss路径
+                                that.$axios.post(host,request)
                                   .then(function(res){
-                                    that.ossObject.push({"fileName":filesName[i],"ossUrl": "https://benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/user-dir/"+filesName[i]})
-                                    console.log(that.ossObject)
+                                    that.ossImgObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+                                    console.log(that.ossImgObject)
                                   })
                                   .catch(function(err){
-                                  });*/
+                                  });
+                              }
+                              for(let i=0;i<that.pdfList.length;i++){
+                                const request = new FormData();
+                                filesName[i]=new Date().getTime()+'.pdf';
+                                request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
+                                request.append("policy",policy);//policy规定了请求的表单域的合法性
+                                request.append("signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+                                //---以上都是阿里的认证策略
+                                request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
+                                request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
+                                request.append('file', that.imgList[i]);//需要上传的文件 file
+                                //得到oss路径
+                                that.$axios.post(host,request)
+                                  .then(function(res){
+                                    that.ossPdfObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+                                    console.log(that.ossPdfObject)
+                                  })
+                                  .catch(function(err){
+                                  });
                               }
                               //把oss图片上传到我们本地服务器
-                              that.$axios.post(that.$baseURL+'/event/apply-for-udpate-slb-orders',{
-                                  imageList: [{"fileName":"1536008029915.jpg","ossUrl": "https://benyun-test-oss.oss-cn-shenzhen.aliyuncs.com/user-dir/1536008029915.jpg"}],
-                                  message: "测试上传图片",
-                                  pdfList: [],
-                                  slbOrderId: 1535509168137
+                              let url = '';
+                              if(that.flag == '申请修改'){
+                                  url = '/event/apply-for-udpate-slb-orders';
+                              }
+                              else if(that.flag == '申请变更'){
+                                  url = '/event/apply-for-change-orders';
+                              }
+                              else if(that.flag == '申请撤单'){
+                                  url = '/event/apply-for-revoke-slb-orders';
+                              }
+                              that.$axios.post(that.$baseURL + url,{
+                                  imageList: that.ossImgObject,
+                                  message: that.inputData,
+                                  pdfList: that.ossPdfObject,
+                                  slbOrderId: that.id
                                 },
                                 {
                                   headers: {
@@ -536,20 +562,21 @@
                                 }
                               )
                                 .then(function(res){
+                                  console.log(res);
                                   that.$message({
-                                    message : '修改成功！',
+                                    message : '提交成功！',
                                     type : 'success'
                                   });
                                 })
                                 .catch(function(err){
                                   that.$message({
-                                    message : '修改失败！',
+                                    message : '提交失败！',
                                     type : 'warning'
                                   });
                                 });
                             })
                             .catch(function(err){
-
+                              console.log(err)
                             });
                         }
                       },

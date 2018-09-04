@@ -4,7 +4,7 @@
     <toolBtn :btns="btns"></toolBtn>
     <tableList :titles="titles" :tableData="tableData" operate="true" @open="open" @refresh="refresh" type="order_list"></tableList>
 
-    <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag"></dialogbox>
+    <dialogbox :dialogVisible="show" :datas="datas" @close="show=false" :flag="flag" :id="id"></dialogbox>
 
     <pagination :listTotal="listTotal" @page="page" :paginationShow="paginationShow"></pagination>
   </div>
@@ -28,7 +28,7 @@
         data () {
           return{
             show:false,
-            index:0,
+            id:0,
             datas:"",
             flag:"",
             paginationShow:true,
@@ -153,12 +153,12 @@
 
         methods: {
           //返回点击的index值
-          open(index, flag) {
+          open(id, flag) {
             this.show = true;
-            this.index = index;
+            this.id = id;
             this.flag = flag;
             //获取当前点击行里的内容
-            let data = this.getJsonById(this.index, this.tableData);
+            let data = this.getJsonById(this.id, this.tableData);
             let label = [];
             let data1 = [];
             let dataIndex = 0;
