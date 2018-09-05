@@ -14,20 +14,25 @@
 import tableList from './tableList'
     export default {
         name: "tabs",
-        props:['Menutabs','operate','father'],
+        props:['Menutabs','operate','father','queryState'],
         components:{
           tableList,
         },
         data() {
           return {
-            activeName: '1'
+            activeName: "1"
           }
         },
         methods: {
           handleClick(tab, event) {
             console.log(tab, event);
           }
-        }
+        },
+      created(){
+          if(this.queryState!=undefined){
+            this.activeName=this.queryState;
+          }
+      }
     }
 </script>
 

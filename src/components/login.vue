@@ -14,6 +14,7 @@
             </el-form-item>
             <el-form-item label="验证码" prop="code">
               <el-input></el-input>
+              <el-button type="primary" size="small">获取验证码</el-button>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" @click="login()"><router-link to="">登 录</router-link></el-button>
@@ -63,7 +64,7 @@
                 const token = res.data.id_token;
                 localStorage.setItem('token', token);
                 that.$router.push({path: '/sale_home'});
-               
+
               })
               .catch(function(err){
                  console.log(err);
@@ -88,20 +89,22 @@
     width: 420px;
     padding: 30px;
     margin: 150px auto 0 auto;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.3);
   }
-  .el-button{
+  .el-button--danger{
     width: 100%;
   }
-  /*h1{
-    font-weight: lighter;
-    color:#f56c6c;
-  }*/
   .login_logo img{
     width: 40%;
     background: transparent;
   }
   .el-tabs__item{
     font-size: 16px;
+    position: relative;
+  }
+  .el-button--primary{
+    position: absolute;
+    right: 4px;
+    top: 4px;
   }
 </style>

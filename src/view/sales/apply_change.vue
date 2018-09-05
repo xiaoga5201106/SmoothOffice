@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <searchTools :searchDatas="searchDatas" level="0" @search="searchApplyList"></searchTools>
-    <tabs :Menutabs="Menutabs" operate="true" father="apply_change"></tabs>
+    <tabs :Menutabs="Menutabs" operate="true" father="apply_change" :queryState="queryState"></tabs>
     <pagination></pagination>
   </div>
 </template>
@@ -11,7 +11,8 @@
     import searchTools from'../component/searchTools'
     import pagination from'../component/pagination'
     export default {
-         name: "apply_change",
+        name: "apply_change",
+        inject: ['newMenu'],
         components: {
           tabs,
           searchTools,
@@ -19,6 +20,8 @@
         },
       data () {
         return {
+          /*工作台跳转过来的query*/
+          queryState:this.$route.query.state,
           /*tabs标签页*/
           Menutabs:[{
             label:'待审核',
@@ -146,7 +149,7 @@
             placeholder:'请选择',
             option:[{
               value: '1',
-              label: '筹税'
+              label: '税筹'
             },{
               value: '2',
               label: '基础业务'
@@ -156,7 +159,7 @@
             placeholder:'请选择',
             option:[{
               value: '3',
-              label: '自由业务'
+              label: '自有业务'
             },{
               value: '4',
               label: '转包业务'
@@ -168,23 +171,14 @@
               value: '5',
               label: '一次付款'
             },{
-              value: '6',
-              label: '多次付款'
-            },{
               value: '7',
               label: '自签业务'
-            },{
-              value: '8',
-              label: '返佣业务'
             },{
               value: '9',
               label: '工商业务'
             },{
               value: '10',
               label: '转包业务'
-            },{
-              value: '11',
-              label: '财务业务'
             }]
           },{
             item:'订单编号',
@@ -198,6 +192,7 @@
           }
         },
         created:function(){
+             this.newMenu('申请列表','申请变更');
              const token=localStorage.getItem('token');
              let that=this;
              this.$axios.get(this.$baseURL+'/slb-order-applications-records',{
@@ -264,7 +259,7 @@
                            })
                         }
                         }
-                       
+
 
                       })
               })

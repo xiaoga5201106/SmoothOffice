@@ -19,7 +19,8 @@
               num1Color:"blue",
               num2:"2",
               num2Title:"待提交订单数",
-              num2Color:"red"
+              num2Color:"red",
+              href:"/order_list"
             },
             {
               title:"申请修改",
@@ -28,7 +29,8 @@
               num1Color:"red",
               num2:"2",
               num2Title:"不通过",
-              num2Color:"red"
+              num2Color:"red",
+              href:"/apply_edit"
             },
             {
               title:"申请撤单",
@@ -37,7 +39,8 @@
               num1Color:"red",
               num2:"2",
               num2Title:"不通过",
-              num2Color:"red"
+              num2Color:"red",
+              href:"/apply_cancle"
             },
             {
               title:"申请变更",
@@ -46,7 +49,8 @@
               num1Color:"red",
               num2:"2",
               num2Title:"不通过",
-              num2Color:"red"
+              num2Color:"red",
+              href:"/apply_change"
             }
           ]
         }

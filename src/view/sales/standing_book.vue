@@ -79,7 +79,7 @@
               id: '2017-H-0001',
               service_type: '税筹-转包业务流程-自签业务',
               signData:'2017-8.15',
-              project:'筹税',
+              project:'税筹',
               newName:'贺州百传股权投资合伙企业(有限合伙)',
               party:'甲方：北京百传中云信息科技有限公司 乙方：广西神州易桥企业管理有限公司',
               sales:'陈诚',
@@ -94,7 +94,7 @@
               id: '2017-H-00012',
               service_type: '税筹-自有业务-一次性付款',
               signData:'2017-9.18',
-              project:'筹税',
+              project:'税筹',
               newName:'贺州德雅股权投资合伙企业(有限合伙)',
               party:'甲方：周康 乙方：广西神州易桥企业管理有限公司',
               sales:'肖婕',
@@ -112,7 +112,7 @@
               placeholder:'请选择',
               option:[{
                 value: '1',
-                label: '筹税'
+                label: '税筹'
               },{
                 value: '2',
                 label: '基础业务'
@@ -122,7 +122,7 @@
               placeholder:'请选择',
               option:[{
                 value: '3',
-                label: '自由业务'
+                label: '自有业务'
               },{
                 value: '4',
                 label: '转包业务'

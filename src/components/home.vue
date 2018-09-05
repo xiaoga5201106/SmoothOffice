@@ -723,6 +723,10 @@
     background-color: #354b60;
     color: #333;
     text-align: left;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
   }
 
   .el-main {
@@ -734,7 +738,9 @@
  .el-container {
     min-height: 100%;
   }
-
+.is-vertical{
+    margin-left: 250px;
+  }
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;

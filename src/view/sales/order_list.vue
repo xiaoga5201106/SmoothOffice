@@ -250,7 +250,7 @@
             }
             //拿到token
             const token = localStorage.getItem('token');
-            this.$axios.get(this.$baseURL+'/slb-orders?code='+order_id+'&isCancel=false&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
+            this.$axios.get(this.$baseURL+'/slb-orders?code='+order_id+'&isCancel=false&sort=createTime,desc&page=' + (val - 1) + '&pageSize=10&size=10&type1='+type1+'&type2='+type2+'&type3='+type3+'&area='+area+'&customerName='+customerName, {
               headers: {
                 "Authorization": "Bearer" + " " + token
               }
@@ -285,8 +285,8 @@
                     partner: value.partnerName,
                     line: value.clue,
                     area: value.area,
-                    add_time: that.$util.formatDate(value.createTime),
-                    edit_time: that.$util.formatDate(value.submitTime),
+                    add_time: value.submitTime,
+                    edit_time: value.createTime,
                     order_status: order_status,
                     pact_status: pact_status,
                     progress: value.currentProgress

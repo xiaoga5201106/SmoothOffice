@@ -1,7 +1,8 @@
 <template>
  <div id="main">
       <searchTools :searchDatas="searchDatas" level="0"></searchTools>
-      <tableList :titles="titles" :tableData="tableData" operate="true" type="certificate"></tableList>
+      <toolBtn :btns="btns"></toolBtn>
+      <tableList :titles="titles" :tableData="tableData" operate="true" type="certificate" chooseAll="true"></tableList>
       <pagination></pagination>
 	</div>
 </template>
@@ -10,12 +11,14 @@
 	import tableList from '../component/tableList'
   import searchTools from'../component/searchTools'
 	import pagination from'../component/pagination'
+  import toolBtn from '../component/toolBtn'
     export default {
         name: "certificate",
         components:{
     		pagination,
     		tableList,
-        searchTools
+        searchTools,
+        toolBtn
     	},
     	data(){
     		return{
@@ -26,7 +29,7 @@
             placeholder:'请选择',
             option:[{
               value: '1',
-              label: '筹税'
+              label: '税筹'
             },{
               value: '2',
               label: '基础业务'
@@ -36,7 +39,7 @@
             placeholder:'请选择',
             option:[{
               value: '3',
-              label: '自由业务'
+              label: '自有业务'
             },{
               value: '4',
               label: '转包业务'
@@ -67,7 +70,7 @@
               label: '财务业务'
             }]
           },{
-            item:'订单编号',
+            item:'公司合同编号',
             content:'input',
             placeholder:'请输入订单编号'
           },{
@@ -79,7 +82,7 @@
               /*表头*/
 
               { prop:'id',
-                label:"合同编号"
+                label:"公司合同编号"
               },
               { prop:'name',
                 label:"客户名称"
@@ -107,7 +110,7 @@
               sales: '老刘',
               partner:'/',
               clue:'/',
-              type:'筹税-自有业务-多次付款',
+              type:'税筹-自有业务-多次付款',
               count:'2',
               },{
               id: '2017-H-0001',
@@ -115,7 +118,7 @@
               sales: '老刘',
               partner:'/',
               clue:'/',
-              type:'筹税-自有业务-多次付款',
+              type:'税筹-自有业务-多次付款',
               count:'2',
               },
               {
@@ -124,7 +127,7 @@
               sales: '老刘',
               partner:'/',
               clue:'/',
-              type:'筹税-自有业务-多次付款',
+              type:'税筹-自有业务-多次付款',
               count:'2',
               },
               {
@@ -133,7 +136,7 @@
               sales: '老刘',
               partner:'/',
               clue:'/',
-              type:'筹税-自有业务-多次付款',
+              type:'税筹-自有业务-多次付款',
               count:'2',
               },
               {
@@ -142,9 +145,16 @@
               sales: '老刘',
               partner:'/',
               clue:'/',
-              type:'筹税-自有业务-多次付款',
+              type:'税筹-自有业务-多次付款',
               count:'2',
-              },]
+              }],
+            /*功能按钮组*/
+            btns:[{
+              label:"下载凭证材料",
+              color:"danger",
+              func:"",
+              path:""
+            }]
     		}
     	}
     }

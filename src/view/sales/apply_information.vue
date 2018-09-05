@@ -10,7 +10,7 @@
         <div class="btn" v-if="type == 'no_pass'"><el-button size="medium" type="danger"
               @click="showDialogbox">再次申请</el-button></div>
       </div>
-      <tableList :titles="titles" :tableData="tableData" operate="false"></tableList>
+      <tableList :titles="titles" :tableData="tableData" operate="false" cerList="true"></tableList>
     </div>
     <dialogbox :dialogVisible="show"  @close="show=false" flag="再次申请"></dialogbox>
   </div>
@@ -88,9 +88,6 @@
               { prop:'apply_time',
                 label:"申请时间"
               },
-              { prop:'vouchers_content',
-                label:"凭证内容"
-              },
               { prop:'type',
                 label:"类型"
               },
@@ -128,56 +125,50 @@
         this.newMenu('申请列表',this.father,'申请信息');
         const token=localStorage.getItem('token');
                 let that=this;
-                this.$axios.get(this.$baseURL+'/slb-order-applications-records?id='+that.id,{
+                this.$axios.get(this.$baseURL+'/slb-order-applications-records/'+that.id,{
                   headers:{
                     "Authorization": "Bearer"+" "+token
                   }
                 })
                   .then(function(ret){
-                    let data=ret.data;
-                     console.log(order_id)
+                    let data=ret.data.value;
                     let order_id=that.order_id;
                     for (var i = 0; i < that.labels.length; i++) {
-                          that.labels[i].message
                     }
-                       data.forEach(function(value,index,array){
+
                         let status;
-                        if (value.states=="1") {
+                        if (data.states=="1") {
                                 status="待审核"
                         }
-                        if (value.states=="2") {
+                        if (data.states=="2") {
                                 status="已通过"
                         }
-                        if (value.states=="3") {
+                        if (data.states=="3") {
                                 status="未通过"
                         }
-                                if (order_id==value.slbOrder.code) {
-                                  console.log(111)
-                                  that.labels[0].message=value.slbOrder.code,
-                                  that.labels[1].message=value.slbOrder.customerName,
-                                  that.labels[2].message=value.slbOrder.area,
-                                  that.labels[3].message=value.slbOrder.partnerName,
-                                  that.labels[4].message=value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                  that.labels[5].message=value.slbOrder.partnerSale,
-                                  that.labels[6].message=value.slbOrder.assist,
-                                  that.labels[7].message=value.slbOrder.submitTime,
-                                  that.tableData=[
-                                      {
-                                        id:that.id,
-                                        apply_remark:value.message,
-                                        apply_time:value.createTime,
-                                        type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                        auditor:value.auditor,
-                                        auditor_time:value.auditTime,
-                                        status:status,
-                                        auditor_remark:value.auditMessage,
-                                        vouchers_content:''
-
-                                      }
-                                  ]
-                                }
-
-                       })
+                        if (order_id==data.slbOrder.code) {
+                          that.labels[0].message=data.slbOrder.code,
+                          that.labels[1].message=data.slbOrder.customerName,
+                          that.labels[2].message=data.slbOrder.area,
+                          that.labels[3].message=data.slbOrder.partnerName,
+                          that.labels[4].message=data.slbOrder.type1+'-'+data.slbOrder.type2+'-'+data.slbOrder.type3,
+                          that.labels[5].message=data.slbOrder.partnerSale,
+                          that.labels[6].message=data.slbOrder.assist,
+                          that.labels[7].message=data.slbOrder.submitTime,
+                          that.tableData=[
+                              {
+                                id:that.id,
+                                apply_remark:data.message,
+                                apply_time:data.createTime,
+                                type:data.slbOrder.type1+'-'+data.slbOrder.type2+'-'+data.slbOrder.type3,
+                                auditor:data.auditor,
+                                auditor_time:data.auditTime,
+                                status:status,
+                                auditor_remark:data.auditMessage,
+                                vouchers_content:ret.data.imageList
+                              }
+                          ]
+                        }
 
                   })
                   .catch(function(err){

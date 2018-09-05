@@ -3,11 +3,11 @@
       <div class="work_status" v-for="works in workData">
         <h4>{{works.title}}</h4>
         <div class="num">
-          <h2 :class="works.num1Color">{{works.num1}}</h2>
+          <h2 :class="works.num1Color"><router-link :to="works.href">{{works.num1}}</router-link></h2>
           <span>{{works.num1Title}}</span>
         </div>
         <div class="num">
-          <h2 :class="works.num2Color">{{works.num2}}</h2>
+          <h2 :class="works.num2Color"><router-link :to="{path:works.href, query: {state:'3'}}">{{works.num2}}</router-link></h2>
           <span>{{works.num2Title}}</span>
         </div>
       </div>
@@ -48,10 +48,10 @@
  .work_status:nth-child(odd){
    margin-right: 2%;
  }
-  h2.blue{
+  h2.blue a{
     color: #409EFF;
   }
-  h2.red{
+  h2.red a{
     color: #e70012;
   }
 </style>

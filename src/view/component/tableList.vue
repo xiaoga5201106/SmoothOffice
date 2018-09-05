@@ -1,9 +1,13 @@
 <template id="tableList">
   <el-table
     :data="tableData"
-    style="width: 100%"  
+    style="width: 100%"
     :header-cell-style="headerColor"
     :cell-style="cellStyle">
+    <el-table-column v-if="chooseAll=='true'"
+      type="selection"
+      width="55">
+    </el-table-column>
     <el-table-column
       v-for="title in titles"
       v-if="title.label!='id'"
@@ -11,6 +15,11 @@
       v-bind:label="title.label"
       v-bind:class-name="title.prop"
       align="center">
+    </el-table-column>
+    <el-table-column label="凭证内容" align="center" v-if="cerList=='true'">
+      <template slot-scope="scope" >
+      <div class="cerList"><img v-for="cerList in tableData[0].vouchers_content" :src="cerList.ossUrl"/></div>
+      </template>
     </el-table-column>
     <el-table-column label="操作" v-if="operate=='true'" align="center" width="130px">
       <template slot-scope="scope" >
@@ -84,7 +93,7 @@
 <script>
     export default {
         name: "tableList",
-        props:['titles','tableData','operate','type','father'],
+        props:['titles','tableData','operate','type','father','chooseAll','cerList'],
         inject: ['reload'],
         data() {
         return {
@@ -156,28 +165,36 @@
               });
             },
             submit(index,row){
-              let that = this;
-              const token = localStorage.getItem('token');
-                this.$axios.post(this.$baseURL+'/event/submit-slb-orders',{
-                  slbOrderId:row.id
+              this.$confirm('是否确认提交?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                  let that = this;
+                  const token = localStorage.getItem('token');
+                  this.$axios.post(this.$baseURL+'/event/submit-slb-orders',{
+                    slbOrderId:row.id
                   },
                   {
                     headers: {
-                       "Authorization": "Bearer"+" "+token
-                       }
+                      "Authorization": "Bearer"+" "+token
+                    }
                   }
                 )
-                .then(function(res){
-                  that.$message({
-                    message : '提交订单成功！',
-                    type : 'success'
-                   });
+                  .then(function(res){
+                    that.$message({
+                      message : '提交订单成功！',
+                      type : 'success'
+                    });
 
-                        that.reload()
-                })
-                .catch(function(err){
-                  console.log(err);
-                })
+                    that.reload()
+                  })
+                  .catch(function(err){
+                    console.log(err);
+                  })
+              }).catch(() => {
+
+              });
             },
             headerColor(row, rowIndex) {
               return 'background:#e70012;color:#fff';
@@ -220,15 +237,17 @@
             handleDelete(index,row){
               console.log(index);
             }
-      },
-      
+      }
 }
-    
+
 </script>
 
 <style scoped>
   .el-button{
     display: block;
     margin:5px 0 5px 0;
+  }
+  .cerList img{
+    width: 40px;
   }
 </style>

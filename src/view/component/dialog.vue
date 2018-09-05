@@ -38,21 +38,24 @@
   :before-close="handleClose"
   >
   <div class="pOff">
-     <p>{{flag}}备注</p>
-     <p>*必填</p>
+     <span>{{flag}}备注</span>
+     <span class="mustBe">*必填</span>
+      <el-input
+        type="textarea"
+        :rows="6"
+        :maxlength="200"
+        placeholder="请输入内容"
+        resize="none"
+        @input="handleInput"
+      >
+      </el-input>
+    <div class="limit">
+      <p>{{inputSum}}/200</p>
+    </div>
   </div>
-     <el-input
-    type="textarea"
-    :rows="6"
-    :maxlength="200"
-    placeholder="请输入内容"
-    resize="none"
-    @input="handleInput"
-    >
-  </el-input>
-  <div class="limit">
-    <p>{{inputSum}}/200</p>
-
+  <div class="pOff">
+    <span>类型</span>
+    <span>{{flag}}凭证</span>
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
@@ -76,21 +79,24 @@
   :before-close="handleClose"
   >
   <div class="pOff">
-     <p>{{flag}}备注</p>
-     <p>*必填</p>
-  </div>
-     <el-input
-    type="textarea"
-    :rows="6"
-    :maxlength="200"
-    placeholder="请输入内容"
-    resize="none"
-    @input="handleInput"
+    <span>{{flag}}备注</span>
+    <span class="mustBe">*必填</span>
+    <el-input
+      type="textarea"
+      :rows="6"
+      :maxlength="200"
+      placeholder="请输入内容"
+      resize="none"
+      @input="handleInput"
     >
-  </el-input>
-  <div class="limit">
-    <p>{{inputSum}}/200</p>
-
+    </el-input>
+    <div class="limit">
+      <p>{{inputSum}}/200</p>
+    </div>
+  </div>
+  <div class="pOff">
+    <span>类型</span>
+    <span>{{flag}}凭证</span>
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
@@ -113,21 +119,24 @@
   :before-close="handleClose"
   >
   <div class="pOff">
-     <p>{{flag}}备注</p>
-     <p>*必填</p>
-  </div>
-     <el-input
-    type="textarea"
-    :rows="6"
-    :maxlength="200"
-    placeholder="请输入内容"
-    resize="none"
-    @input="handleInput"
+    <span>{{flag}}备注</span>
+    <span class="mustBe">*必填</span>
+    <el-input
+      type="textarea"
+      :rows="6"
+      :maxlength="200"
+      placeholder="请输入内容"
+      resize="none"
+      @input="handleInput"
     >
-  </el-input>
-  <div class="limit">
-    <p>{{inputSum}}/200</p>
-
+    </el-input>
+    <div class="limit">
+      <p>{{inputSum}}/200</p>
+    </div>
+  </div>
+  <div class="pOff">
+    <span>类型</span>
+    <span>{{flag}}凭证</span>
   </div>
    <div class="upload">
     <div class="uploadTip">上传凭证(照片)</div>
@@ -275,8 +284,8 @@
       <el-input placeholder="请输入落地对接销售"></el-input>
       <span>线索</span>
       <el-input placeholder="请输入线索"></el-input>
-      <span>客户新公司名</span>
-      <el-input placeholder="请输入客户新公司名"></el-input>
+      <span>客户新公司名称</span>
+      <el-input placeholder="请输入客户新公司名称"></el-input>
     </div>
     <div class="items">
       <span>合同总价款</span>
@@ -287,12 +296,12 @@
       <el-select v-model="value4" placeholder="请选择">
         <el-option
           key="12"
-          label="20%"
+          label="18%"
           value="12">
         </el-option>
         <el-option
           key="13"
-          label="30%"
+          label="20%"
           value="13">
         </el-option>
       </el-select>
@@ -335,7 +344,7 @@
         </el-option>
         <el-option
           key="19"
-          label="记账会计 XX会计"
+          label="记账会计"
           value="19">
         </el-option>
         <el-option
@@ -358,17 +367,23 @@
 </template>
 <style scoped>
   .pOff{
-    float: left;
+    text-align: left;
+    position: relative;
+  }
+  .pOff span{
+    display: inline-block;
     font-size: 18px;
+    min-width: 120px;
+    padding-left: 10px;
+    vertical-align: top;
   }
-  .pOff p{
-    margin-top: 0px;
-    margin-left: 10px;
-  }
-  .pOff p:nth-child(2){
+  .pOff .mustBe{
+    position: absolute;
+    font-size: 12px;
     color: red;
-    text-align: right;
-    font-size: 15px;
+    right: 10px;
+    top: 10px;
+    min-width: 20px;
   }
   .el-textarea{
     width: 70%;
@@ -403,7 +418,7 @@
   }
   #searchTools .items span{
     float: left;
-    width: 90px;
+    width: 100px;
     text-align: left;
     line-height: 40px;
   }
@@ -411,11 +426,11 @@
     float: left;
     margin-right: 20px;
   }
-  #searchTools .el-input{
-    width: 200px;
+  #searchTools .el-input,.el-select{
+    width: 190px;
   }
   #searchTools .items .el-input.short{
-    width: 72px;
+    width: 67px;
   }
   #searchTools .items span.short{
     width: 36px;
@@ -514,7 +529,6 @@
                                 that.$axios.post(host,request)
                                   .then(function(res){
                                     that.ossImgObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
-                                    console.log(that.ossImgObject)
                                   })
                                   .catch(function(err){
                                   });
@@ -562,7 +576,6 @@
                                 }
                               )
                                 .then(function(res){
-                                  console.log(res);
                                   that.$message({
                                     message : '提交成功！',
                                     type : 'success'

@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <searchTools :searchDatas="searchDatas" level="0" @search="searchApplyList"></searchTools>
-    <tabs :Menutabs="Menutabs" operate="true" father="apply_edit"></tabs>
+    <tabs :Menutabs="Menutabs" operate="true" father="apply_edit" :queryState="queryState"></tabs>
     <pagination></pagination>
   </div>
 </template>
@@ -12,6 +12,7 @@
     import pagination from'../component/pagination'
     export default {
         name: "apply_edit",
+        inject: ['newMenu'],
         components: {
           tabs,
           searchTools,
@@ -19,6 +20,8 @@
         },
       data () {
         return {
+          /*工作台跳转过来的query*/
+          queryState:this.$route.query.state,
           /*tabs标签页*/
           Menutabs:[{
             label:'待审核',
@@ -147,7 +150,7 @@
             placeholder:'请选择',
             option:[{
               value: '1',
-              label: '筹税'
+              label: '税筹'
             },{
               value: '2',
               label: '基础业务'
@@ -157,7 +160,7 @@
             placeholder:'请选择',
             option:[{
               value: '3',
-              label: '自由业务'
+              label: '自有业务'
             },{
               value: '4',
               label: '转包业务'
@@ -199,6 +202,7 @@
           }
         },
          created:function(){
+             this.newMenu('申请列表','申请修改');
              const token=localStorage.getItem('token');
              let that=this;
              this.$axios.get(this.$baseURL+'/slb-order-applications-records',{
@@ -215,6 +219,7 @@
                 }
 
                       data.forEach(function(value,index,array){
+                        console.log(value)
                         if (value.type=="1") {
                             let status;
                         if (value.states=="1") {
@@ -371,7 +376,7 @@
                          console.log(err)
                 })
              }
-        }
+      }
     }
 </script>
 

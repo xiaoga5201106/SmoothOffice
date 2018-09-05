@@ -3,7 +3,7 @@
   <div id="main">
    <formBox :labels="labels" flag="newOrder"></formBox>
   	<formButton state4="提交" @submit="submit(labels)"></formButton>
-
+    <router-link to=""></router-link>
 
   </div>
 </template>
@@ -35,10 +35,7 @@
                	},
                		{
                	    item:'贺州'
-               	},
-               			{
-               	    item:'钦州'
-               	},
+               	}
 
 
                	]
@@ -52,7 +49,7 @@
                	    item:'税筹'
                	},
                		{
-               	    item:'基本业务'
+               	    item:'基础业务'
                	},
 
                	]
@@ -76,7 +73,7 @@
                	value:'',
                	items:[
                	{
-               	    item:'一次性付款'
+               	    item:'一次付款'
                	},
                		{
                	    item:'多次付款'
@@ -139,7 +136,6 @@
         submit(labels){
           let that=this;
           const token = localStorage.getItem('token');
-             console.log(labels.length);
              this.$axios.post(this.$baseURL+'/event/save-slb-order-events/new',{
                       area: labels[0].value,
                       assist: labels[9].value,
@@ -159,7 +155,6 @@
                    }
               )
              .then(function(res){
-              console.log(res);
                that.$message({
                 message : '新建订单成功！',
                 type : 'success'
@@ -167,6 +162,7 @@
                for(let i = 0; i < labels.length; i++){
                   labels[i].value = '';
                }
+               that.$route.push("/order_list");
              })
              .catch(function(err){
                 that.$message({
