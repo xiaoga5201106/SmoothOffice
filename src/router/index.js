@@ -71,6 +71,7 @@ import add_count from '@/view/admin/add_count'
 import count_list from '@/view/admin/count_list'
 import template_design from '@/view/admin/template_design'
 import standingbook_detail from '@/view/sales/standingbook_detail'
+import audit_count from '@/view/admin/audit_count'
 
 Vue.use(Router)
 
@@ -438,7 +439,12 @@ export default new Router({
           path: '/standingbook_detail',
           name: 'standingbook_detail',
           component: standingbook_detail
-        }
+        },
+          {
+          path: '/audit_count',
+          name: 'audit_count',
+          component: audit_count
+        },
       ]
     }
   ]

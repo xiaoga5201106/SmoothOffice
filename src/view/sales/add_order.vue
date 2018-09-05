@@ -29,14 +29,14 @@
                	key:'2',
                	title:'区域',
                	value:'',
+                msg:'*必选',
                	items:[
                	{
                	    item:'柳州'
                	},
                		{
                	    item:'贺州'
-               	}
-
+               	},
 
                	]
                },
@@ -44,6 +44,7 @@
                  key:'2',
                	title:'业务类型',
                	value:'',
+                 msg:'*必选',
                	items:[
                	{
                	    item:'税筹'
@@ -58,6 +59,7 @@
                  key:'2',
                	title:'',
                	value:'',
+                 msg:'*必选',
                	items:[
                	{
                	    item:'自有业务'
@@ -71,6 +73,7 @@
                  key:'2',
                	title:'',
                	value:'',
+                 msg:'*必选',
                	items:[
                	{
                	    item:'一次付款'
@@ -100,31 +103,37 @@
                    {
                  key:'1',
                	title:'客户名称',
+                 msg:'*必填',
                 value:''
                },
                    {
                  key:'1',
                	title:'联系方式',
+                 msg:'*必填',
                 value:''
                },
                     {
                  key:'1',
                	title:'合伙人名称',
+                msg:'　　',
                 value:''
                },
                     {
                  key:'1',
                	title:'合伙人销售',
+                msg:'　　',
                 value:''
                },
                     {
                  key:'1',
                	title:'线索（个人）',
+                msg:'　　',
                 value:''
                },
                     {
                  key:'1',
                	title:'协助单位（内部）',
+                msg:'　　',
                 value:''
                },
           ],
@@ -136,7 +145,26 @@
         submit(labels){
           let that=this;
           const token = localStorage.getItem('token');
-             this.$axios.post(this.$baseURL+'/event/save-slb-order-events/new',{
+          if (labels[0].value=='') {
+           that.$message.error('请选择区域')
+          }
+         else if (labels[1].value=='') {
+               that.$message.error('请选择业务类型')
+          }
+           else if (labels[2].value=='') {
+             that.$message.error('请选择业务类型')
+          }
+           else if (labels[3].value=='') {
+             that.$message.error('请选择业务类型')
+          }
+           else if (labels[4].value=='') {
+             that.$message.error('请填写客户名称')
+          }
+           else if (labels[5].value=='') {
+             that.$message.error('请填写联系方式')
+          }
+          else{
+    this.$axios.post(this.$baseURL+'/event/save-slb-order-events/new',{
                       area: labels[0].value,
                       assist: labels[9].value,
                       clue: labels[8].value,
@@ -170,6 +198,10 @@
                 type : 'warning'
                });
               });
+                  }
+
+          
+             
 
              }
         }

@@ -2,7 +2,8 @@
    <div id="main">
    	<searchTools :searchDatas="searchDatas" level="0" @search="searchCounts"></searchTools>
    	 <toolBtn :btns="btns" @submit="addCount"></toolBtn>
-   	 <tableList :titles="titles" :tableData="tableData" operate="false" type="order_list"></tableList>
+   	 <tableList :titles="titles" :tableData="tableData" operate="true" type="count_list"></tableList>
+     <pagination :listTotal="listTotal" @page="page" :paginationShow="paginationShow"></pagination>
    </div>
 </template>
 
@@ -10,15 +11,19 @@
 	import searchTools from'../component/searchTools'
 	 import toolBtn from '../component/toolBtn'
 	 import tableList from '../component/tableList'
+   import pagination from '../component/pagination'
     export default {
         name: "count_list",
         components: {
           searchTools,
           toolBtn,
-          tableList
+          tableList,
+          pagination
         },
         data(){
         	return{
+             paginationShow:true,
+          listTotal:0,
         		titles:[
               /*表头*/
               { prop:'id',
@@ -35,6 +40,9 @@
               },
               { prop:'job',
                 label:"职务"
+              },
+               { prop:'creator',
+                label:"创建人"
               },
               { prop:'createtime',
                 label:"创建时间"
@@ -82,6 +90,18 @@
               },{
                 value: '5',
                 label: '外勤'
+              },
+              {
+                value: '6',
+                label: '高管'
+              },
+              {
+                value: '7',
+                label: '业务会计'
+              },
+              {
+                value: '8',
+                label: '全部'
               }]
             },{
             	item:'区域',
@@ -89,11 +109,15 @@
               placeholder:'请选择',
               value:'',
               option:[{
-                value: '6',
+                value: '9',
                 label: '柳州'
               },{
-                value: '7',
+                value: '10',
                 label: '贺州'
+              }
+              ,{
+                value: '11',
+                label: '全部'
               }]
             },{
               item:'创建时间',
@@ -147,33 +171,44 @@
                 if (name==undefined) {
                      name=" "
                  }
-                if (role==undefined) {
+                if (role==undefined||role=="全部") {
                      role=" "
                  }
-                if (area==undefined) {
+                if (area==undefined||area=="全部") {
                      area=" "
                  }
                  if (createTime==undefined) {
                      createTime=" "
                  }
 
-                this.$axios.get(this.$baseURL+'/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state,{
+                this.$axios.get(this.$baseURL+'/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state+'&pageSize=10&size=10',{
                        headers:{
                            "Authorization": "Bearer"+" "+token
                         }
                 })
                 .then(function(ret){
+                  that.listTotal = parseInt(ret.headers['x-total-count']);
               let data1=ret.data;
+               if(ret.data==""){
+                      that.$message.error("暂无此信息！")
+                    }
               that.tableData=[];
               data1.forEach(function(value,index,array){
+                  let state;
+                if (value.user.activated==true) {
+                  state="可用"
+                }
+                else if (value.user.activated==false) {
+                  state="停用"
+                }
               that.tableData.push({
               id:value.id,
               name:value.name,
-              sex:value.sex,
-              area:value.area,
-              job:value.role,
+              sex:that.changeSex(value.sex),
+              area:that.changeArea(value.area),
+              job:that.changeRole(value.role),
               createtime:value.createTime,
-              state:''
+              state:state
                     })
               })
                 })
@@ -185,28 +220,77 @@
              },
              addCount(){
                 this.$router.push({path: '/add_count'});
-             }
-        },
-        created:function(){
-             const token = localStorage.getItem('token');
+             },
+             page(val){
+              const token = localStorage.getItem('token');
             let that=this;
-            this.$axios.get(this.$baseURL+'/slb-accounts',{
+            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10&page='+(val-1),{
                headers:{
                   "Authorization": "Bearer"+" "+token
                }
 
             })
             .then(function(ret){
+              that.listTotal = parseInt(ret.headers['x-total-count']);
               let data=ret.data;
+              that.tableData=[];
               data.forEach(function(value,index,array){
+                let state;
+                if (value.user.activated==true) {
+                  state="可用"
+                }
+                else if (value.user.activated==false) {
+                  state="停用"
+                }
               that.tableData.push({
               id:value.id,
               name:value.name,
-              sex:value.sex,
-              area:value.area,
-              job:value.role,
+              sex:that.changeSex(value.sex),
+              area:that.changeArea(value.area),
+              job:that.changeRole(value.role),
               createtime:value.createTime,
-              state:''
+              state:state
+                    })
+              })
+
+            })
+             .catch(function(err){
+              console.log(err)
+            })
+             },
+             open(){
+             this.$router.push({path: '/add_count'});
+             }
+        },
+        created:function(){
+             const token = localStorage.getItem('token');
+            let that=this;
+            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10',{
+               headers:{
+                  "Authorization": "Bearer"+" "+token
+               }
+
+            })
+            .then(function(ret){
+              that.changeRole(ret.data.role)
+              that.listTotal = parseInt(ret.headers['x-total-count']);
+              let data=ret.data;
+              data.forEach(function(value,index,array){
+                    let state;
+                if (value.user.activated==true) {
+                  state="可用"
+                }
+                else if (value.user.activated==false) {
+                  state="停用"
+                }
+              that.tableData.push({
+              id:value.id,
+              name:value.name,
+              sex:that.changeSex(value.sex),
+              area:that.changeArea(value.area),
+              job:that.changeRole(value.role),
+              createtime:value.createTime,
+              state:state
                     })
               })
 

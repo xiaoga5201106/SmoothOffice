@@ -85,52 +85,65 @@
               },{
                 value: '2',
                 label: '基础业务'
+              }
+              ,{
+                value: '3',
+                label: '全部'
               }]
             },{
               content:'select',
               placeholder:'请选择',
               option:[{
-                value: '3',
+                value: '4',
                 label: '自有业务'
               },{
-                value: '4',
+                value: '5',
                 label: '转包业务'
+              },{
+                value: '6',
+                label: '全部'
               }]
             },{
               content:'select',
               placeholder:'请选择',
               option:[{
-                value: '5',
+                value: '7',
                 label: '一次付款'
               },{
-                value: '6',
+                value: '8',
                 label: '多次付款'
               },{
-                value: '7',
+                value: '9',
                 label: '自签业务'
               },{
-                value: '8',
+                value: '10',
                 label: '返佣业务'
               },{
-                value: '9',
+                value: '11',
                 label: '工商业务'
               },{
-                value: '10',
+                value: '12',
                 label: '转包业务'
               },{
-                value: '11',
+                value: '13',
                 label: '财务业务'
+              },{
+                value: '14',
+                label: '全部'
               }]
             },{
               item:'区域',
               content:'select',
               placeholder:'请选择',
               option:[{
-                value: '12',
+                value: '15',
                 label: '柳州'
               },{
-                value: '13',
+                value: '16',
                 label: '贺州'
+              },{
+                value: '17',
+                label: '全部'
               }]
             },{
               item:'订单编号',
@@ -230,16 +243,16 @@
             if(val!=undefined){
               that.tableData = [];
             }
-            if(type1==undefined){
+            if(type1==undefined||type1=="全部"){
               type1="";
             }
-            if(type2==undefined){
+            if(type2==undefined||type2=="全部"){
               type2="";
             }
-            if(type3==undefined){
+            if(type3==undefined||type3=="全部"){
               type3="";
             }
-            if(area==undefined){
+            if(area==undefined||area=="全部"){
               area="";
             }
             if(order_id==undefined){
@@ -256,6 +269,9 @@
               }
             })
               .then(function (res) {
+             if(res.data==""){
+                      that.$message.error("暂无此信息！")
+                    }
                 that.listTotal = parseInt(res.headers['x-total-count']);
                 res.data.forEach(function (value, index, array) {
                   let order_status, pact_status;

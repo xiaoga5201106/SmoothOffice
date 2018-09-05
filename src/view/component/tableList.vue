@@ -85,6 +85,14 @@
               size="mini"
               @click="opendialogForSee1(scope.$index, scope.row)">查看订单详情</el-button>
           </div>
+             <div v-else-if="type == 'count_list'" >
+                <el-button
+              size="mini"
+              @click="opendialogForSee1(scope.$index, scope.row)"><router-link :to="{name:'audit_count', query:{order_id:tableData[scope.$index].id}}">修改</router-link></el-button>
+                <el-button
+              size="mini"
+              @click="opendialogForSee1(scope.$index, scope.row)">停用</el-button>
+          </div>
       </template>
     </el-table-column>
   </el-table>
@@ -225,6 +233,12 @@
                 return 'color:#8bc34a';
               }
               if(row.column.className=='status'&&row.row.status=='不通过'){
+                return 'color:#e70012';
+              }
+                if(row.column.className=='state'&&row.row.state=='可用'){
+                return 'color:#8bc34a';
+              }
+               if(row.column.className=='state'&&row.row.state=='停用'){
                 return 'color:#e70012';
               }
               if(row.column.className=='audit_remark'){

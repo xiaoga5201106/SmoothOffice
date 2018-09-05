@@ -2,7 +2,7 @@
   <div id="main">
     <searchTools :searchDatas="searchDatas" level="0" @search="searchApplyList"></searchTools>
     <tabs :Menutabs="Menutabs" operate="true" father="apply_change" :queryState="queryState"></tabs>
-    <pagination></pagination>
+    <pagination :listTotal="listTotal" @page="page" :paginationShow="paginationShow"></pagination>
   </div>
 </template>
 
@@ -20,6 +20,8 @@
         },
       data () {
         return {
+          paginationShow:true,
+          listTotal:0,
           /*工作台跳转过来的query*/
           queryState:this.$route.query.state,
           /*tabs标签页*/
@@ -153,32 +155,51 @@
             },{
               value: '2',
               label: '基础业务'
+            }
+            ,{
+              value: '3',
+              label: '全部'
             }]
           },{
             content:'select',
             placeholder:'请选择',
             option:[{
-              value: '3',
+              value: '4',
               label: '自有业务'
             },{
-              value: '4',
+              value: '5',
               label: '转包业务'
+            },{
+              value: '6',
+              label: '全部'
             }]
           },{
             content:'select',
             placeholder:'请选择',
             option:[{
-              value: '5',
+              value: '7',
               label: '一次付款'
             },{
-              value: '7',
-              label: '自签业务'
+              value: '8',
+              label: '多次付款'
             },{
               value: '9',
-              label: '工商业务'
+              label: '自签业务'
             },{
               value: '10',
+              label: '返佣业务'
+            },{
+              value: '11',
+              label: '工商业务'
+            },{
+              value: '12',
               label: '转包业务'
+            },{
+              value: '13',
+              label: '财务业务'
+            },{
+              value: '14',
+              label: '全部'
             }]
           },{
             item:'订单编号',
@@ -195,23 +216,22 @@
              this.newMenu('申请列表','申请变更');
              const token=localStorage.getItem('token');
              let that=this;
-             this.$axios.get(this.$baseURL+'/slb-order-applications-records',{
+             this.$axios.get(this.$baseURL+'/slb-order-applications-records?pageSize=10&size=10&isCancel=false&type=3',{
                    headers:{
                       "Authorization": "Bearer"+" "+token
                    }
              })
               .then(function(ret){
+                that.listTotal = parseInt(ret.headers['x-total-count']);
                 let data=ret.data;
                 let menu=[];
                 console.log(111)
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
                 }
-
-
-
                       data.forEach(function(value,index,array){
-                        if (value.type=="3") {
+                      
+                          console.log(data.length)
                            let status;
                         if (value.states=="1") {
                                 status="待审核"
@@ -258,7 +278,7 @@
                                  apply_information:value.message
                            })
                         }
-                        }
+                        
 
 
                       })
@@ -278,13 +298,13 @@
                 let code=inputValue[3];
                 let name=inputValue[4];
 
-                if (type1==undefined) {
+                if (type1==undefined||type1=="全部") {
                      type1=" "
                  }
-                if (type2==undefined) {
+                if (type2==undefined||type2=="全部") {
                      type2=" "
                  }
-                if (type3==undefined) {
+                if (type3==undefined||type3=="全部") {
                      type3=" "
                  }
                 if (code==undefined) {
@@ -293,13 +313,14 @@
                  if (name==undefined) {
                      name=" "
                  }
-
-                this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&type1='+type1+'&type2='+type2+'&type3='+type3,{
+                 console.log(type1)
+                this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&type1='+type1+'&type2='+type2+'&type3='+type3+'&type=3'+'&pageSize=10&size=10',{
                        headers:{
                            "Authorization": "Bearer"+" "+token
                         }
                 })
                 .then(function(ret){
+                  that.listTotal = parseInt(ret.headers['x-total-count']);
                         console.log(11)
                         let data=ret.data;
                 let menu=[];
@@ -307,9 +328,14 @@
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
                 }
-
+                    if(data==""){
+                      that.$message.error("暂无此信息！")
+                    }
+                    menu[0].tableData=[];
+                    menu[1].tableData=[];
+                    menu[2].tableData=[];
                       data.forEach(function(value,index,array){
-                        if (value.type=="3") {
+                        
                             let status;
                         if (value.states=="1") {
                                 status="待审核"
@@ -321,7 +347,7 @@
                                 status="未通过"
                         }
                         if (value.states==menu[0].name) {
-                            menu[0].tableData=[];
+                            
                             menu[0].tableData.push({
                                  id:value.id,
                                  order_id:value.slbOrder.code,
@@ -333,8 +359,7 @@
                                  apply_information:value.message
                            })
                         }
-                         else if (value.states==menu[1].name) {
-                          menu[0].tableData=[];
+                         else if (value.states==menu[1].name) {                         
                             menu[1].tableData.push({
                                  id:value.id,
                                  order_id:value.slbOrder.code,
@@ -347,7 +372,6 @@
                            })
                         }
                          else  if (value.states==menu[2].name) {
-                          menu[0].tableData=[];
                             menu[2].tableData.push({
                                  id:value.id,
                                 order_id:value.slbOrder.code,
@@ -359,14 +383,93 @@
                                  apply_information:value.message
                            })
                         }
-                        }
+
+                        
 
                       })
+
 
                 })
                  .catch(function(err){
                          console.log(err)
                 })
+             },
+             page(val){
+
+                 this.newMenu('申请列表','申请变更');
+             const token=localStorage.getItem('token');
+             let that=this;
+             this.$axios.get(this.$baseURL+'/slb-order-applications-records?pageSize=10&size=10&&type=3&isCancel=false&page='+(val-1),{
+                   headers:{
+                      "Authorization": "Bearer"+" "+token
+                   }
+             })
+              .then(function(ret){
+                let data=ret.data;
+                let menu=[];
+                console.log(111)
+                for (var i = 0; i < that.Menutabs.length; i++) {
+                               menu[i]=that.Menutabs[i]
+                }
+                       menu[0].tableData=[];
+                      data.forEach(function(value,index,array){
+                        
+                           let status;
+                        if (value.states=="1") {
+                                status="待审核"
+                        }
+                        if (value.states=="2") {
+                                status="已通过"
+                        }
+                        if (value.states=="3") {
+                                status="未通过"
+                        }
+                        
+                        console.log(value.states)
+                        if (value.states==menu[0].name) {
+                            menu[0].tableData.push({
+                                 id:value.id,
+                                 order_id:value.slbOrder.code,
+                                 contract_id:'',
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
+                           })
+                        }
+                         else if (value.states==menu[1].name) {
+                            menu[1].tableData.push({
+                                 id:value.id,
+                                 order_id:value.slbOrder.code,
+                                 contract_id:'',
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
+                           })
+                        }
+                         else  if (value.states==menu[2].name) {
+                            menu[2].tableData.push({
+                                 id:value.id,
+                                order_id:value.slbOrder.code,
+                                 contract_id:'',
+                                 name:value.slbOrder.customerName,
+                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
+                                 apply_time:value.createTime,
+                                 status:status,
+                                 apply_information:value.message
+                           })
+                        }
+                        
+
+
+                      })
+              })
+               .catch(function(err){
+                console.log(err)
+              })
              }
         }
 

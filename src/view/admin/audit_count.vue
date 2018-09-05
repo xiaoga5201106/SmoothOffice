@@ -1,7 +1,7 @@
 <template>
 	<div id="main">
 		<formBox :labels="labels" flag="newOrder"></formBox>
-		<formButton state4="提交" @submit="submit(labels)" ></formButton>
+		<formButton state4="提交" @submit="updata_count" ></formButton>
 	</div>
 
 </template>
@@ -10,13 +10,15 @@
 	import formBox from '../component/formBox'
 	import formButton from '../component/formButton'
     export default {
-        name: "add_count",
+        name: "audit_count",
         components:{
         	formBox,
         	formButton
         },
+         inject: ['newMenu'],
         data(){
-        	return{          
+        	return{ 
+          id: this.$route.query.order_id,         
              labels:[
                {
                	key:'2',
@@ -150,107 +152,107 @@
                   prop:"rePassWord",
                   placeholder:'请再次输入密码',
                   msg:'*必填',
-               	title:'确认密码',
-                maxlength:"20",
-                value:''
+               	  title:'确认密码',
+                  maxlength:"20",
+                  value:''
+               },
+                  {
+                 key:'3',
+                  prop:"state",
+                title:'使用状态',
+                placeholder:'请选择',
+                msg:'　　',
+                value:'',
+                items:[
+                    {
+                      item:'可用'
+                    },
+                     {
+                      item:'停用'
+                    },
+                    
+                ]
                },
           ],
         	}
         },
         methods:{
-             submit(labels){
-              const token = localStorage.getItem('token');
-              let that=this;
-              let data=[];
-              let str=/(18|19)|([2-5]\d)|(6[0-5])/;
-            for (var i = 0; i < labels.length; i++) {
-                         data[i]=labels[i].value
+                getData(){
+           let that=this;
+          const token = localStorage.getItem('token');
+          this.$axios.get(this.$baseURL+'/slb-accounts/' + this.id,{
+            headers: {
+                "Authorization": "Bearer" + " " + token
+              }
+          })
+          .then(function(res){
+            let state;
+            if (res.data.user.activated==true) {
+                         state="可用"
             }
-            if (data[0]=="销售") {
-              data[0]="ROLE_XIAO_SHOU"
+            if (res.data.user.activated==false) {
+                         state="停用"
             }
-             if (data[0]=="内务") {
-              data[0]="ROLE_NEI_WU"
-            }
-             if (data[0]=="审核") {
-              data[0]="ROLE_SHEN_HE"
-            }
-             if (data[0]=="财务") {
-              data[0]="ROLE_XIAO_SHOU"
-            }
-             if (data[0]=="外勤") {
-              data[0]="ROLE_WAI_QING"
-            }
-              if (data[0]=="业务会计") {
-              data[0]="ROLE_YE_WU_KUAI_JI_QING"
-            }
-              if (data[0]=="高管") {
-              data[0]="ROLE_GAO_GUAN"
-            }
-              if (data[0]=="") {
-                    that.$message.error("请选择职务！")
-               }
-               else if (data[1]=="") {
-                    that.$message.error("请选择区域！")
-               }
-               else if (data[2]=="") {
-                    that.$message.error("账号不能为空！")
-               }
-               else if (data[3]=="") {
-                    that.$message.error("姓名不能为空！")
-               }
-                else if (!str.test(data[5])) {
-                    that.$message.error("年龄必须在18-65岁之间!")
-               }
-               else if(data[7].length<6){
-                that.$message.error("密码必须大于6位！")
-               }
-                else if(data[8]!=data[7]){
-                that.$message.error("两次密码不同！")
-               }
-               else{
-                    this.$axios.post(this.$baseURL+'/event/create-slbAccount',{
-                age:data[5],
-                area:data[1],
-                login:data[2],
-                name:data[3],
-                passWord:data[7],
-                rePassWord:data[8],
-                role:data[0],
-                sex:data[4],
-                xueLi:data[6],
+             console.log(state);
+             //订单编号是code
+             that.labels[0].value = that.changeRole(res.data.role);
+             that.labels[1].value = that.changeArea(res.data.area);
+             that.labels[2].value = res.data.user.login;
+             that.labels[3].value = res.data.name;
+             that.labels[4].value = that.changeSex(res.data.sex);
+             that.labels[5].value = res.data.age;
+             that.labels[6].value = res.data.xueLi;
+             /*that.labels[7].value = res.data.partnerSale;
+             that.labels[8].value = res.data.clue;*/
+             that.labels[9].value = state;
+             //这个才是订单id
+          })
+          .catch(function(err){
+            console.log(err)
+          })
+         },
+         updata_count(){
+          console.log(111)
+                 let that=this;
+           const token = localStorage.getItem('token');
+          this.$axios.post(this.$baseURL+'/event/update-slbAccount',{
+                activated:that.labels[9].value,
+                age:that.labels[5].value,
+                area:that.labels[1].value,
+                login: that.labels[2].value,
+                name:that.labels[3].value,
+                /*passWord:data[7],
+                rePassWord:data[8],*/
+                role:that.labels[0].value,
+                sex:that.labels[4].value,
+                xueLi:that.labels[6].value, 
 
-              },
-              {
-                headers:{
-                  "Authorization": "Bearer"+" "+token
-                }
-              })
+                
+          },
+          {
+           headers: {
+                "Authorization": "Bearer" + " " + token
+              }
+          })
+          
+          .then(function(ret){
+                  console.log(1111)
+          })
+          .catch(function(err){
+            console.log(err)
+          })
 
-            .then(function(ret){
-                 that.$message({
-                  message:"创建成功",
-                  type:'success'
-                 });
-                 that.$router.push({path: 'count_list'});
-
-            })
-              .catch(function(err){
-                   that.$message.error("创建失败") 
-            })
-               }
-           
-
-
-             }
-                }
+         }
+        },
+        created:function(){
+               this.newMenu('账号管理','账号列表','修改账号');
+               this.getData();
         }
-    
-</script>
-
-<style scoped>
+      }
+    </script>
+  <style scoped>
    #main{
-   	background: #fff;
+    background: #fff;
    padding: 0 300px 20px;
    }
 </style>

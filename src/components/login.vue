@@ -63,7 +63,45 @@
                 //存token
                 const token = res.data.id_token;
                 localStorage.setItem('token', token);
-                that.$router.push({path: '/sale_home'});
+                that.$axios.get(that.$baseURL+'/currentUser/slb-accounts',{
+                        headers:{
+                          "Authorization": "Bearer"+" "+token
+                        }
+                })
+                .then(function(ret){
+                         console.log(ret.data.role)
+                         if (ret.data.role=="ROLE_ADMIN") {
+                          that.$router.push({path: '/count_list'});
+                         }
+                         else if (ret.data.role=="ROLE_XIAO_SHOU") {
+                          that.$router.push({path: '/sale_home'});
+                         }
+                          else if (ret.data.role=="ROLE_CAI_WU") {
+                          that.$router.push({path: ''});
+                         }
+                          else if (ret.data.role=="ROLE_GAO_GUAN") {
+                          that.$router.push({path: ''});
+                         }
+                          else if (ret.data.role=="ROLE_NEI_WU") {
+                          that.$router.push({path: ''});
+                         }
+                          else if (ret.data.role=="ROLE_SHEN_HE") {
+                          that.$router.push({path: ''});
+                         }
+                          else if (ret.data.role=="ROLE_USER") {
+                          that.$router.push({path: ''});
+                         }
+                           else if (ret.data.role=="ROLE_WAI_QING") {
+                          that.$router.push({path: ''});
+                         }
+                           else if (ret.data.role=="ROLE_YE_WU_KUAI_JI_QING") {
+                          that.$router.push({path: ''});
+                         }
+
+                })
+                 .catch(function(err){
+                        console.log(err)
+                })
 
               })
               .catch(function(err){
