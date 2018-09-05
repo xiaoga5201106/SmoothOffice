@@ -466,6 +466,7 @@
                  date2:'',
                  date3:'',
                  date4:'',
+                 ossFlag:false,
                  formLabelWidth:'120px',
         }
       },
@@ -528,7 +529,10 @@
                                 //得到oss路径
                                 that.$axios.post(host,request)
                                   .then(function(res){
+                                    console.log(that.ossFlag);
                                     that.ossImgObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+                                    that.ossFlag=true;
+                                    console.log(that.ossFlag);
                                   })
                                   .catch(function(err){
                                   });
@@ -576,6 +580,8 @@
                                 }
                               )
                                 .then(function(res){
+                                  console.log(res);
+                                  console.log(that.ossFlag);
                                   that.$message({
                                     message : '提交成功！',
                                     type : 'success'

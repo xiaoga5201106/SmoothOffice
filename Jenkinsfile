@@ -11,4 +11,12 @@ node {
         sh "npm -version"
     sh "node -v"
     }
+
+    stage('check npm&&node') {
+        sh "npm run build"
+    }
+    stage('check npm&&node') {
+        sh "npm run dev"
+    }
+
 }
