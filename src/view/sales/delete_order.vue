@@ -117,7 +117,7 @@
               this.show = true;
               this.index = index;
               this.flag = flag;
-              //获取当前点击行里的内容
+              //获取当前点击行里的内容a
               let data = this.getJsonById(this.index,this.tableData);
               let label = [];
               let data1 = [];
