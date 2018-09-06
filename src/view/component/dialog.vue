@@ -498,10 +498,59 @@
                             this.$refs.getPath1.getUploadData();
                             this.$refs.getPath2.getUploadData();
                             //把图片上传到阿里云
-                            let that=this;
+                            
                             //获取token
                             const token = localStorage.getItem('token');
-                            that.$axios.get(this.$baseURL+'/oss/benyun-test-oss/postPolicy?dir=user-dir',{
+                            this.postPath(token);
+                              
+                        }
+                      },
+                           //把oss图片上传到我们本地服务器
+                      async postPath(token){
+                        let that=this;
+                        console.log(511);
+                              await this.getOssPath(token);
+                              console.log(513);
+                              let url = '';
+                              if(that.flag == '申请修改'){
+                                  url = '/event/apply-for-udpate-slb-orders';
+                              }
+                              else if(that.flag == '申请变更'){
+                                  url = '/event/apply-for-change-orders';
+                              }
+                              else if(that.flag == '申请撤单'){
+                                  url = '/event/apply-for-revoke-slb-orders';
+                              }
+                              that.$axios.post(that.$baseURL + url,{
+                                  imageList: that.ossImgObject,
+                                  message: that.inputData,
+                                  pdfList: that.ossPdfObject,
+                                  slbOrderId: that.id
+                                },
+                                {
+                                  headers: {
+                                    "Authorization": "Bearer"+" "+token
+                                  }
+                                }
+                              )
+                                .then(function(res){
+                                  console.log(res);
+                                  console.log(that.ossFlag);
+                                  that.$message({
+                                    message : '提交成功！',
+                                    type : 'success'
+                                  });
+                                })
+                                .catch(function(err){
+                                  that.$message({
+                                    message : '提交失败！',
+                                    type : 'warning'
+                                  });
+                                });
+                            },
+                      getOssPath(token){
+                          let that=this;
+                          that.$axios.get(this.$baseURL+'/oss/benyun-test-oss/postPolicy?dir=user-dir',{
                               headers: {
                                 "Authorization": "Bearer" + " " + token
                               }
@@ -556,48 +605,10 @@
                                   .catch(function(err){
                                   });
                               }
-                              //把oss图片上传到我们本地服务器
-                              let url = '';
-                              if(that.flag == '申请修改'){
-                                  url = '/event/apply-for-udpate-slb-orders';
-                              }
-                              else if(that.flag == '申请变更'){
-                                  url = '/event/apply-for-change-orders';
-                              }
-                              else if(that.flag == '申请撤单'){
-                                  url = '/event/apply-for-revoke-slb-orders';
-                              }
-                              that.$axios.post(that.$baseURL + url,{
-                                  imageList: that.ossImgObject,
-                                  message: that.inputData,
-                                  pdfList: that.ossPdfObject,
-                                  slbOrderId: that.id
-                                },
-                                {
-                                  headers: {
-                                    "Authorization": "Bearer"+" "+token
-                                  }
-                                }
-                              )
-                                .then(function(res){
-                                  console.log(res);
-                                  console.log(that.ossFlag);
-                                  that.$message({
-                                    message : '提交成功！',
-                                    type : 'success'
-                                  });
-                                })
-                                .catch(function(err){
-                                  that.$message({
-                                    message : '提交失败！',
-                                    type : 'warning'
-                                  });
-                                });
                             })
-                            .catch(function(err){
+                              .catch(function(err){
                               console.log(err)
                             });
-                        }
                       },
                       handleInput(event){
                          this.inputData = event;
