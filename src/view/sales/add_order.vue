@@ -1,7 +1,7 @@
 <template>
 
   <div id="main">
-   <formBox :labels="labels" flag="newOrder"></formBox>
+   <formBox :labels="labels" flag="newOrder" @changeItem="changeItem"></formBox>
   	<formButton state4="提交" @submit="submit(labels)"></formButton>
     <router-link to=""></router-link>
 
@@ -22,8 +22,8 @@
       },
     data () {
       return{
-
-
+          item1:'',
+          item2:'',
           labels:[
                {
                	key:'2',
@@ -55,36 +55,11 @@
                     value:''
                 },
                   {
-                    item:[{
-                      i:'自有业务'
-                    },
-                      {
-                        i:'转包业务'
-                      }],
+                    item:[],
                     value:''
                   },
                   {
-                    item:[{
-                      i:'一次付款'
-                      },
-                      {
-                        i:'多次付款'
-                      },
-                      {
-                        i:'自签业务'
-                      },
-                      {
-                        i:'返佣业务'
-                      },
-                      {
-                        i:'工商业务'
-                      },
-                      {
-                        i:'转包业务'
-                      },
-                      {
-                        i:'财务业务'
-                      }],
+                    item:[],
                     value:''
                   }
                	]
@@ -131,6 +106,56 @@
 
     },
     methods:{
+        changeItem(type){
+           //同时做到判断是点击哪个下拉框
+            if(type == 1){
+              this.labels[1].items[1].item = [];
+              this.labels[1].items[1].value = '';
+              this.labels[1].items[2].item = [];
+              this.labels[1].items[2].value = '';
+              if(this.labels[1].items[0].value == '税筹'){
+                
+                this.labels[1].items[1].item.push({i:'自有业务'},{i:'转包业务'});
+              }
+              else if(this.labels[1].items[0].value =='基础业务'){
+                this.labels[1].items[1].item.push({i:'自有业务'});
+              }
+            }
+            else if(type == 2){             
+              if(this.labels[1].items[0].value == ''){
+                  this.$message({
+                message:'请选择前面的业务类型！',
+                type:"warning",
+                duration:1000,
+              })                  
+              }
+            }
+            else if(type == 3 && (this.labels[1].items[0].value == '' || this.labels[1].items[1].value == '')){
+              this.$message({
+                 message:'请选择前面的业务类型！',
+                type:"warning",
+                duration:1000,
+
+              })
+            }
+            if(this.labels[1].items[0].value == '税筹' && this.labels[1].items[1].value == '自有业务'){
+              this.labels[1].items[2].item = [];
+              this.labels[1].items[2].value = '';
+              this.labels[1].items[2].item.push({i:'一次付款'},{i:'多次付款'});
+            }
+            else if(this.labels[1].items[0].value == '税筹' && this.labels[1].items[1].value == '转包业务'){
+              this.labels[1].items[2].item = [];
+              this.labels[1].items[2].value = '';
+              this.labels[1].items[2].item.push({i:'自签业务'},{i:'返佣业务'});
+            }
+            else if(this.labels[1].items[0].value == '基础业务' && this.labels[1].items[1].value == '自有业务'){
+              this.labels[1].items[2].item = [];
+              this.labels[1].items[2].value = '';
+              this.labels[1].items[2].item.push({i:'工商业务'},{i:'转包业务'},{i:'财务业务'});
+            }
+
+           
+        },
         submit(labels){
           let that=this;
           const token = localStorage.getItem('token');
@@ -188,12 +213,8 @@
                });
               });
                   }
-
-
-
-
              }
-        }
+        },
     }
 </script>
 

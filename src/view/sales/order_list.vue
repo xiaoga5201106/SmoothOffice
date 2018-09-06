@@ -139,16 +139,17 @@
               item:'区域',
               content:'select',
               placeholder:'请选择',
-              option:[{
+              option:[
+              {
+                value: '17',
+                label: '全部'
+              },{
                 value: '15',
                 label: '柳州'
               },{
                 value: '16',
                 label: '贺州'
-              },{
-                value: '17',
-                label: '全部'
-              }]
+              },]
             },{
               item:'订单编号',
               content:'input',
