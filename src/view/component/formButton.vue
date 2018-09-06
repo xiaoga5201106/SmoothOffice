@@ -6,13 +6,14 @@
    <el-button v-if="state4=='提交'" type="danger" @click="submit" size="small">{{state4}}</el-button>
    <el-button v-if="state5=='通过'" type="danger" size="small">{{state5}}</el-button>
    <el-button v-if="state6=='不通过'" type="danger" size="small">{{state6}}</el-button>
+   <el-button v-if="state7=='关闭'" @click="closedialog"  size="small">{{state7}}</el-button>
 	</div>
 </template>
 
 <script >
 	export default{
 		name:'formButton',
-		props:["state1","state2","state3","state4","state5","state6"],
+		props:["state1","state2","state3","state4","state5","state6","state7"],
 		data(){
 			return{
 

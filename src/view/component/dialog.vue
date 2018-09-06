@@ -27,7 +27,7 @@
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer" align="center">
-    <formButton state1="确定"  state2="取消" @close="close"></formButton>
+    <formButton state7="关闭"   @close="close"></formButton>
   </div>
 </el-dialog>
 

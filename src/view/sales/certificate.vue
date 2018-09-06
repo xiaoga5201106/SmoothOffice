@@ -27,7 +27,11 @@
             item:'业务类型',
             content:'select',
             placeholder:'请选择',
-            option:[{
+            option:[
+            {
+              value: '3',
+              label: '全部'
+              },{
               value: '1',
               label: '税筹'
             },{
@@ -37,42 +41,50 @@
           },{
             content:'select',
             placeholder:'请选择',
-            option:[{
-              value: '3',
+            option:[
+            {
+              value: '6',
+              label: '全部'
+              },{
+              value: '4',
               label: '自有业务'
             },{
-              value: '4',
+              value: '5',
               label: '转包业务'
             }]
           },{
             content:'select',
             placeholder:'请选择',
-            option:[{
-              value: '5',
+            option:[
+            {
+              value: '14',
+              label: '全部'
+              },{
+              value: '7',
               label: '一次付款'
             },{
-              value: '6',
+              value: '8',
               label: '多次付款'
             },{
-              value: '7',
+              value: '9',
               label: '自签业务'
             },{
-              value: '8',
+              value: '10',
               label: '返佣业务'
             },{
-              value: '9',
+              value: '11',
               label: '工商业务'
             },{
-              value: '10',
+              value: '12',
               label: '转包业务'
             },{
-              value: '11',
+              value: '13',
               label: '财务业务'
             }]
           },{
             item:'公司合同编号',
             content:'input',
-            placeholder:'请输入订单编号'
+            placeholder:'请输入公司合同编号'
           },{
             item:'客户名称',
             content:'input',
