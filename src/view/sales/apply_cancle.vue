@@ -235,7 +235,7 @@
                 }
 
                       data.forEach(function(value,index,array){
-                      
+
                           console.log(data.length)
                            let status;
                         if (value.states=="1") {
@@ -283,7 +283,7 @@
                                  apply_information:value.message
                            })
                         }
-                        
+
 
 
                       })
@@ -340,7 +340,7 @@
                     menu[1].tableData=[];
                     menu[2].tableData=[];
                       data.forEach(function(value,index,array){
-                        
+
                             let status;
                         if (value.states=="1") {
                                 status="待审核"
@@ -352,7 +352,7 @@
                                 status="未通过"
                         }
                         if (value.states==menu[0].name) {
-                            
+
                             menu[0].tableData.push({
                                  id:value.id,
                                  order_id:value.slbOrder.code,
@@ -364,7 +364,7 @@
                                  apply_information:value.message
                            })
                         }
-                         else if (value.states==menu[1].name) {                         
+                         else if (value.states==menu[1].name) {
                             menu[1].tableData.push({
                                  id:value.id,
                                  order_id:value.slbOrder.code,
@@ -389,7 +389,7 @@
                            })
                         }
 
-                        
+
 
                       })
 
@@ -401,7 +401,7 @@
              },
              page(val){
 
-                 this.newMenu('申请列表','申请变更');
+                 this.newMenu('申请列表','申请撤单');
              const token=localStorage.getItem('token');
              let that=this;
              this.$axios.get(this.$baseURL+'/slb-order-applications-records?pageSize=10&size=10&&type=1&isCancel=false&page='+(val-1),{
@@ -418,7 +418,7 @@
                 }
                        menu[0].tableData=[];
                       data.forEach(function(value,index,array){
-                        
+
                            let status;
                         if (value.states=="1") {
                                 status="待审核"
@@ -429,7 +429,7 @@
                         if (value.states=="3") {
                                 status="未通过"
                         }
-                        
+
                         console.log(value.states)
                         if (value.states==menu[0].name) {
                             menu[0].tableData.push({
@@ -467,7 +467,7 @@
                                  apply_information:value.message
                            })
                         }
-                        
+
 
 
                       })

@@ -19,7 +19,7 @@
 <style>
   .upload-demo{
     position: relative;
-    height: 50px;
+    min-height: 50px;
   }
   .el-upload-list{
     width: 100%;
@@ -81,7 +81,7 @@
             name: file.name,
             url: file.url
           });
-        if((tempFile.size/1024) < 50){           
+        if((tempFile.size/1024) < 50){
            this.fileList.push(tempFile);
         }
         else{

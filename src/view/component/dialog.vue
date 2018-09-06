@@ -401,7 +401,7 @@
     position: absolute;
     margin-left: 10px;
   }
-  
+
   .tip{
     text-align: right;
   }
@@ -499,11 +499,11 @@
                             this.$refs.getPath1.getUploadData();
                             this.$refs.getPath2.getUploadData();
                             //把图片上传到阿里云
-                            
+
                             //获取token
                             const token = localStorage.getItem('token');
                             this.postPath(token);
-                              
+
                         }
                       },
                            //把oss图片上传到我们本地服务器

@@ -16,6 +16,7 @@
     import pagination from'../component/pagination'
     import searchTools from'../component/searchTools'
     import toolBtn from '../component/toolBtn'
+    let type1=undefined,type2=undefined,type3=undefined,area=undefined,order_id=undefined,customerName=undefined;
     export default {
         name: "order_list",
         components: {
@@ -219,7 +220,7 @@
           },
           //翻页
           page(val) {
-            this.getList(val);
+            this.getList(val,type1,type2,type3,area,order_id,customerName);
           },
           refresh(){
             //策略进行DOM的更新，表格以及分页刷新
@@ -231,12 +232,12 @@
           },
           //搜索
           search(inputValue,selectValue){
-            let type1=selectValue[0];
-            let type2=selectValue[1];
-            let type3=selectValue[2];
-            let area=selectValue[3];
-            let order_id=inputValue[4];
-            let customerName=inputValue[5];
+             type1=selectValue[0];
+             type2=selectValue[1];
+             type3=selectValue[2];
+             area=selectValue[3];
+             order_id=inputValue[4];
+             customerName=inputValue[5];
             //策略进行DOM的更新，表格以及分页刷新
             this.paginationShow = false;
             this.$nextTick(function () {
