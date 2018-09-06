@@ -32,8 +32,8 @@
               { prop:'name',
                 label:"姓名"
               },
-              { prop:'sex',
-                label:"性别"
+              { prop:'login',
+                label:"账号"
               },
               { prop:'area',
                 label:"区域"
@@ -135,6 +135,9 @@
               },{
                 value: '9',
                 label: '停用'
+              },{
+                value: '10',
+                label: '全部'
               }]
             }],
             btns:[{
@@ -162,7 +165,7 @@
                  if (state=="停用") {
                      state="false"
                  }
-                  if (state==undefined) {
+                  if (state==undefined||state=="全部") {
                      state=" "
                  }
                   if (loginKey==undefined) {
@@ -204,7 +207,7 @@
               that.tableData.push({
               id:value.id,
               name:value.name,
-              sex:that.changeSex(value.sex),
+               login:value.user.login,
               area:that.changeArea(value.area),
               job:that.changeRole(value.role),
               createtime:value.createTime,
@@ -245,7 +248,7 @@
               that.tableData.push({
               id:value.id,
               name:value.name,
-              sex:that.changeSex(value.sex),
+               login:value.user.login,
               area:that.changeArea(value.area),
               job:that.changeRole(value.role),
               createtime:value.createTime,
@@ -272,6 +275,7 @@
 
             })
             .then(function(ret){
+
               that.changeRole(ret.data.role)
               that.listTotal = parseInt(ret.headers['x-total-count']);
               let data=ret.data;
@@ -283,10 +287,12 @@
                 else if (value.user.activated==false) {
                   state="停用"
                 }
+                let date=new Date((value.createTime).split(".")[0]);
+                value.createTime=that.changeDate(date);
               that.tableData.push({
               id:value.id,
               name:value.name,
-              sex:that.changeSex(value.sex),
+              login:value.user.login,
               area:that.changeArea(value.area),
               job:that.changeRole(value.role),
               createtime:value.createTime,

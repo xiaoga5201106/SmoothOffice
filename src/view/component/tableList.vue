@@ -90,8 +90,13 @@
               size="mini"
               @click="opendialogForSee1(scope.$index, scope.row)"><router-link :to="{name:'audit_count', query:{order_id:tableData[scope.$index].id}}">修改</router-link></el-button>
                 <el-button
+                v-if="tableData[scope.$index].state=='可用'"
               size="mini"
               @click="opendialogForSee1(scope.$index, scope.row)">停用</el-button>
+              <el-button
+              v-if="tableData[scope.$index].state=='停用'"
+              size="mini"
+              @click="opendialogForSee1(scope.$index, scope.row)">恢复使用</el-button>
           </div>
       </template>
     </el-table-column>

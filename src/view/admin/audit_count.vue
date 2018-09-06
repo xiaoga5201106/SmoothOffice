@@ -193,7 +193,7 @@
             if (res.data.user.activated==false) {
                          state="停用"
             }
-             console.log(state);
+             console.log(res.data.sex);
              //订单编号是code
              that.labels[0].value = that.changeRole(res.data.role);
              that.labels[1].value = that.changeArea(res.data.area);

@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="250px">
         <img class="logo" src="../../static/img/logo.png"/>
-        <div class="role" @click="returnHome"><router-link to="/sale_home">{{role}}</router-link></div>
+        <div class="role" @click="returnHome">{{role}}</div>
         <el-col>
           <el-menu
             default-active="0"
@@ -75,7 +75,15 @@
       },
       returnHome(){
         this.menu=[{title1:"工作台",title2:"",title3:""}];
+           if (this.role=="管理员") {
+           this.$router.push({path: '/count_list'});
+           }
+             if (this.role=="销售") {
+           this.$router.push({path: '/sale_home'});
+           }
+        console.log(this.role)
       },
+
       //刷新当前页面
       reload(){
         this.isRouterAlive = false;
