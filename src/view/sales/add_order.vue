@@ -190,7 +190,7 @@
                for(let i = 0; i < labels.length; i++){
                   labels[i].value = '';
                }
-               that.$route.push("/order_list");
+               that.$router.push("/order_list");
              })
              .catch(function(err){
                 that.$message({
