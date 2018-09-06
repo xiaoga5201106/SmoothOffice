@@ -227,7 +227,7 @@
              page(val){
               const token = localStorage.getItem('token');
             let that=this;
-            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10&page='+(val-1),{
+            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10&page='+(val-1)+'&sort=createTime,desc',{
                headers:{
                   "Authorization": "Bearer"+" "+token
                }
@@ -268,7 +268,7 @@
         created:function(){
              const token = localStorage.getItem('token');
             let that=this;
-            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10',{
+            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10&sort=createTime,desc',{
                headers:{
                   "Authorization": "Bearer"+" "+token
                }
