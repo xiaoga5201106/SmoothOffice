@@ -45,7 +45,18 @@ Vue.prototype.changeDate=function(date, fmt){
 		    }
 		    return fmt;
 };
-
+  Vue.prototype.changeSex=function(sex){
+           if(sex=="男"){
+                sex="男"
+           }
+           else if(sex=="女"){
+                sex="女"
+           }
+           else{
+           	sex=""
+           }
+           return sex
+  };
 Vue.prototype.changeRole=function(role){
 	     if (role=="ROLE_ADMIN") {
 	     	  role="管理员"
