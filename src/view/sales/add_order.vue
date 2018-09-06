@@ -134,22 +134,22 @@
         submit(labels){
           let that=this;
           const token = localStorage.getItem('token');
-          if (labels[0].value=='') {
-           that.$message.error('请选择区域')
-          }
-         else if (labels[1].items[0].value=='') {
+          if (labels[1].items[0].value=='') {
                that.$message.error('请选择业务类型')
           }
-           else if (labels[1].items[1].value=='') {
+          else if (labels[1].items[1].value=='') {
              that.$message.error('请选择业务类型')
           }
-           else if (labels[1].items[2].value=='') {
+          else if (labels[1].items[2].value=='') {
              that.$message.error('请选择业务类型')
           }
-           else if (labels[2].value=='') {
+          else if (labels[0].value=='') {
+           that.$message.error('请选择区域')
+          }
+          else if (labels[2].value=='') {
              that.$message.error('请填写客户名称')
           }
-           else if (labels[3].value=='') {
+          else if (labels[3].value=='') {
              that.$message.error('请填写联系方式')
           }
           else{

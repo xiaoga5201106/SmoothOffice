@@ -11,6 +11,6 @@ node {
     sh "node -v"
     }
     stage('npm install&&build&&run') {
-        sh "./start.sh"
+        sh "JENKINS_NODE_COOKIE=dontKillMe ./start.sh"
     }
 }
