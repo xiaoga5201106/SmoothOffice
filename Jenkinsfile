@@ -12,10 +12,10 @@ node {
     sh "node -v"
     }
 
-    stage('check npm&&node') {
+    stage('build') {
         sh "npm run build"
     }
-    stage('check npm&&node') {
+    stage('run') {
         sh "npm run dev"
     }
 

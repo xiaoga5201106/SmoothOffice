@@ -26,7 +26,11 @@
               item:'业务类型',
               content:'select',
               placeholder:'请选择',
-              option:[{
+              option:[
+              {
+              value: '3',
+              label: '全部'
+              },{
                 value: '1',
                 label: '筹税'
               },{
@@ -36,36 +40,44 @@
             },{
               content:'select',
               placeholder:'请选择',
-              option:[{
-                value: '3',
-                label: '自由业务'
+              option:[
+              {
+              value: '6',
+              label: '全部'
               },{
                 value: '4',
+                label: '自由业务'
+              },{
+                value: '5',
                 label: '转包业务'
               }]
             },{
               content:'select',
               placeholder:'请选择',
-              option:[{
-                value: '5',
-                label: '一次付款'
-              },{
-                value: '6',
-                label: '多次付款'
+              option:[
+              {
+              value: '14',
+              label: '全部'
               },{
                 value: '7',
-                label: '自签业务'
+                label: '一次付款'
               },{
                 value: '8',
-                label: '返佣业务'
+                label: '多次付款'
               },{
                 value: '9',
-                label: '工商业务'
+                label: '自签业务'
               },{
                 value: '10',
-                label: '转包业务'
+                label: '返佣业务'
               },{
                 value: '11',
+                label: '工商业务'
+              },{
+                value: '12',
+                label: '转包业务'
+              },{
+                value: '13',
                 label: '财务业务'
               }]
             },{
@@ -122,7 +134,7 @@
                   label:"业务类型"
                 },
                 { prop:'pact_count',
-                  label:"合同总价款"
+                  label:"后端服务费用"
                 },
                 { prop:'state',
                   label:"提成状态"

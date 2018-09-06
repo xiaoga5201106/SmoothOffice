@@ -150,34 +150,40 @@
             item:'业务类型',
             content:'select',
             placeholder:'请选择',
-            option:[{
+            option:[
+            {
+              value: '3',
+              label: '全部'
+            },{
               value: '1',
               label: '税筹'
             },{
               value: '2',
               label: '基础业务'
             }
-            ,{
-              value: '3',
-              label: '全部'
-            }]
+            ,]
           },{
             content:'select',
             placeholder:'请选择',
-            option:[{
+            option:[
+            {
+              value: '6',
+              label: '全部'
+            },{
               value: '4',
               label: '自有业务'
             },{
               value: '5',
               label: '转包业务'
-            },{
-              value: '6',
-              label: '全部'
-            }]
+            },]
           },{
             content:'select',
             placeholder:'请选择',
-            option:[{
+            option:[
+            {
+              value: '14',
+              label: '全部'
+            },{
               value: '7',
               label: '一次付款'
             },{
@@ -198,10 +204,7 @@
             },{
               value: '13',
               label: '财务业务'
-            },{
-              value: '14',
-              label: '全部'
-            }]
+            },]
           },{
             item:'订单编号',
             content:'input',
@@ -214,7 +217,7 @@
           }
         },
          created:function(){
-             this.newMenu('申请列表','申请变更');
+             
              const token=localStorage.getItem('token');
              let that=this;
              this.$axios.get(this.$baseURL+'/slb-order-applications-records?pageSize=10&size=10&isCancel=false&type=2',{

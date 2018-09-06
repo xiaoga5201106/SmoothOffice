@@ -18,7 +18,7 @@
     methods:{
        show(){
       console.log(this.menu3);
-   }
+     }
     }
    
   }

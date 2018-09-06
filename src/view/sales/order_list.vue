@@ -79,34 +79,40 @@
               item:'业务类型',
               content:'select',
               placeholder:'请选择',
-              option:[{
+              option:[
+              {
+                value: '3',
+                label: '全部'
+              },{
                 value: '1',
                 label: '税筹'
               },{
                 value: '2',
                 label: '基础业务'
               }
-              ,{
-                value: '3',
-                label: '全部'
-              }]
+              ,]
             },{
               content:'select',
               placeholder:'请选择',
-              option:[{
+              option:[
+              {
+                value: '6',
+                label: '全部'
+              },{
                 value: '4',
                 label: '自有业务'
               },{
                 value: '5',
                 label: '转包业务'
-              },{
-                value: '6',
-                label: '全部'
               }]
             },{
               content:'select',
               placeholder:'请选择',
-              option:[{
+              option:[
+              {
+                value: '14',
+                label: '全部'
+              },{
                 value: '7',
                 label: '一次付款'
               },{
@@ -127,9 +133,6 @@
               },{
                 value: '13',
                 label: '财务业务'
-              },{
-                value: '14',
-                label: '全部'
               }]
             },{
               item:'区域',
@@ -182,9 +185,16 @@
                * 下面两个循环是为了重新构造显示出来的json数组 类型如下[{"name":"订单编号"，"data":"order_id"}]
                */
             for (let i in data) {
+
+              if(data[i] === null){
+                data1[dataIndex] = '';
+              }
+              else{
               data1[dataIndex] = data[i];
+              }
               label[dataIndex] = this.titles[dataIndex].label;
               dataIndex++;
+
             }
             dataStr = "[";
             for (let i = 0; i < dataIndex; i++) {
@@ -272,6 +282,7 @@
              if(res.data==""){
                       that.$message.error("暂无此信息！")
                     }
+                    console.log(res.data);
                 that.listTotal = parseInt(res.headers['x-total-count']);
                 res.data.forEach(function (value, index, array) {
                   let order_status, pact_status;
