@@ -11,6 +11,6 @@ node {
     sh "node -v"
     }
     stage('npm install&&build&&run') {
-        sh "./start.sh"
+        sh "/var/lib/jenkins/workspace/benyun/start.sh"
     }
 }

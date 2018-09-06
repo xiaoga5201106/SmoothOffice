@@ -32,7 +32,7 @@
               label: '全部'
               },{
                 value: '1',
-                label: '筹税'
+                label: '税筹'
               },{
                 value: '2',
                 label: '基础业务'
@@ -46,7 +46,7 @@
               label: '全部'
               },{
                 value: '4',
-                label: '自由业务'
+                label: '自有业务'
               },{
                 value: '5',
                 label: '转包业务'

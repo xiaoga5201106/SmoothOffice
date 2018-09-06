@@ -6,11 +6,28 @@
         :label="label.title"
         :prop="label.prop" v-if="label.title=='业务类型'">
         <span v-if="label.key=='0'" style="width:400px">{{label.value}}</span>
-        <el-select v-for="item in label.items" class="short" v-model="item.value">
+        <el-select v-for="(item,index) in label.items" v-if="index<1" class="short" v-model="item.value" @change="change"  >
           <el-option
             v-for="i in item.item"
             :label="i.i"
-            v-model="i.i">
+            v-model="i.i"
+            >
+          </el-option>
+        </el-select>
+        <el-select v-for="(item,index) in label.items" v-if="index==1" class="short" v-model="item.value" @focus="focus_two" >
+          <el-option
+            v-for="i in item.item"
+            :label="i.i"
+            v-model="i.i"
+            >
+          </el-option>
+        </el-select>
+        <el-select v-for="(item,index) in label.items" v-if="index>1" class="short" v-model="item.value" @focus="focus_three">
+          <el-option
+            v-for="i in item.item"
+            :label="i.i"
+            v-model="i.i"
+            >
           </el-option>
         </el-select>
         <span class="must">{{label.msg}}</span>
@@ -66,14 +83,20 @@
     props:["labels","flag"],
     data() {
       return {
-
       }
     },
     methods: {
-      onSubmit() {
+       //将三个下拉框分开写是因为需要判断点第三个的时候前面两个下拉框有没有被选择        
+      change(value){
+       this.$emit("changeItem",1);
+      },
+      focus_two(event){
+       this.$emit("changeItem",2);
+      },
+      focus_three(event){
+       this.$emit("changeItem",3);
 
-
-      }
+      },
     }
   }
 </script>
