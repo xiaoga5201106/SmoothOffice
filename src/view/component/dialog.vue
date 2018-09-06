@@ -401,6 +401,7 @@
     position: absolute;
     margin-left: 10px;
   }
+  
   .tip{
     text-align: right;
   }
@@ -507,10 +508,8 @@
                       },
                            //把oss图片上传到我们本地服务器
                       async postPath(token){
-                        let that=this;
-                        console.log(511);
+                              let that=this;
                               await this.getOssPath(token);
-                              console.log(513);
                               let url = '';
                               if(that.flag == '申请修改'){
                                   url = '/event/apply-for-udpate-slb-orders';
