@@ -282,7 +282,7 @@
              if(res.data==""){
                       that.$message.error("暂无此信息！")
                     }
-                    console.log(res.data);
+
                 that.listTotal = parseInt(res.headers['x-total-count']);
                 res.data.forEach(function (value, index, array) {
                   let order_status, pact_status;

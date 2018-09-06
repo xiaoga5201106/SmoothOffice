@@ -19,7 +19,7 @@
 <style>
   .upload-demo{
     position: relative;
-    height: 50px;
+    min-height: 50px;
   }
   .el-upload-list{
     width: 100%;
