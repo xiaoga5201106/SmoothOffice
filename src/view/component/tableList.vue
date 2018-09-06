@@ -18,7 +18,7 @@
     </el-table-column>
     <el-table-column label="凭证内容" align="center" v-if="cerList=='true'">
       <template slot-scope="scope" >
-      <div class="cerList"><img v-for="cerList in tableData[0].vouchers_content" :src="cerList.ossUrl"/></div>
+      <div class="cerList"><img v-for="cerList in tableData[0].vouchers_content" :src="cerList.ossUrl" style="width: 40px;height: 40px;margin-right: 5px;cursor: pointer"/></div>
       </template>
     </el-table-column>
     <el-table-column label="操作" v-if="operate=='true'" align="center" width="130px">

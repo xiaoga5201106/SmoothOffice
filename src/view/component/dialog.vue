@@ -467,7 +467,6 @@
                  date2:'',
                  date3:'',
                  date4:'',
-                 ossFlag:false,
                  formLabelWidth:'120px',
         }
       },
@@ -507,107 +506,111 @@
                         }
                       },
                            //把oss图片上传到我们本地服务器
-                      async postPath(token){
+                         postPath(token){
                               let that=this;
-                              await this.getOssPath(token);
-                              let url = '';
-                              if(that.flag == '申请修改'){
+                              that.getOssPath(token).then((value)=>{
+                                console.log(value.value1)
+                                let url = '';
+                                if(that.flag == '申请修改'){
                                   url = '/event/apply-for-udpate-slb-orders';
-                              }
-                              else if(that.flag == '申请变更'){
-                                  url = '/event/apply-for-change-orders';
-                              }
-                              else if(that.flag == '申请撤单'){
-                                  url = '/event/apply-for-revoke-slb-orders';
-                              }
-                              that.$axios.post(that.$baseURL + url,{
-                                  imageList: that.ossImgObject,
-                                  message: that.inputData,
-                                  pdfList: that.ossPdfObject,
-                                  slbOrderId: that.id
-                                },
-                                {
-                                  headers: {
-                                    "Authorization": "Bearer"+" "+token
-                                  }
                                 }
-                              )
-                                .then(function(res){
-                                  console.log(res);
-                                  console.log(that.ossFlag);
-                                  that.$message({
-                                    message : '提交成功！',
-                                    type : 'success'
+                                else if(that.flag == '申请变更'){
+                                  url = '/event/apply-for-change-orders';
+                                }
+                                else if(that.flag == '申请撤单'){
+                                  url = '/event/apply-for-revoke-slb-orders';
+                                }
+                                that.$axios.post(that.$baseURL + url,{
+                                    imageList: value.value1,
+                                    message: that.inputData,
+                                    pdfList: value.value2,
+                                    slbOrderId: that.id
+                                  },
+                                  {
+                                    headers: {
+                                      "Authorization": "Bearer"+" "+token
+                                    }
+                                  }
+                                )
+                                  .then(function(res){
+                                    that.$message({
+                                      message : '提交成功！',
+                                      type : 'success'
+                                    });
+                                    that.close();
+                                  })
+                                  .catch(function(err){
+                                    that.$message({
+                                      message : '提交失败！',
+                                      type : 'warning'
+                                    });
                                   });
-                                })
-                                .catch(function(err){
-                                  that.$message({
-                                    message : '提交失败！',
-                                    type : 'warning'
-                                  });
-                                });
+                              });
+
                             },
                       getOssPath(token){
                           let that=this;
-                          that.$axios.get(this.$baseURL+'/oss/benyun-test-oss/postPolicy?dir=user-dir',{
+                          return new Promise(function (resolve, reject) {
+                            that.$axios.get(that.$baseURL+'/oss/benyun-test-oss/postPolicy?dir=user-dir',{
                               headers: {
                                 "Authorization": "Bearer" + " " + token
                               }
                             })
-                            .then(function(res){
-                              console.log(res);
-                              const accessid = res.data.accessid;
-                              const signature = res.data.signature;
-                              const host =res.data.host;
-                              const dir =res.data.dir;
-                              //const expire =res.data.expire;
-                              const policy =res.data.policy;
-                              const filesName=[];
-                              //组装发送数据
-                              for(let i=0;i<that.imgList.length;i++){
-                                const request = new FormData();
-                                filesName[i]=new Date().getTime()+'.jpg';
-                                request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
-                                request.append("policy",policy);//policy规定了请求的表单域的合法性
-                                request.append("signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
-                                //---以上都是阿里的认证策略
-                                request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
-                                request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
-                                request.append('file', that.imgList[i]);//需要上传的文件 file
-                                //得到oss路径
-                                that.$axios.post(host,request)
-                                  .then(function(res){
-                                    console.log(that.ossFlag);
-                                    that.ossImgObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
-                                    that.ossFlag=true;
-                                    console.log(that.ossFlag);
-                                  })
-                                  .catch(function(err){
-                                  });
-                              }
-                              for(let i=0;i<that.pdfList.length;i++){
-                                const request = new FormData();
-                                filesName[i]=new Date().getTime()+'.pdf';
-                                request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
-                                request.append("policy",policy);//policy规定了请求的表单域的合法性
-                                request.append("signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
-                                //---以上都是阿里的认证策略
-                                request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
-                                request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
-                                request.append('file', that.imgList[i]);//需要上传的文件 file
-                                //得到oss路径
-                                that.$axios.post(host,request)
-                                  .then(function(res){
-                                    that.ossPdfObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
-                                    console.log(that.ossPdfObject)
-                                  })
-                                  .catch(function(err){
-                                  });
-                              }
-                            })
+                              .then(function(res){
+                                console.log(res);
+                                const accessid = res.data.accessid;
+                                const signature = res.data.signature;
+                                const host =res.data.host;
+                                const dir =res.data.dir;
+                                //const expire =res.data.expire;
+                                const policy =res.data.policy;
+                                const filesName=[];
+                                //组装发送数据
+                                for(let i=0;i<that.imgList.length;i++){
+                                  const request = new FormData();
+                                  filesName[i]=new Date().getTime()+i+'.jpg';
+                                  request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
+                                  request.append("policy",policy);//policy规定了请求的表单域的合法性
+                                  request.append("signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+                                  //---以上都是阿里的认证策略
+                                  request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
+                                  request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
+                                  request.append('file', that.imgList[i]);//需要上传的文件 file
+                                  that.ossImgObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+
+                                  //得到oss路径
+                                  that.$axios.post(host,request)
+                                    .then(function(res){
+
+                                    })
+                                    .catch(function(err){
+                                    });
+                                }
+                                for(let i=0;i<that.pdfList.length;i++){
+                                  const request = new FormData();
+                                  filesName[i]=new Date().getTime()+'.pdf';
+                                  request.append("OSSAccessKeyId",accessid);//Bucket 拥有者的Access Key Id。
+                                  request.append("policy",policy);//policy规定了请求的表单域的合法性
+                                  request.append("signature",signature);//根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+                                  //---以上都是阿里的认证策略
+                                  request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
+                                  request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
+                                  request.append('file', that.imgList[i]);//需要上传的文件 file
+                                  that.ossPdfObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+                                  //得到oss路径
+                                  that.$axios.post(host,request)
+                                    .then(function(res){
+
+                                    })
+                                    .catch(function(err){
+                                    });
+                                }
+                                resolve({value1:that.ossImgObject,value2:that.ossPdfObject});
+                              })
                               .catch(function(err){
-                              console.log(err)
-                            });
+                                console.log(err)
+                              });
+                          });
                       },
                       handleInput(event){
                          this.inputData = event;
