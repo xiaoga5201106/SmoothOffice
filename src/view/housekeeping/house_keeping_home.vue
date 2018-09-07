@@ -1,0 +1,111 @@
+<template>
+  <work :workData="workData"></work>
+</template>
+
+<script>
+   import work from '../component/work'
+    export default {
+        name: "house_keeping_home",
+        components:{
+          work
+        },
+        data () {
+         return{
+           workData:[
+            {
+              title:"自签合同",
+              num1:"564",
+              num1Title:"待签订",
+              num1Color:"red",
+              num2:"2",
+              num2Title:"待审核",
+              num2Color:"orange",
+              num3:"2",
+              num3Title:"未通过",
+              num3Color:"blue",
+              isWidtn1:true,
+              isWidtn2:false,
+              isWidtn3:false,
+              href:"/pending_pact"
+            },
+            {
+               title:"转包合同",
+              num1:"564",
+              num1Title:"待签订",
+              num1Color:"red",
+              num2:"2",
+              num2Title:"待审核",
+              num2Color:"orange",
+              num3:"2",
+              num3Title:"未通过",
+              num3Color:"blue",
+              isWidtn1:true,
+              isWidtn2:false,
+              isWidtn3:false,
+              href:"/pending_pact"
+            },
+            {
+               title:"合伙人合同",
+              num1:"564",
+              num1Title:"待签订",
+              num1Color:"red",
+              num2:"2",
+              num2Title:"待审核",
+              num2Color:"orange",
+              num3:"2",
+              num3Title:"未通过",
+              num3Color:"blue",
+              isWidtn1:true,
+              isWidtn2:false,
+              isWidtn3:false,
+              href:"/pending_pact"
+            },
+            {
+               title:"销售信息",
+              num1:"10",
+              num1Title:"待审批",
+              num1Color:"red",
+              isWidtn1:false,
+              isWidtn2:false,
+              isWidtn3:true,
+              href:"/pending_pact"
+            },
+            {
+               title:"提成设置-基础业务",
+              num1:"10",
+              num1Title:"待结算",
+              num1Color:"red",
+              isWidtn1:false,
+              isWidtn2:false,
+              isWidtn3:true,
+              href:"/pending_pact"
+            },
+            {
+               title:"提成设置-后端服务",
+              num1:"10",
+              num1Title:"待结算",
+              num1Color:"red",
+              isWidtn1:false,
+              isWidtn2:false,
+              isWidtn3:true,
+              href:"/pending_pact"
+            },
+            {
+               title:"派工单",
+              num1:"10",
+              num1Title:"未确认",
+              num1Color:"red",
+              isWidtn1:false,
+              isWidtn2:false,
+              isWidtn3:true,
+              href:"/pending_pact"
+            }
+          ]
+        }
+      }
+  }
+</script>
+
+<style scoped>
+
+</style>

@@ -20,6 +20,9 @@
               num2:"2",
               num2Title:"待提交订单数",
               num2Color:"red",
+              isWidtn1:false,
+              isWidtn2:true,
+              isWidtn3:false,
               href:"/order_list"
             },
             {
@@ -30,6 +33,9 @@
               num2:"2",
               num2Title:"不通过",
               num2Color:"red",
+              isWidtn1:false,
+              isWidtn2:true,
+              isWidtn3:false,
               href:"/apply_edit"
             },
             {
@@ -40,6 +46,9 @@
               num2:"2",
               num2Title:"不通过",
               num2Color:"red",
+              isWidtn1:false,
+              isWidtn2:true,
+              isWidtn3:false,
               href:"/apply_cancle"
             },
             {
@@ -50,6 +59,9 @@
               num2:"2",
               num2Title:"不通过",
               num2Color:"red",
+              isWidtn1:false,
+              isWidtn2:true,
+              isWidtn3:false,
               href:"/apply_change"
             }
           ]

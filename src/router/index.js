@@ -29,6 +29,7 @@ import settlement_base from '@/view/housekeeping/settlement_base'
 import settlement_stage from '@/view/housekeeping/settlement_stage'
 import sign_pact from '@/view/housekeeping/sign_pact'
 import voucher_list from '@/view/housekeeping/voucher_list'
+import house_keeping_home from'@/view/housekeeping/house_keeping_home'
 import cer_list from '@/view/review/cer_list'
 import commission from '@/view/review/commission'
 import line_pay_cer from '@/view/review/line_pay_cer'
@@ -223,6 +224,11 @@ export default new Router({
           path: '/voucher_list',
           name: 'voucher_list',
           component: voucher_list
+        },
+        {
+          path: '/house_keeping_home',
+          name: 'house_keeping_home',
+          component: house_keeping_home
         },
         //审核权限
         {

@@ -70,6 +70,7 @@
                 })
                 .then(function(ret){
                          console.log(ret.data.role)
+                         localStorage.setItem('userId', ret.data.id);
                          if (ret.data.role=="ROLE_ADMIN") {
                           that.$router.push({path: '/count_list'});
                          }
@@ -83,7 +84,7 @@
                           that.$router.push({path: ''});
                          }
                           else if (ret.data.role=="ROLE_NEI_WU") {
-                          that.$router.push({path: ''});
+                          that.$router.push({path: '/house_keeping_home'});
                          }
                           else if (ret.data.role=="ROLE_SHEN_HE") {
                           that.$router.push({path: ''});

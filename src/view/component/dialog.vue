@@ -502,6 +502,7 @@
                             //获取token
                             const token = localStorage.getItem('token');
                             this.postPath(token);
+                            this.$emit("close");
 
                         }
                       },
@@ -550,6 +551,7 @@
                             },
                       getOssPath(token){
                           let that=this;
+                          const userId = localStorage.getItem('userId');
                           return new Promise(function (resolve, reject) {
                             that.$axios.get(that.$baseURL+'/oss/benyun-test-oss/postPolicy?dir=user-dir',{
                               headers: {
@@ -576,7 +578,7 @@
                                   request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
                                   request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
                                   request.append('file', that.imgList[i]);//需要上传的文件 file
-                                  that.ossImgObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+                                  that.ossImgObject.push({"creatorId":userId,"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
 
                                   //得到oss路径
                                   that.$axios.post(host,request)
@@ -596,7 +598,7 @@
                                   request.append("key",dir+'/'+filesName[i]);//文件名字，可设置路径
                                   request.append("success_action_status",'200');// 让服务端返回200,不然，默认会返回204
                                   request.append('file', that.imgList[i]);//需要上传的文件 file
-                                  that.ossPdfObject.push({"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
+                                  that.ossPdfObject.push({"creatorId":userId,"fileName":filesName[i],"ossUrl": host+'/'+dir+'/'+filesName[i]})
                                   //得到oss路径
                                   that.$axios.post(host,request)
                                     .then(function(res){
