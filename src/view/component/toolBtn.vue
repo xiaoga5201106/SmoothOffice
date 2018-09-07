@@ -36,7 +36,7 @@
   overflow: auto;
 }
 .el-button{
-  float: left;
+  float: right;
   margin-right: 20px;
 }
 </style>

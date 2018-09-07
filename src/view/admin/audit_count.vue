@@ -193,27 +193,30 @@
           })
          },
          updata_count(){
+             let that=this;
+           const token = localStorage.getItem('token');
             let state;
-            if ( that.labels[7].value==可用) {
+            if ( that.labels[7].value=="可用") {
                          state="true"
             }
-            if (that.labels[7].value==停用) {
+            if (that.labels[7].value=="停用") {
                          state="false"
             }
-          console.log(111)
-                 let that=this;
-           const token = localStorage.getItem('token');
-          this.$axios.post(this.$baseURL+'/event/update-slbAccount',{
-                slbAccountId:id,
+            console.log(this.id)
+
+         this.$axios.post(this.$baseURL+'/event/update-slbAccount',{
+                slbAccountId:this.id,
                 activated:state,
                 age:that.labels[5].value,
                 area:that.labels[1].value,
                 login: that.labels[2].value,
                 name:that.labels[3].value,
+                passWord:'string',
+                rePassWord:'string',
+                id:0,
                 role:that.labels[0].value,
                 sex:that.labels[4].value,
                 xueLi:that.labels[6].value, 
-
                 
           },
           {
