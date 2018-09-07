@@ -11,7 +11,7 @@ node {
         sh "node -v"
     }
     stage('project starting') {
-        sh "cd /var/lib/jenkins/workspace/benyun/"
+        sh "cd /var/lib/jenkins/workspace/shunliban/"
         sh "./start.sh"
     }
 }
