@@ -24,8 +24,8 @@ import tableList from './tableList'
           }
         },
         methods: {
-          handleClick(tab, event) {
-            console.log(tab, event);
+          handleClick(tab) {
+            this.$emit('getTab',tab.name);
           }
         },
       created(){

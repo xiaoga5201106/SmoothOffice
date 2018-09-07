@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <searchTools :searchDatas="searchDatas" level="0" @search="searchApplyList"></searchTools>
-    <tabs :Menutabs="Menutabs" operate="true" father="apply_edit" :queryState="queryState"></tabs>
+    <tabs :Menutabs="Menutabs" operate="true" father="apply_edit" :queryState="queryState" @getTab="getTab"></tabs>
      <pagination :listTotal="listTotal" @page="page" :paginationShow="paginationShow"></pagination>
   </div>
 </template>
@@ -23,6 +23,7 @@
         return {
           paginationShow:true,
           listTotal:0,
+          tabName:1,
           /*工作台跳转过来的query*/
           queryState:this.$route.query.state,
           /*tabs标签页*/
@@ -32,7 +33,7 @@
             type:'wait_audit',
             /*待审核表头*/
             titles:[
-               { prop:'id',
+               { prop:'showIndex',
                 label:"序号"
               },
               { prop:'order_id',
@@ -65,7 +66,7 @@
             type:'pass',
             /*其他表头*/
             titles:[
-              { prop:'id',
+              { prop:'showIndex',
                 label:"序号"
               },
               { prop:'order_id',
@@ -107,7 +108,7 @@
             type:'no_pass',
             /*其他表头*/
             titles:[
-              { prop:'id',
+              { prop:'showIndex',
                 label:"序号"
               },
               { prop:'order_id',
@@ -221,6 +222,9 @@
                     this.getList();
         },
            methods:{
+            getTab(name){
+                this.tabName = name;              
+            },
             getList(val,type1,type2,type3,code,name){
               const token=localStorage.getItem('token');
              let that=this;
@@ -242,7 +246,7 @@
                  if (name==undefined) {
                      name=" "
                  }
-             this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&page='+(val-1)+'&pageSize=10&size=10&sort=createTime,desc&type=2&isCancel=false&type1='+type1+'&type2='+type2+'&type3='+type3,{
+              this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&page='+(val-1)+'&pageSize=10&size=10&sort=createTime,desc&type=2&states='+that.tabName+'&isCancel=false&type1='+type1+'&type2='+type2+'&type3='+type3,{
                    headers:{
                       "Authorization": "Bearer"+" "+token
                    }
@@ -251,11 +255,14 @@
                 that.listTotal = parseInt(ret.headers['x-total-count']);
                 let data=ret.data;
                 let menu=[];
+                let indexOne = 1;
+                let indexTwo = 1;
+                let indexThree = 1;
                 console.log(type1)
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
                 }
-                      data.forEach(function(value,index,array){
+                       data.forEach(function(value,index,array){
                       
                           console.log(data.length)
                            let status;
@@ -268,9 +275,10 @@
                         if (value.states=="3") {
                                 status="未通过"
                         }
-                        if (value.states==menu[0].name) {
+                        if (value.states==menu[0].name) {                          
                             menu[0].tableData.push({
                                  id:value.id,
+                                 showIndex:((val-1)*10)+indexOne,
                                  order_id:value.slbOrder.code,
                                  contract_id:'',
                                  name:value.slbOrder.customerName,
@@ -279,10 +287,12 @@
                                  status:status,
                                  apply_information:value.message
                            })
+                            indexOne++;
                         }
                          else if (value.states==menu[1].name) {
                             menu[1].tableData.push({
                                  id:value.id,
+                                 showIndex:((val-1)*10)+indexTwo,
                                  order_id:value.slbOrder.code,
                                  contract_id:'',
                                  name:value.slbOrder.customerName,
@@ -291,11 +301,13 @@
                                  status:status,
                                  apply_information:value.message
                            })
+                            indexTwo++;
                         }
                          else  if (value.states==menu[2].name) {
                             menu[2].tableData.push({
                                  id:value.id,
-                                order_id:value.slbOrder.code,
+                                 showIndex:((val-1)*10)+indexThree,                                 
+                                 order_id:value.slbOrder.code,
                                  contract_id:'',
                                  name:value.slbOrder.customerName,
                                  service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
@@ -303,10 +315,8 @@
                                  status:status,
                                  apply_information:value.message
                            })
+                            indexThree++;
                         }
-                        
-
-
                       })
               })
                .catch(function(err){

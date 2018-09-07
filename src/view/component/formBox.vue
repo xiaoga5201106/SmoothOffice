@@ -132,7 +132,7 @@
     margin-bottom: 0 !important;
   }
   .short{
-    width: 120px;
+    width: 117px;
   }
   .short+.short{
     margin-left: 10px;
