@@ -3,14 +3,15 @@ node {
     stage('checkout') {
         checkout scm
     }
-    stage('git') {
+    stage('git clone') {
         git branch: 'master', changelog: false, poll: true, url: 'https://github.com/xiaoga5201106/SmoothOffice.git'
     }
-    stage('check npm&&node') {
+    stage('check npm') {
         sh "npm -version"
-    sh "node -v"
+        sh "node -v"
     }
-    stage('npm install&&build&&run') {
-        sh "/var/lib/jenkins/workspace/benyun/start.sh"
+    stage('project starting') {
+        sh "cd /var/lib/jenkins/workspace/benyun/"
+        sh "./start.sh"
     }
 }
