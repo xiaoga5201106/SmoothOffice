@@ -50,7 +50,7 @@
           },
           search(){
              this.$emit('search',this.inputValue,this.selectValue);
-          }
+          },
       }
     }
 </script>

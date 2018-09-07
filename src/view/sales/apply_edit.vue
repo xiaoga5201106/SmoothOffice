@@ -218,7 +218,7 @@
           }
         },
          created:function(){
-                    this.getList()
+                    this.getList();
         },
            methods:{
             getList(val,type1,type2,type3,code,name){
@@ -346,8 +346,6 @@
             })
                
              },
-
-
         }
     }
 </script>

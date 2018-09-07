@@ -30,7 +30,7 @@
           return{
             show:false,
             id:0,
-            datas:"",
+            datas:"111",
             flag:"",
             paginationShow:true,
             listTotal:0,

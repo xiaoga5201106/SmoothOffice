@@ -30,6 +30,22 @@
     <formButton state7="关闭"   @close="close"></formButton>
   </div>
 </el-dialog>
+<el-dialog v-else-if="flag == '修改密码'"
+           :title="flag"
+           :visible="dialogVisible"
+           width="30%"
+           :before-close="handleClose"
+>
+  <el-form >
+    <el-form-item v-for="datas1 in datas" v-bind:label="datas1.name" :label-width="formLabelWidth">
+     <span>{{datas1.data}}</span>
+    </el-form-item>
+    <span>密码</span><el-input style="width: 200px;position: relative;left: 50px" placeholder="请输入密码" v-model="psw" maxlength="20" minlength="6"></el-input>
+  </el-form>
+  <div slot="footer" class="dialog-footer" align="center">
+<formButton state4="提交"  state2="取消" @close="close" @submit="submitPsw"></formButton>
+  </div>
+</el-dialog>
 
 <el-dialog v-else-if="flag == '申请修改'"
   :title="flag"
@@ -468,6 +484,7 @@
                  date3:'',
                  date4:'',
                  formLabelWidth:'120px',
+                 psw:''
         }
       },
       methods: {
@@ -502,10 +519,14 @@
                             //获取token
                             const token = localStorage.getItem('token');
                             this.postPath(token);
-                            this.$emit("close");
+
+                            this.$emit("close");                    
 
                         }
                       },
+                      submitPsw(psw){
+                         this.$emit('submit',this.psw)
+                       },
                            //把oss图片上传到我们本地服务器
                          postPath(token){
                               let that=this;

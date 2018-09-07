@@ -97,6 +97,9 @@
               v-if="tableData[scope.$index].state=='停用'"
               size="mini"
               @click="opendialogForSee1(scope.$index, scope.row)">恢复使用</el-button>
+               <el-button
+              size="mini"
+              @click="opendialogForEidtpsw(scope.$index, scope.row)">修改密码</el-button>
           </div>
       </template>
     </el-table-column>
@@ -119,6 +122,7 @@
               this.$emit('open',row.id,flag);
 
             },
+
             opendialogForSee(index,row){
               let flag = "查看订单详情";
               this.$emit('open',row.id,flag);
@@ -137,6 +141,10 @@
             },
             opendialogForApplyChange(index,row){
               let flag = "申请变更";
+              this.$emit('open',row.id,flag);
+            },
+            opendialogForEidtpsw(index,row){
+                let flag = "修改密码";
               this.$emit('open',row.id,flag);
             },
             stopAccount(index,row){
