@@ -138,24 +138,7 @@
                     },
                 ]
                },
-                    {
-                 key:'1',
-                  prop:"passWord",
-               	title:'密码',
-                placeholder:'请输入6~20位英文、数字密码',
-                msg:'*必填',
-                maxlength:"20",
-                value:''
-               },
-                    {
-                 key:'1',
-                  prop:"rePassWord",
-                  placeholder:'请再次输入密码',
-                  msg:'*必填',
-               	  title:'确认密码',
-                  maxlength:"20",
-                  value:''
-               },
+                
                   {
                  key:'3',
                   prop:"state",
@@ -202,27 +185,31 @@
              that.labels[4].value = that.changeSex(res.data.sex);
              that.labels[5].value = res.data.age;
              that.labels[6].value = res.data.xueLi;
-             /*that.labels[7].value = res.data.partnerSale;
-             that.labels[8].value = res.data.clue;*/
-             that.labels[9].value = state;
-             //这个才是订单id
+             that.labels[7].value = state;
+
           })
           .catch(function(err){
             console.log(err)
           })
          },
          updata_count(){
+            let state;
+            if ( that.labels[7].value==可用) {
+                         state="true"
+            }
+            if (that.labels[7].value==停用) {
+                         state="false"
+            }
           console.log(111)
                  let that=this;
            const token = localStorage.getItem('token');
           this.$axios.post(this.$baseURL+'/event/update-slbAccount',{
-                activated:that.labels[9].value,
+                slbAccountId:id,
+                activated:state,
                 age:that.labels[5].value,
                 area:that.labels[1].value,
                 login: that.labels[2].value,
                 name:that.labels[3].value,
-                /*passWord:data[7],
-                rePassWord:data[8],*/
                 role:that.labels[0].value,
                 sex:that.labels[4].value,
                 xueLi:that.labels[6].value, 

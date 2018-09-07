@@ -92,7 +92,7 @@
                 <el-button
                 v-if="tableData[scope.$index].state=='可用'"
               size="mini"
-              @click="opendialogForSee1(scope.$index, scope.row)">停用</el-button>
+              @click="stopAccount(scope.$index, scope.row)">停用</el-button>
               <el-button
               v-if="tableData[scope.$index].state=='停用'"
               size="mini"
@@ -138,6 +138,45 @@
             opendialogForApplyChange(index,row){
               let flag = "申请变更";
               this.$emit('open',row.id,flag);
+            },
+            stopAccount(index,row){
+              let that=this;
+              this.$confirm('是否确定停用?', '停用账号', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                center: true
+              }).then(() => {
+                //拿到token
+                const token = localStorage.getItem('token');
+                //废除订单
+                this.$axios.post(this.$baseURL+'/event/disable-slbAccount',{
+                  id:0,
+                  slbAccountId:row.id,
+                },{
+                  headers: {
+                    "Authorization": "Bearer" + " " + token
+                  }
+                })
+                  .then(function (res) {
+                    that.$message({
+                      type: 'success',
+                      message: '已停用此账号!'
+                    });
+                    //表格刷新
+                    that.$emit('refresh');
+                  }).catch(function (err) {
+                  that.$message({
+                    type: 'error',
+                    message: '停用失败!'
+                  });
+                });
+              }).catch(() => {
+                that.$message({
+                  type: 'info',
+                  message: '已取消停用'
+                });
+              });
             },
             opendialogDelete(index,row){
               let that=this;

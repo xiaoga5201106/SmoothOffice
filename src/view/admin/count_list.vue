@@ -2,7 +2,7 @@
    <div id="main">
    	<searchTools :searchDatas="searchDatas" level="0" @search="searchCounts"></searchTools>
    	 <toolBtn :btns="btns" @submit="addCount"></toolBtn>
-   	 <tableList :titles="titles" :tableData="tableData" operate="true" type="count_list"></tableList>
+   	 <tableList :titles="titles" :tableData="tableData" operate="true" type="count_list" @refresh="refresh"></tableList>
      <pagination :listTotal="listTotal" @page="page" :paginationShow="paginationShow"></pagination>
    </div>
 </template>
@@ -12,13 +12,14 @@
 	 import toolBtn from '../component/toolBtn'
 	 import tableList from '../component/tableList'
    import pagination from '../component/pagination'
+   let loginKey=undefined,name=undefined,role=undefined,area=undefined,createTime=undefined,state=undefined;
     export default {
         name: "count_list",
         components: {
           searchTools,
           toolBtn,
           tableList,
-          pagination
+          pagination,
         },
         data(){
         	return{
@@ -99,8 +100,12 @@
                 value: '7',
                 label: '业务会计'
               },
+                {
+                  value: '8',
+                    label:'管理员'
+                },
               {
-                value: '8',
+                value: '9',
                 label: '全部'
               }]
             },{
@@ -109,14 +114,14 @@
               placeholder:'请选择',
               value:'',
               option:[{
-                value: '9',
+                value: '10',
                 label: '柳州'
               },{
-                value: '10',
+                value: '11',
                 label: '贺州'
               }
               ,{
-                value: '11',
+                value: '12',
                 label: '全部'
               }]
             },{
@@ -130,13 +135,13 @@
               placeholder:'请选择',
               value:'',
               option:[{
-                value: '8',
+                value: '13',
                 label: '可用'
               },{
-                value: '9',
+                value: '14',
                 label: '停用'
               },{
-                value: '10',
+                value: '15',
                 label: '全部'
               }]
             }],
@@ -150,21 +155,19 @@
         },
 
         methods:{
-             searchCounts(inputValue,selectValue){
-               const token = localStorage.getItem('token');
-                let that=this;
-                let loginKey=inputValue[1];
-                let name=inputValue[2];
-                let role=selectValue[3];
-                let area=selectValue[4];
-                let createTime=selectValue[5];
-                let state=selectValue[6];
-                 if (state=="可用") {
+          getList(val,loginKey,name,role,area,createTime,state){
+             if (state=="可用") {
                      state="true"
                  }
                  if (state=="停用") {
                      state="false"
                  }
+                 if (val==undefined) {
+                    val=1
+                 }  
+                 if (val!=undefined) {
+                    this.tableData=[]
+                 }             
                   if (state==undefined||state=="全部") {
                      state=" "
                  }
@@ -183,92 +186,9 @@
                  if (createTime==undefined) {
                      createTime=" "
                  }
-
-                this.$axios.get(this.$baseURL+'/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state+'&pageSize=10&size=10',{
-                       headers:{
-                           "Authorization": "Bearer"+" "+token
-                        }
-                })
-                .then(function(ret){
-                  that.listTotal = parseInt(ret.headers['x-total-count']);
-              let data1=ret.data;
-               if(ret.data==""){
-                      that.$message.error("暂无此信息！")
-                    }
-              that.tableData=[];
-              data1.forEach(function(value,index,array){
-                  let state;
-                if (value.user.activated==true) {
-                  state="可用"
-                }
-                else if (value.user.activated==false) {
-                  state="停用"
-                }
-              that.tableData.push({
-              id:value.id,
-              name:value.name,
-               login:value.user.login,
-              area:that.changeArea(value.area),
-              job:that.changeRole(value.role),
-              createtime:value.createTime,
-              state:state
-                    })
-              })
-                })
-                 .catch(function(err){
-                         console.log(err)
-                })
-
-
-             },
-             addCount(){
-                this.$router.push({path: '/add_count'});
-             },
-             page(val){
-              const token = localStorage.getItem('token');
+            const token = localStorage.getItem('token');
             let that=this;
-            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10&page='+(val-1)+'&sort=createTime,desc',{
-               headers:{
-                  "Authorization": "Bearer"+" "+token
-               }
-
-            })
-            .then(function(ret){
-              that.listTotal = parseInt(ret.headers['x-total-count']);
-              let data=ret.data;
-              that.tableData=[];
-              data.forEach(function(value,index,array){
-                let state;
-                if (value.user.activated==true) {
-                  state="可用"
-                }
-                else if (value.user.activated==false) {
-                  state="停用"
-                }
-              that.tableData.push({
-              id:value.id,
-              name:value.name,
-               login:value.user.login,
-              area:that.changeArea(value.area),
-              job:that.changeRole(value.role),
-              createtime:value.createTime,
-              state:state
-                    })
-              })
-
-            })
-             .catch(function(err){
-              console.log(err)
-            })
-             },
-             open(){
-             this.$router.push({path: '/add_count'});
-             }
-        },
-        created:function(){
-             const token = localStorage.getItem('token');
-            let that=this;
-            this.$axios.get(this.$baseURL+'/slb-accounts?pageSize=10&size=10&sort=createTime,desc',{
+            this.$axios.get(this.$baseURL+'/slb-accounts?area='+area+'&loginKey='+loginKey+'&nameKey='+name+'&role='+role+'&createDay='+createTime+'&activated='+state+'&pageSize=10&size=10&pageSize=10&size=10&sort=createTime,desc&page='+(val-1),{
                headers:{
                   "Authorization": "Bearer"+" "+token
                }
@@ -304,6 +224,46 @@
              .catch(function(err){
               console.log(err)
             })
+           },
+             searchCounts(inputValue,selectValue){
+               const token = localStorage.getItem('token');
+                let that=this;
+                 loginKey=inputValue[1];
+                 name=inputValue[2];
+                 role=selectValue[3];
+                 area=selectValue[4];
+                 createTime=selectValue[5];
+                 state=selectValue[6];
+                this.paginationShow = false;
+            this.$nextTick(function () {
+              this.tableData=[];
+              this.getList(undefined,loginKey,name,role,area,createTime,state);
+              this.paginationShow = true;
+            })
+                
+             },
+             addCount(){
+                this.$router.push({path: '/add_count'});
+             },
+             page(val){
+                  this.tableData=[];
+                 this.getList(val,loginKey,name,role,area,createTime,state)
+             },
+             open(){
+             this.$router.push({path: '/add_count'});
+             },
+             refresh(){
+              console.log(111)
+            //策略进行DOM的更新，表格以及分页刷新
+            this.paginationShow = false;
+            this.$nextTick(function () {
+              this.getList(1);
+              this.paginationShow = true;
+            })
+          },
+        },
+        created:function(){
+               this.getList()
         }
     }
 </script>

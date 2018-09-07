@@ -215,11 +215,32 @@
           }]
           }
         },
-        created:function(){
-
-             const token=localStorage.getItem('token');
+         created:function(){
+                    this.getList()
+        },
+           methods:{
+            getList(val,type1,type2,type3,code,name){
+              const token=localStorage.getItem('token');
              let that=this;
-             this.$axios.get(this.$baseURL+'/slb-order-applications-records?pageSize=10&size=10&isCancel=false&type=3',{
+               if (val == undefined) {
+              val = 1;
+                     }
+             if (type1==undefined||type1=="全部") {
+                     type1=" "
+                 }
+                if (type2==undefined||type2=="全部") {
+                     type2=" "
+                 }
+                if (type3==undefined||type3=="全部") {
+                     type3=" "
+                 }
+                if (code==undefined) {
+                     code=" "
+                 }
+                 if (name==undefined) {
+                     name=" "
+                 }
+             this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&page='+(val-1)+'&pageSize=10&size=10&sort=createTime,desc&type=2&isCancel=false&type1='+type1+'&type2='+type2+'&type3='+type3,{
                    headers:{
                       "Authorization": "Bearer"+" "+token
                    }
@@ -228,12 +249,12 @@
                 that.listTotal = parseInt(ret.headers['x-total-count']);
                 let data=ret.data;
                 let menu=[];
-                console.log(111)
+                console.log(type1)
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
                 }
                       data.forEach(function(value,index,array){
-
+                      
                           console.log(data.length)
                            let status;
                         if (value.states=="1") {
@@ -281,7 +302,7 @@
                                  apply_information:value.message
                            })
                         }
-
+                        
 
 
                       })
@@ -289,191 +310,42 @@
                .catch(function(err){
                 console.log(err)
               })
-
-        },
-           methods:{
-             searchApplyList(inputValue,selectValue){
-                 const token = localStorage.getItem('token');
-                let that=this;
-                let type1=selectValue[0];
-                let type2=selectValue[1];
-                let type3=selectValue[2];
-                let code=inputValue[3];
-                let name=inputValue[4];
-
-                if (type1==undefined||type1=="全部") {
-                     type1=" "
-                 }
-                if (type2==undefined||type2=="全部") {
-                     type2=" "
-                 }
-                if (type3==undefined||type3=="全部") {
-                     type3=" "
-                 }
-                if (code==undefined) {
-                     code=" "
-                 }
-                 if (name==undefined) {
-                     name=" "
-                 }
-                 console.log(type1)
-                this.$axios.get(this.$baseURL+'/slb-order-applications-records?code='+code+'&customerName='+name+'&type1='+type1+'&type2='+type2+'&type3='+type3+'&type=3'+'&pageSize=10&size=10',{
-                       headers:{
-                           "Authorization": "Bearer"+" "+token
-                        }
-                })
-                .then(function(ret){
-                  that.listTotal = parseInt(ret.headers['x-total-count']);
-                        console.log(11)
-                        let data=ret.data;
-                let menu=[];
-
-                for (var i = 0; i < that.Menutabs.length; i++) {
-                               menu[i]=that.Menutabs[i]
-                }
-                    if(data==""){
-                      that.$message.error("暂无此信息！")
-                    }
-                    menu[0].tableData=[];
-                    menu[1].tableData=[];
-                    menu[2].tableData=[];
-                      data.forEach(function(value,index,array){
-
-                            let status;
-                        if (value.states=="1") {
-                                status="待审核"
-                        }
-                        if (value.states=="2") {
-                                status="已通过"
-                        }
-                        if (value.states=="3") {
-                                status="未通过"
-                        }
-                        if (value.states==menu[0].name) {
-
-                            menu[0].tableData.push({
-                                 id:value.id,
-                                 order_id:value.slbOrder.code,
-                                 contract_id:'',
-                                 name:value.slbOrder.customerName,
-                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                 apply_time:value.createTime,
-                                 status:status,
-                                 apply_information:value.message
-                           })
-                        }
-                         else if (value.states==menu[1].name) {
-                            menu[1].tableData.push({
-                                 id:value.id,
-                                 order_id:value.slbOrder.code,
-                                 contract_id:'',
-                                 name:value.slbOrder.customerName,
-                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                 apply_time:value.createTime,
-                                 status:status,
-                                 apply_information:value.message
-                           })
-                        }
-                         else  if (value.states==menu[2].name) {
-                            menu[2].tableData.push({
-                                 id:value.id,
-                                order_id:value.slbOrder.code,
-                                 contract_id:'',
-                                 name:value.slbOrder.customerName,
-                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                 apply_time:value.createTime,
-                                 status:status,
-                                 apply_information:value.message
-                           })
-                        }
-
-
-
-                      })
-
-
-                })
-                 .catch(function(err){
-                         console.log(err)
-                })
              },
              page(val){
-
-                 this.newMenu('申请列表','申请变更');
-             const token=localStorage.getItem('token');
-             let that=this;
-             this.$axios.get(this.$baseURL+'/slb-order-applications-records?pageSize=10&size=10&&type=3&isCancel=false&page='+(val-1),{
-                   headers:{
-                      "Authorization": "Bearer"+" "+token
-                   }
-             })
-              .then(function(ret){
-                let data=ret.data;
-                let menu=[];
-                console.log(111)
+              let that=this;
+               let menu=[];
+                console.log(val)
                 for (var i = 0; i < that.Menutabs.length; i++) {
                                menu[i]=that.Menutabs[i]
-                }
-                       menu[0].tableData=[];
-                      data.forEach(function(value,index,array){
-
-                           let status;
-                        if (value.states=="1") {
-                                status="待审核"
-                        }
-                        if (value.states=="2") {
-                                status="已通过"
-                        }
-                        if (value.states=="3") {
-                                status="未通过"
-                        }
-
-                        console.log(value.states)
-                        if (value.states==menu[0].name) {
-                            menu[0].tableData.push({
-                                 id:value.id,
-                                 order_id:value.slbOrder.code,
-                                 contract_id:'',
-                                 name:value.slbOrder.customerName,
-                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                 apply_time:value.createTime,
-                                 status:status,
-                                 apply_information:value.message
-                           })
-                        }
-                         else if (value.states==menu[1].name) {
-                            menu[1].tableData.push({
-                                 id:value.id,
-                                 order_id:value.slbOrder.code,
-                                 contract_id:'',
-                                 name:value.slbOrder.customerName,
-                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                 apply_time:value.createTime,
-                                 status:status,
-                                 apply_information:value.message
-                           })
-                        }
-                         else  if (value.states==menu[2].name) {
-                            menu[2].tableData.push({
-                                 id:value.id,
-                                order_id:value.slbOrder.code,
-                                 contract_id:'',
-                                 name:value.slbOrder.customerName,
-                                 service_type:value.slbOrder.type1+'-'+value.slbOrder.type2+'-'+value.slbOrder.type3,
-                                 apply_time:value.createTime,
-                                 status:status,
-                                 apply_information:value.message
-                           })
-                        }
+                }     
+               menu[0].tableData=[];
+                  this.getList(val,type1,type2,type3,code,name)
+                 
+             },
+             searchApplyList(inputValue,selectValue){
+                let that=this;
+                let menu=[];
+                 type1=selectValue[0];
+                 type2=selectValue[1];
+                 type3=selectValue[2];
+                 code=inputValue[3];
+                 name=inputValue[4];                
+                for (var i = 0; i < that.Menutabs.length; i++) {
+                               menu[i]=that.Menutabs[i]
+                }     
+                 console.log(type1)
+                this.paginationShow = false;
+            this.$nextTick(function () {
+                  menu[0].tableData=[];
+                  menu[1].tableData=[];
+                  menu[2].tableData=[];
+              this.getList(undefined,type1,type2,type3,code,name);
+              this.paginationShow = true;
+            })
+               
+             },
 
 
-
-                      })
-              })
-               .catch(function(err){
-                console.log(err)
-              })
-             }
         }
 
     }
