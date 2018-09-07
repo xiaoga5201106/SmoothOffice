@@ -81,6 +81,9 @@
              if (this.role=="销售") {
            this.$router.push({path: '/sale_home'});
            }
+             if (this.role=="内务") {
+           this.$router.push({path: '/house_keeping_home'});
+           }
         console.log(this.role)
       },
 

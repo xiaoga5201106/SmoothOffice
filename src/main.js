@@ -64,6 +64,25 @@ Vue.prototype.changeRole=function(role){
 	     else if (role=="ROLE_XIAO_SHOU") {
 	     	 role="销售"
 	     }
+	      else if (role=="ROLE_NEI_WU") {
+	     	 role="内务"
+	     }
+	      else if (role=="ROLE_CAI_WU") {
+	     	 role="财务"
+	     }
+	      else if (role=="ROLE_GAO_GUAN") {
+	     	 role="高管"
+	     }
+	      else if (role=="ROLE_SHEN_HE") {
+	     	 role="审核"
+	     }
+	      else if (role=="ROLE_WAI_QING") {
+	     	 role="外勤"
+	     }
+	      else if (role=="ROLE_YE_WU_KUAI_JI_QING") {
+	     	 role="业务会计"
+	     }
+
 	     else{
 	     	 role=""
 	     }

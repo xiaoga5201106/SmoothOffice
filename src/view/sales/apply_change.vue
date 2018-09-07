@@ -10,6 +10,7 @@
     import tabs from '../component/tabs'
     import searchTools from'../component/searchTools'
     import pagination from'../component/pagination'
+    let type1=undefined,type2=undefined,type3=undefined,name=undefined,code=undefined;
     export default {
         name: "apply_change",
         inject: ['newMenu'],
