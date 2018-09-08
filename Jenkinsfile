@@ -11,6 +11,8 @@ node {
         sh "node -v"
     }
     stage('project starting') {
+	
+        sh "chmod +x start.sh"
         sh "source /var/lib/jenkins/workspace/shunliban/start.sh"
     }
 }
