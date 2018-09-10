@@ -12,6 +12,6 @@ node {
     }
     stage('project starting') {
         sh "chmod +x start.sh"
-        sh "JENKINS_NODE_COOKIE=dontKillMe ./start.sh"
+        sh "./start.sh"
     }
 }
